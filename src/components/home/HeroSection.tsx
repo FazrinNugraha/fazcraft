@@ -15,26 +15,7 @@ export default function HeroSection() {
         {/* GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* ================= LEFT COLUMN ================= */}
-          <div className="space-y-8 flex flex-col justify-start">
-            {/* Availability Badge */}
-            <div className="flex items-center">
-              <div
-                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[9px] font-bold uppercase tracking-[0.2em] backdrop-blur-md"
-                style={{
-                  backgroundColor: "rgba(59, 130, 246, 0.05)",
-                  borderColor: "rgba(59, 130, 246, 0.18)",
-                  color: "#60a5fa",
-                }}
-              >
-                <span className="relative flex h-1.5 w-1.5">
-                  {/* Pulsing indicator */}
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
-                </span>
-                Available for select projects
-              </div>
-            </div>
-
+          <div className="space-y-8 flex flex-col justify-start lg:mt-10">
             {/* Main Headline */}
             <div className="space-y-4">
               <h1
@@ -176,7 +157,7 @@ export default function HeroSection() {
           {/* ================= RIGHT COLUMN ================= */}
           <div className="hidden lg:flex justify-end items-start mt-12 transition-all duration-200 ease-out text-md hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5">
             <div
-              className="w-full p-8 rounded-2xl"
+              className="w-full p-6 rounded-2xl flex flex-col gap-5"
               style={{
                 backgroundColor: "var(--bg-card)",
                 border: "1px solid var(--border-color)",
@@ -184,16 +165,16 @@ export default function HeroSection() {
               }}
             >
               {/* Top Row: Avatar+Name left, Description right */}
-              <div className="flex flex-col md:flex-row gap-6 items-center md:items-start">
+              <div className="flex flex-col md:flex-row gap-5 items-center md:items-start">
                 {/* Left: Avatar + Name */}
                 <div
-                  className="flex flex-col items-center flex-shrink-0 mt-0 md:mt-4"
+                  className="flex flex-col items-center flex-shrink-0 mt-0 md:mt-2"
                   style={{ minWidth: "140px" }}
                 >
                   <img
-                    src="/profile/pepe.jpeg"
+                    src="/hero_v1.jpg"
                     alt="Fazrin Nugraha"
-                    className="w-20 h-20 rounded-full object-cover"
+                    className="w-20 h-20 rounded-[18px] object-cover"
                     style={{
                       border: "2px solid var(--border-color)",
                     }}
@@ -205,60 +186,62 @@ export default function HeroSection() {
                     Fazrin Nugraha
                   </h3>
                   <p
-                    className="text-[11px] uppercase tracking-widest mt-1"
+                    className="text-[11px] uppercase tracking-[0.15em] mt-1"
                     style={{ color: "var(--text-secondary)" }}
                   >
                     Based in Indonesia
                   </p>
                 </div>
 
-                {/* Right: Description */}
-                <p
-                  className="text-md leading-relaxed pt-0 md:pt-10 text-center text-justify md:text-left"
-                  style={{ color: "var(--text-secondary)" }}
+                {/* Right: Quote Block Description */}
+                <div
+                  className="pl-3 border-l-2 py-0.5 mt-2 md:mt-5 flex-1"
+                  style={{ borderColor: "var(--border-color)" }}
                 >
-                  I blend engineering, design, and motion to create interfaces
-                  that feel deliberate, calm, and precise without sacrificing
-                  performance or accessibility.
-                </p>
+                  <p
+                    className="text-md leading-relaxed italic text-justify md:text-left"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    "I build AI-powered software that solves real problems - taking ideas all the way to production, with systems that ship reliably and work for actual users."
+                  </p>
+                </div>
               </div>
 
               {/* Bottom Row: Stats */}
               <div
-                className="grid grid-cols-3 gap-6 mt-6 pt-5 items-center text-center"
+                className="grid grid-cols-3 gap-6 mt-4 pt-4 items-center text-center"
                 style={{ borderTop: "1px solid var(--border-color)" }}
               >
                 <div>
                   <p
-                    className="text-[11px] uppercase tracking-widest mb-1.5"
+                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Since
+                    Role
                   </p>
                   <p
                     className="text-base font-bold"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    2023
+                    Engineer
                   </p>
                 </div>
                 <div>
                   <p
-                    className="text-[11px] uppercase tracking-widest mb-1.5"
+                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Selected Projects
+                    Status
                   </p>
                   <p
-                    className="text-base font-bold"
-                    style={{ color: "var(--text-primary)" }}
+                    className="text-base font-bold text-blue-600 dark:text-blue-400"
                   >
-                    5+ Projects
+                    Open to Work
                   </p>
                 </div>
                 <div>
                   <p
-                    className="text-[11px] uppercase tracking-widest mb-1.5"
+                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
                     style={{ color: "var(--text-secondary)" }}
                   >
                     Focus
@@ -267,7 +250,7 @@ export default function HeroSection() {
                     className="text-base font-bold"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    Web · AI
+                    AI Integration
                   </p>
                 </div>
               </div>
