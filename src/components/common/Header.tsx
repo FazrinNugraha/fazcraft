@@ -120,7 +120,7 @@ export default function Header() {
             style={{ textDecoration: "none", gap: "10px" }}
           >
             <img
-              src="/profile/pepe.jpeg"
+              src="/hero_v1.jpg"
               alt="Fazrin Nugraha"
               className="rounded-full object-cover flex-shrink-0"
               style={{
