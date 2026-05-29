@@ -18,16 +18,21 @@ export default function HeroSection() {
           <div className="space-y-8 flex flex-col justify-start">
             {/* Availability Badge */}
             <div className="flex items-center">
-              <span
-                className="text-xs font-semibold uppercase tracking-widest flex items-center gap-2"
-                style={{ color: "var(--text-secondary)" }}
+              <div
+                className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[9px] font-bold uppercase tracking-[0.2em] backdrop-blur-md"
+                style={{
+                  backgroundColor: "rgba(59, 130, 246, 0.05)",
+                  borderColor: "rgba(59, 130, 246, 0.18)",
+                  color: "#60a5fa",
+                }}
               >
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{ backgroundColor: "var(--text-secondary)" }}
-                ></span>
+                <span className="relative flex h-1.5 w-1.5">
+                  {/* Pulsing indicator */}
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500"></span>
+                </span>
                 Available for select projects
-              </span>
+              </div>
             </div>
 
             {/* Main Headline */}

@@ -12,6 +12,8 @@ export default function PhotoCarousel({ thumbnails }: PhotoCarouselProps) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
+
+
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isFullscreen) {
@@ -61,6 +63,22 @@ export default function PhotoCarousel({ thumbnails }: PhotoCarouselProps) {
     setCurrentIndex((prev) => (prev === thumbnails.length - 1 ? 0 : prev + 1));
   };
 
+  // Helper to dynamically optimize Cloudinary URLs
+  const getOptimizedImageUrl = (url: string, width = 800) => {
+    if (!url) return "";
+    
+    // Check if the URL is hosted on Cloudinary
+    if (url.includes("res.cloudinary.com")) {
+      // Split URL at '/upload/' to insert dynamic optimization parameters
+      const parts = url.split("/upload/");
+      if (parts.length === 2) {
+        // Insert auto-format (f_auto), auto-quality (q_auto), and max width (w_800)
+        return `${parts[0]}/upload/f_auto,q_auto,w_${width},c_limit/${parts[1]}`;
+      }
+    }
+    return url;
+  };
+
   return (
     <div className="relative w-full">
       {/* Image Container */}
@@ -73,8 +91,9 @@ export default function PhotoCarousel({ thumbnails }: PhotoCarouselProps) {
         onClick={() => setIsFullscreen(true)}
       >
         <img
-          src={thumbnails[currentIndex]}
+          src={getOptimizedImageUrl(thumbnails[currentIndex], 800)}
           alt={`Project screenshot ${currentIndex + 1}`}
+          decoding="async"
           className="w-full h-full object-cover"
         />
 
@@ -148,7 +167,7 @@ export default function PhotoCarousel({ thumbnails }: PhotoCarouselProps) {
 
             {/* Fullscreen Image */}
             <img
-              src={thumbnails[currentIndex]}
+              src={getOptimizedImageUrl(thumbnails[currentIndex], 1920)}
               alt={`Project screenshot ${currentIndex + 1}`}
               className="max-w-95vw max-h-95vh object-contain"
             />

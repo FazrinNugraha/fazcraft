@@ -1,5 +1,6 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
+import { Github, Instagram, Linkedin } from "lucide-react";
 
 export default function Contact() {
   const { theme } = useTheme();
@@ -9,14 +10,17 @@ export default function Contact() {
     {
       name: "Github",
       url: "https://github.com/FazrinNugraha",
+      icon: Github,
     },
     {
       name: "Instagram",
       url: "https://www.instagram.com/nugrahafazrinn?igsh=MXdkeXluZHM0cnN6dA",
+      icon: Instagram,
     },
     {
-      name: "Whatsaap",
-      url: "https://wa.me/6289636507448",
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/muhamad-fazrin-nugraha-968733333/",
+      icon: Linkedin,
     },
   ];
 
@@ -148,27 +152,27 @@ export default function Contact() {
           >
             Social Media
           </p>
-          <div className="flex flex-wrap gap-3 md:gap-6">
-            {socialLinks.map((link, index) => (
-              <a
-                key={link.name}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="transition-colors duration-300 text-base md:text-lg"
-                style={{ color: "var(--text-secondary)" }}
-              >
-                {link.name}
-                {index < socialLinks.length - 1 && (
-                  <span
-                    className="hidden md:inline ml-6"
-                    style={{ color: "var(--border-color)" }}
-                  >
-                    |
-                  </span>
-                )}
-              </a>
-            ))}
+          <div className="flex flex-wrap gap-4 mt-2">
+            {socialLinks.map((link) => {
+              const Icon = link.icon;
+              return (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3.5 rounded-full border transition-all duration-300 hover:-translate-y-1 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] flex items-center justify-center"
+                  style={{
+                    backgroundColor: "var(--bg-secondary)",
+                    borderColor: "var(--border-color)",
+                    color: "var(--text-secondary)",
+                  }}
+                  title={link.name}
+                >
+                  <Icon size={20} />
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>

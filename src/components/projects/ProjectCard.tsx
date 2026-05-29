@@ -141,12 +141,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div
           className={`block min-h-0 sm:min-h-[250px] md:min-h-[320px] flex flex-col justify-center ${project.side === "left" ? "md:order-2" : "md:order-1"}`}
         >
-          {/* Phase Label */}
-          <div className="mb-2">
+          {/* Phase & Role Label */}
+          <div className="mb-2 flex flex-wrap items-center gap-2">
             <span
               className={`text-xs font-bold ${project.phaseColor} uppercase tracking-wider`}
             >
               {project.phase}
+            </span>
+            <span className="text-xs text-neutral-500 select-none mx-1">•</span>
+            <span
+              className="text-xs font-semibold uppercase tracking-wider"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              {project.role}
             </span>
           </div>
 

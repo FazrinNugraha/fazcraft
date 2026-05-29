@@ -23,9 +23,9 @@ export default function AboutSection() {
           <a
             href="/blog"
             className="text-sm font-medium hover:text-white transition-colors pb-1"
-            style={{ 
-              color: "var(--text-secondary)", 
-              borderBottom: "1px dashed var(--border-hover)" 
+            style={{
+              color: "var(--text-secondary)",
+              borderBottom: "1px dashed var(--border-hover)"
             }}
           >
             See all posts
@@ -121,7 +121,7 @@ export default function AboutSection() {
                 className="font-bold"
                 style={{ color: "var(--text-primary)" }}
               >
-                AI & Machine Learning
+                AI & Machine Learning Engineer
               </strong>
               .
             </p>

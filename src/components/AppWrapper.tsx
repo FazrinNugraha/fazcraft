@@ -14,12 +14,14 @@ const Contact = lazy(() => import("./pages/Contact"));
 //Lazy load for markdown layouts
 const BlogMarkdownLayout = lazy(() => import("./pages/blog/BlogMarkdownLayout"));
 const JourneyMarkdownLayout = lazy(() => import("./pages/journey/JourneyMarkdownLayout"));
+const CaseStudyMarkdownLayout = lazy(() => import("./pages/case-study/CaseStudyMarkdownLayout"));
 
 type PageType =
   | "home"
   | "projects"
   | "journey"
   | "journey_detail"
+  | "case_study_detail"
   | "skills"
   | "contact"
   | "blog"
@@ -33,6 +35,7 @@ interface AppWrapperProps {
   blogPosts?: any[];
   blogFrontmatter?: any;
   journeyFrontmatter?: any;
+  caseStudyFrontmatter?: any;
   journeyPosts?: any[];
 }
 
@@ -44,6 +47,7 @@ export default function AppWrapper({
   blogPosts,
   blogFrontmatter,
   journeyFrontmatter,
+  caseStudyFrontmatter,
   journeyPosts,
 }: AppWrapperProps) {
   return (
@@ -68,6 +72,12 @@ export default function AppWrapper({
                 <JourneyMarkdownLayout frontmatter={journeyFrontmatter}>
                   {children}
                 </JourneyMarkdownLayout>
+              ) : null)}
+            {page === "case_study_detail" && 
+              (caseStudyFrontmatter ? (
+                <CaseStudyMarkdownLayout frontmatter={caseStudyFrontmatter}>
+                  {children}
+                </CaseStudyMarkdownLayout>
               ) : null)}
             {page === "skills" && <Skills />}
             {page === "contact" && <Contact />}

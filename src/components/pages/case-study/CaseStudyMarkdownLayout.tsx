@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useTheme } from "../../../context/ThemeContext";
 
-interface JourneyMarkdownLayoutProps {
+interface CaseStudyMarkdownLayoutProps {
   frontmatter: {
     title: string;
     description?: string;
@@ -13,12 +13,11 @@ interface JourneyMarkdownLayoutProps {
   children: React.ReactNode;
 }
 
-export default function JourneyMarkdownLayout({
+export default function CaseStudyMarkdownLayout({
   frontmatter,
   children,
-}: JourneyMarkdownLayoutProps) {
+}: CaseStudyMarkdownLayoutProps) {
   const { theme } = useTheme();
-  const isDark = theme === "dark";
   const contentRef = useRef<HTMLDivElement>(null);
   const accentColor = frontmatter.accentColor || "#3B82F6";
 
@@ -32,6 +31,7 @@ export default function JourneyMarkdownLayout({
     headings.forEach((h2, index) => {
       h2.style.fontSize = "1.5rem";
       h2.style.fontWeight = "700";
+      h2.style.marginTop = "2rem";
       h2.style.marginBottom = "1.25rem";
       h2.style.paddingLeft = "0";
       h2.style.borderLeft = "none";
@@ -62,14 +62,50 @@ export default function JourneyMarkdownLayout({
       h2.insertBefore(numSpan, h2.firstChild);
     });
 
+    // Style h3 headings
+    const h3s = article.querySelectorAll("h3");
+    h3s.forEach((h3) => {
+      h3.style.fontSize = "1.25rem";
+      h3.style.fontWeight = "600";
+      h3.style.marginTop = "1.5rem";
+      h3.style.marginBottom = "1rem";
+      h3.style.color = "var(--text-primary)";
+    });
+
     // Style paragraphs
     const paragraphs = article.querySelectorAll("p");
     paragraphs.forEach((p) => {
-      p.style.fontSize = "clamp(1rem, 2vw, 1.125rem)";
-      p.style.lineHeight = "1.75";
+      p.style.fontSize = "clamp(1.025rem, 2.2vw, 1.1rem)";
+      p.style.lineHeight = "1.8";
       p.style.textAlign = "justify";
       p.style.color = "var(--text-secondary)";
-      p.style.marginBottom = "0";
+      p.style.marginBottom = "1.25rem";
+    });
+
+    // Style tables if any
+    const tables = article.querySelectorAll("table");
+    tables.forEach((table) => {
+      table.style.width = "100%";
+      table.style.borderCollapse = "collapse";
+      table.style.marginTop = "1.5rem";
+      table.style.marginBottom = "1.5rem";
+      table.style.fontSize = "0.95rem";
+    });
+
+    const ths = article.querySelectorAll("th");
+    ths.forEach((th) => {
+      th.style.borderBottom = "2px solid var(--border-color)";
+      th.style.padding = "0.75rem";
+      th.style.textAlign = "left";
+      th.style.fontWeight = "600";
+      th.style.color = "var(--text-primary)";
+    });
+
+    const tds = article.querySelectorAll("td");
+    tds.forEach((td) => {
+      td.style.borderBottom = "1px solid var(--border-color)";
+      td.style.padding = "0.75rem";
+      td.style.color = "var(--text-secondary)";
     });
 
     // Style hr elements as gradient separators
@@ -78,20 +114,34 @@ export default function JourneyMarkdownLayout({
       hr.style.border = "none";
       hr.style.height = "1px";
       hr.style.background = `linear-gradient(to right, ${accentColor}40, transparent)`;
-      hr.style.marginTop = "3rem";
-      hr.style.marginBottom = "3rem";
+      hr.style.marginTop = "2.5rem";
+      hr.style.marginBottom = "2.5rem";
+    });
+
+    // Style details and summary blocks (like Table of Contents)
+    const details = article.querySelectorAll("details");
+    details.forEach((detail) => {
+      detail.style.border = "1px solid var(--border-color)";
+      detail.style.borderRadius = "8px";
+      detail.style.padding = "1rem";
+      detail.style.marginBottom = "1.5rem";
+      detail.style.backgroundColor = "var(--bg-card)";
+    });
+
+    const summaries = article.querySelectorAll("summary");
+    summaries.forEach((summary) => {
+      summary.style.fontWeight = "600";
+      summary.style.cursor = "pointer";
+      summary.style.color = "var(--text-primary)";
+      summary.style.outline = "none";
     });
 
     // Style list items with accent markers
     const listItems = article.querySelectorAll("li");
     listItems.forEach((li) => {
-      li.style.display = "flex";
-      li.style.alignItems = "flex-start";
-      li.style.gap = "0.75rem";
-      li.style.fontSize = "clamp(1rem, 2vw, 1.125rem)";
+      li.style.fontSize = "clamp(0.95rem, 2vw, 1.05rem)";
       li.style.lineHeight = "1.75";
       li.style.color = "var(--text-secondary)";
-      li.style.listStyle = "none";
 
       // Style strong elements inside li
       const strong = li.querySelector("strong");
@@ -100,25 +150,36 @@ export default function JourneyMarkdownLayout({
       }
     });
 
-    // Style ul elements
+    // Style ul elements if they are not inside TOC or summaries
     const uls = article.querySelectorAll("ul");
     uls.forEach((ul) => {
+      // Skip if inside details / Table of Contents
+      if (ul.closest("details")) {
+        ul.style.paddingLeft = "1.5rem";
+        ul.style.marginTop = "0.5rem";
+        return;
+      }
+
       ul.style.listStyle = "none";
       ul.style.padding = "0";
-      ul.style.margin = "0";
+      ul.style.margin = "1rem 0";
       ul.style.display = "flex";
       ul.style.flexDirection = "column";
-      ul.style.gap = "1rem";
+      ul.style.gap = "0.75rem";
 
       // Add accent markers to li children
       const items = ul.querySelectorAll(":scope > li");
       items.forEach((li) => {
         // Check if the li already has a marker span
-        if (!li.querySelector(".journey-marker")) {
+        if (!li.querySelector(".case-study-marker")) {
+          li.style.display = "flex";
+          li.style.alignItems = "flex-start";
+          li.style.gap = "0.75rem";
+
           const marker = document.createElement("span");
-          marker.className = "journey-marker";
+          marker.className = "case-study-marker";
           marker.style.color = accentColor;
-          marker.style.marginTop = "0.375rem";
+          marker.style.marginTop = "0.25rem";
           marker.style.fontSize = "1.125rem";
           marker.style.flexShrink = "0";
           marker.textContent = "›";
@@ -134,44 +195,14 @@ export default function JourneyMarkdownLayout({
       });
     });
 
-    // Handle skill tags from data attributes
-    const skillContainers = article.querySelectorAll(".journey-skills");
-    skillContainers.forEach((container) => {
-      const skillsData = container.getAttribute("data-skills");
-      if (!skillsData) return;
-
-      const skills = skillsData.split(",").map((s) => s.trim());
-      const wrapper = document.createElement("div");
-      wrapper.style.display = "flex";
-      wrapper.style.flexWrap = "wrap";
-      wrapper.style.gap = "0.5rem";
-
-      skills.forEach((skill) => {
-        const tag = document.createElement("span");
-        tag.textContent = skill;
-        tag.style.fontSize = "0.875rem";
-        tag.style.padding = "0.375rem 0.75rem";
-        tag.style.borderRadius = "4px";
-        tag.style.transition = "all 0.2s ease";
-        tag.style.cursor = "default";
-        tag.style.border = `1px solid ${accentColor}50`;
-        tag.style.color = accentColor;
-        tag.style.backgroundColor = "transparent";
-
-        tag.addEventListener("mouseenter", () => {
-          tag.style.borderColor = accentColor;
-          tag.style.backgroundColor = `${accentColor}10`;
-        });
-
-        tag.addEventListener("mouseleave", () => {
-          tag.style.borderColor = `${accentColor}50`;
-          tag.style.backgroundColor = "transparent";
-        });
-
-        wrapper.appendChild(tag);
-      });
-
-      container.replaceWith(wrapper);
+    // Style ol elements
+    const ols = article.querySelectorAll("ol");
+    ols.forEach((ol) => {
+      ol.style.paddingLeft = "1.5rem";
+      ol.style.marginTop = "0.5rem";
+      ol.style.display = "flex";
+      ol.style.flexDirection = "column";
+      ol.style.gap = "0.5rem";
     });
   }, [accentColor, children]);
 
@@ -180,7 +211,7 @@ export default function JourneyMarkdownLayout({
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24">
         {/* Back Button */}
         <a
-          href="/journey"
+          href="/"
           className="inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors"
           style={{ color: "var(--text-secondary)" }}
           onMouseEnter={(e) => (e.currentTarget.style.color = accentColor)}
@@ -188,7 +219,7 @@ export default function JourneyMarkdownLayout({
             (e.currentTarget.style.color = "var(--text-secondary)")
           }
         >
-          <span>←</span> Back to Journey
+          <span>←</span> Back to Home
         </a>
 
         {/* Header */}
@@ -224,7 +255,7 @@ export default function JourneyMarkdownLayout({
         </header>
 
         {/* Article Content */}
-        <article ref={contentRef}>
+        <article ref={contentRef} className="markdown-content">
           {children}
         </article>
 
@@ -234,7 +265,7 @@ export default function JourneyMarkdownLayout({
           style={{ borderTop: `1px solid var(--border-color)` }}
         >
           <div className="text-sm" style={{ color: "var(--text-muted)" }}>
-            Part of my development journey
+            Project Case Study Showcase &middot; Muhamad Fazrin Nugraha
           </div>
         </footer>
       </section>

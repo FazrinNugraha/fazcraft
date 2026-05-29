@@ -52,7 +52,6 @@ export default function Skills() {
           name: "Python",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
         },
-        { name: "Bun", icon: "https://bun.sh/logo.svg" },
         {
           name: "FastAPI",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
@@ -60,6 +59,19 @@ export default function Skills() {
         {
           name: "Express",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+        },
+      ],
+    },
+    {
+      category: "Databases",
+      techs: [
+        {
+          name: "MySQL",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
+        },
+        {
+          name: "PostgreSQL",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
         },
         {
           name: "MongoDB",
@@ -71,21 +83,24 @@ export default function Skills() {
       category: "ML and AI",
       techs: [
         {
-          name: "Python",
-          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-        },
-        { name: "Bun", icon: "https://bun.sh/logo.svg" },
-        {
-          name: "FastAPI",
-          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+          name: "PyTorch",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg",
         },
         {
-          name: "Express",
-          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
+          name: "TensorFlow",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
         },
         {
-          name: "MongoDB",
-          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
+          name: "Hugging Face",
+          icon: "https://huggingface.co/front/assets/huggingface_logo-noborder.svg",
+        },
+        {
+          name: "Google Gemini API",
+          icon: "https://img.icons8.com/color/512/google-gemini.png",
+        },
+        {
+          name: "Computer Vision",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg",
         },
       ],
     },
@@ -96,14 +111,13 @@ export default function Skills() {
           name: "Docker",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
         },
-        { name: "Vite", icon: "https://vitejs.dev/logo.svg" },
         {
           name: "Git",
           icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
         },
         {
-          name: "Figma",
-          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+          name: "Postman",
+          icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
         },
       ],
     },
@@ -152,16 +166,43 @@ export default function Skills() {
                     }}
                   >
                     <div className="text-center">
-                      <img
-                        src={tech.icon}
-                        alt={tech.name}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-12 h-12 mx-auto mb-3 object-contain"
-                        onError={(e) =>
-                          (e.currentTarget.style.display = "none")
-                        }
-                      />
+                      {tech.name === "Google Gemini API" ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          className="w-12 h-12 mx-auto mb-3 object-contain"
+                        >
+                          {/* Large Sparkle */}
+                          <path
+                            d="M 10 2 Q 10 10 2 10 Q 10 10 10 18 Q 10 10 18 10 Q 10 10 10 2"
+                            fill="url(#gemini-inline-grad)"
+                          />
+                          {/* Small Sparkle */}
+                          <path
+                            d="M 18 3 Q 18 6 15 6 Q 18 6 18 9 Q 18 6 21 6 Q 18 6 18 3"
+                            fill="url(#gemini-inline-grad)"
+                          />
+                          <defs>
+                            <linearGradient id="gemini-inline-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stopColor="#9b51e0" />
+                              <stop offset="35%" stopColor="#3b82f6" />
+                              <stop offset="70%" stopColor="#60a5fa" />
+                              <stop offset="100%" stopColor="#f43f5e" />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                      ) : (
+                        <img
+                          src={tech.icon}
+                          alt={tech.name}
+                          loading="lazy"
+                          decoding="async"
+                          className="w-12 h-12 mx-auto mb-3 object-contain"
+                          onError={(e) =>
+                            (e.currentTarget.style.display = "none")
+                          }
+                        />
+                      )}
                       <p
                         className="text-sm"
                         style={{ color: "var(--text-secondary)" }}
