@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 
 const highlights = [
   {
@@ -49,13 +49,24 @@ export default function RecentActivities() {
         </h2>
         <a
           href="/journey"
-          className="text-sm font-medium hover:text-white transition-colors pb-1"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-sm"
           style={{
-            color: "var(--text-secondary)",
-            borderBottom: "1px dashed var(--border-hover)"
+            color: "var(--text-primary)",
+            border: "1px dashed var(--border-hover)",
+            backgroundColor: "transparent",
+            textDecoration: "none",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.borderColor = "var(--text-secondary)";
+            e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.borderColor = "var(--border-hover)";
+            e.currentTarget.style.backgroundColor = "transparent";
           }}
         >
-          See all journey
+          <span>See all journey</span>
+          <ChevronRight size={13} />
         </a>
       </div>
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
 export default function AboutSection() {
@@ -22,13 +22,24 @@ export default function AboutSection() {
           </h2>
           <a
             href="/blog"
-            className="text-sm font-medium hover:text-white transition-colors pb-1"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-sm"
             style={{
-              color: "var(--text-secondary)",
-              borderBottom: "1px dashed var(--border-hover)"
+              color: "var(--text-primary)",
+              border: "1px dashed var(--border-hover)",
+              backgroundColor: "transparent",
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--text-secondary)";
+              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--border-hover)";
+              e.currentTarget.style.backgroundColor = "transparent";
             }}
           >
-            See all posts
+            <span>See all posts</span>
+            <ChevronRight size={13} />
           </a>
         </div>
 
@@ -95,10 +106,23 @@ export default function AboutSection() {
           </h2>
           <button
             onClick={() => setExpandAbout(!expandAbout)}
-            className="font-medium text-sm transition-colors border-b border-transparent pb-1"
-            style={{ color: "var(--text-secondary)" }}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer"
+            style={{
+              color: "var(--text-primary)",
+              border: "1px dashed var(--border-hover)",
+              backgroundColor: "transparent",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--text-secondary)";
+              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--border-hover)";
+              e.currentTarget.style.backgroundColor = "transparent";
+            }}
           >
-            {expandAbout ? "Show Less" : "Full Version"}
+            <span>{expandAbout ? "Show Less" : "Full Version"}</span>
+            {expandAbout ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
           </button>
         </div>
 
@@ -300,30 +324,6 @@ export default function AboutSection() {
             </p>
           </div>
         )}
-
-        <div className="flex flex-col sm:flex-row gap-4 pt-4 ">
-          <a
-            href="/projects"
-            className="px-8 py-3 font-semibold rounded-lg transition-all duration-300 hover:scale-105 text-center"
-            style={{
-              backgroundColor: "var(--btn-primary-bg)",
-              color: "var(--btn-primary-text)",
-            }}
-          >
-            Check My Work
-          </a>
-          <a
-            href="/contact"
-            className="px-8 py-3 font-semibold rounded-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5 text-center"
-            style={{
-              border: "2px solid var(--text-primary)",
-              color: "var(--text-primary)",
-              backgroundColor: "transparent",
-            }}
-          >
-            Know Me Better
-          </a>
-        </div>
       </div>
     </section>
   );

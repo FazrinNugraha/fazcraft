@@ -26,7 +26,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-6 pb-8">
         {/* Footer Content */}
         <div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 pt-12"
+          className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 pt-12"
           style={{ borderTop: "2px solid var(--border-color)" }}
         >
           {/* Brand */}
