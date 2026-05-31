@@ -326,18 +326,23 @@ export default function HeroSection() {
                     Engineer
                   </p>
                 </div>
-                <div>
+                <div className="flex flex-col items-center">
                   <p
-                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
+                    className="text-[11px] font-bold uppercase tracking-widest mb-2"
                     style={{ color: "var(--text-secondary)" }}
                   >
                     Status
                   </p>
-                  <p
-                    className="text-base font-bold text-blue-600 dark:text-blue-400"
+                  <span
+                    className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full whitespace-nowrap inline-block"
+                    style={{
+                      backgroundColor: "rgba(37, 99, 235, 0.1)",
+                      color: "var(--link-blue)",
+                      border: "1px solid rgba(37, 99, 235, 0.2)",
+                    }}
                   >
                     Open to Work
-                  </p>
+                  </span>
                 </div>
                 <div>
                   <p
