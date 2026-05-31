@@ -172,7 +172,7 @@ export default function HeroSection() {
                   style={{ minWidth: "140px" }}
                 >
                   <img
-                    src="/hero_v1.jpg"
+                    src="/pp6.png"
                     alt="Fazrin Nugraha"
                     className="w-20 h-20 rounded-[18px] object-cover"
                     style={{
