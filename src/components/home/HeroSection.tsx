@@ -32,17 +32,6 @@ export default function HeroSection() {
                     src="/pp6.png"
                     alt="Fazrin Nugraha"
                     className="w-14 h-14 rounded-full object-cover"
-                    style={{
-                      border: "2px solid var(--border-color)",
-                    }}
-                  />
-                  {/* Pulsing Active Indicator */}
-                  <span
-                    className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 animate-pulse"
-                    style={{
-                      backgroundColor: "#10b981", // Emerald green
-                      borderColor: "var(--bg-card)",
-                    }}
                   />
                 </div>
                 <div className="flex-1">
@@ -51,7 +40,7 @@ export default function HeroSection() {
                       className="text-sm font-bold"
                       style={{ color: "var(--text-primary)" }}
                     >
-                      Fazrin Nugraha
+                      Muhamad Fazrin Nugraha
                     </h3>
                     <span
                       className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full whitespace-nowrap"
