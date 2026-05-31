@@ -117,18 +117,8 @@ export default function Header() {
           <a
             href="/"
             className="flex items-center shrink-0 transition-opacity duration-200 hover:opacity-75"
-            style={{ textDecoration: "none", gap: "10px" }}
+            style={{ textDecoration: "none" }}
           >
-            <img
-              src="/pp6.png"
-              alt="Fazrin Nugraha"
-              className="rounded-full object-cover flex-shrink-0"
-              style={{
-                width: "32px",
-                height: "32px",
-                border: "1.5px solid var(--border-color)",
-              }}
-            />
             <div style={{ display: "flex", flexDirection: "column", lineHeight: 1, gap: "4px" }}>
               <span
                 style={{

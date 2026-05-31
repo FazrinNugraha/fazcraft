@@ -16,8 +16,79 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           {/* ================= LEFT COLUMN ================= */}
           <div className="space-y-8 flex flex-col justify-start lg:mt-10">
+            {/* Mobile Glassmorphic Card (Opsi B) - Now at the very top of mobile view */}
+            <div
+              className="flex lg:hidden flex-col gap-4 p-4 rounded-xl transition-all duration-300"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                border: "1px solid var(--border-color)",
+                boxShadow: "var(--card-shadow)",
+              }}
+            >
+              {/* Row 1: Avatar, Name, Status */}
+              <div className="flex items-center gap-4">
+                <div className="relative flex-shrink-0">
+                  <img
+                    src="/pp6.png"
+                    alt="Fazrin Nugraha"
+                    className="w-14 h-14 rounded-full object-cover"
+                    style={{
+                      border: "2px solid var(--border-color)",
+                    }}
+                  />
+                  {/* Pulsing Active Indicator */}
+                  <span
+                    className="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 animate-pulse"
+                    style={{
+                      backgroundColor: "#10b981", // Emerald green
+                      borderColor: "var(--bg-card)",
+                    }}
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <h3
+                      className="text-sm font-bold"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      Fazrin Nugraha
+                    </h3>
+                    <span
+                      className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full whitespace-nowrap"
+                      style={{
+                        backgroundColor: "rgba(37, 99, 235, 0.1)",
+                        color: "var(--link-blue)",
+                        border: "1px solid rgba(37, 99, 235, 0.2)",
+                      }}
+                    >
+                      Open to Work
+                    </span>
+                  </div>
+                  <p
+                    className="text-[10px] uppercase tracking-widest mt-0.5"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    Based in Indonesia
+                  </p>
+                </div>
+              </div>
+
+              {/* Row 2: Short elegant quote */}
+              <div
+                className="pl-3 border-l-2 py-0.5"
+                style={{ borderColor: "var(--border-color)" }}
+              >
+                <p
+                  className="text-xs leading-relaxed italic"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  "I build AI-powered software that solves real problems - taking ideas all the way to production, with systems that ship reliably and work for actual users."
+                </p>
+              </div>
+            </div>
+
             {/* Main Headline */}
-            <div className="space-y-4">
+            <div className="space-y-4 lg:!mt-0">
               <h1
                 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight"
                 style={{ color: "var(--text-primary)" }}
@@ -37,29 +108,6 @@ export default function HeroSection() {
 
             {/* Mobile: Opsi B — badge profil atas, role tags sejajar bawah */}
             <div className="flex lg:hidden flex-col gap-2 mt-6">
-              {/* Baris 1: Badge Profil */}
-              {/* <a
-                href="#about"
-                className="inline-flex items-center gap-2 px-3 py-1.5 rounded text-xs font-bold uppercase tracking-widest transition-colors duration-200 w-fit"
-                style={{
-                  backgroundColor: "var(--bg-secondary)",
-                  border: "1px solid var(--border-color)",
-                  color: "var(--text-primary)",
-                  textDecoration: "none",
-                }}
-              >
-                <img
-                  src="/profile/pepe.jpeg"
-                  alt="Fazrin Nugraha"
-                  className="rounded-full object-cover flex-shrink-0"
-                  style={{
-                    width: "18px",
-                    height: "18px",
-                  }}
-                />
-                Muhamad Fazrin Nugraha
-              </a> */}
-
               {/* Baris 2: Role Tags sejajar */}
               <div className="flex gap-2">
                 {["FULLSTACK ENGINEER", "AI & ML ENGINEER"].map((skill, idx) => (
