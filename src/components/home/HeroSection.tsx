@@ -133,7 +133,7 @@ export default function HeroSection() {
                   style={{ color: "var(--text-primary)" }}
                 >
                   <Github size={14} style={{ color: "var(--text-secondary)" }} />
-                  <span>I ship code on <span className="underline font-semibold" style={{ textDecorationColor: "var(--border-color)" }}>GitHub</span></span>
+                  <span>I ship code on <span className="underline font-semibold">GitHub</span></span>
                 </a>
 
                 <a
@@ -144,7 +144,7 @@ export default function HeroSection() {
                   style={{ color: "var(--text-primary)" }}
                 >
                   <Linkedin size={14} style={{ color: "var(--text-secondary)" }} />
-                  <span>Let's connect on <span className="underline font-semibold" style={{ textDecorationColor: "var(--border-color)" }}>LinkedIn</span></span>
+                  <span>Let's connect on <span className="underline font-semibold">LinkedIn</span></span>
                 </a>
 
                 <a
@@ -153,7 +153,7 @@ export default function HeroSection() {
                   style={{ color: "var(--text-primary)" }}
                 >
                   <Mail size={14} style={{ color: "var(--text-secondary)" }} />
-                  <span>Drop me a message on <span className="underline font-semibold" style={{ textDecorationColor: "var(--border-color)" }}>Email</span></span>
+                  <span>Drop me a message on <span className="underline font-semibold">Email</span></span>
                 </a>
               </div>
             </div>
