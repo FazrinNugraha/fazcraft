@@ -56,7 +56,7 @@ export const projects: Project[] = [
     phase: "PHASE : DES 2025",
     phaseColor: "text-emerald-500",
     title: "Gluco Check",
-    role: "FULL-STACK DEVELOPER",
+    role: "FULLSTACK ENGINEER",
     status: "COMPLETED",
     statusColor: "bg-emerald-500",
     description:
@@ -76,9 +76,9 @@ export const projects: Project[] = [
   {
     id: 2,
     phase: "PHASE : OCT 2025",
-    phaseColor: "text-orange-500",
+    phaseColor: "text-emerald-500",
     title: "Learning Management System ",
-    role: "SENIOR ENGINEER · 2025",
+    role: "FULLSTACK ENGINEER ",
     status: "COMPLETED",
     statusColor: "bg-emerald-500",
     description:
@@ -93,7 +93,6 @@ export const projects: Project[] = [
       "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051485/LMS2_oekvkr.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051486/LMS3_dddqq3.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051484/LMS4_rffldl.png",
-      ""
     ],
     sourceCode:
       "https://github.com/FazrinNugraha/Learning-Management-System-Fe",
@@ -104,9 +103,9 @@ export const projects: Project[] = [
   {
     id: 4,
     phase: "PHASE : JUNE 2026",
-    phaseColor: "text-orange-500",
+    phaseColor: "text-emerald-500",
     title: "EMIGRIA",
-    role: "AI ENGINEER · 2024",
+    role: "AI ENGINEER ",
     status: "COMPLETED",
     statusColor: "bg-emerald-500",
     description:
@@ -130,9 +129,9 @@ export const projects: Project[] = [
   {
     id: 5,
     phase: "PHASE 4: MARCH 2026",
-    phaseColor: "text-orange-500",
+    phaseColor: "text-emerald-500",
     title: "SmartWealth",
-    role: "FULLSTACK DEVELOPER · 2026",
+    role: "FULLSTACK ENGINEER",
     status: "COMPLETED",
     statusColor: "bg-emerald-500",
     description:
@@ -152,6 +151,6 @@ export const projects: Project[] = [
     sourceCode: "https://github.com/FazrinNugraha/be-smartwealth",
     liveDemo: "https://fe-smartwealth.vercel.app/",
     link: "#project5",
-    side: "left",
+    side: "right",
   }
 ];
