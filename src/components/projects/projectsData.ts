@@ -75,12 +75,12 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    phase: "PHASE : AUG 2025",
+    phase: "PHASE : OCT 2025",
     phaseColor: "text-orange-500",
     title: "Learning Management System ",
     role: "SENIOR ENGINEER · 2025",
-    status: "ONGOING",
-    statusColor: "bg-orange-500",
+    status: "COMPLETED",
+    statusColor: "bg-emerald-500",
     description:
       "Led migration from monolith to microservices architecture, reducing deployment time by 75%",
     problem:
@@ -88,32 +88,70 @@ export const projects: Project[] = [
     solution:
       "Gradual migration ke microservices dengan strangler pattern. Implement service mesh untuk observability. Deployment time turun ke 30 menit, zero-downtime deployments achieved.",
     tech: ["React", "Express js", "Mongo DB", "Node js"],
-    thumbnails: [],
+    thumbnails: [
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051485/LMS1_yutst9.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051485/LMS2_oekvkr.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051486/LMS3_dddqq3.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051484/LMS4_rffldl.png",
+      ""
+    ],
     sourceCode:
       "https://github.com/FazrinNugraha/Learning-Management-System-Fe",
-    liveDemo: "#",
+    liveDemo: "https://lms-mern-fe.vercel.app/",
     link: "#project-3",
     side: "right",
   },
   {
     id: 4,
-    phase: "PHASE 4: MAY 2024",
+    phase: "PHASE : JUNE 2026",
     phaseColor: "text-orange-500",
-    title: "API Gateway Redesign",
-    role: "BACKEND ENGINEER · 2024",
-    status: "ONGOING",
-    statusColor: "bg-orange-500",
+    title: "EMIGRIA",
+    role: "AI ENGINEER · 2024",
+    status: "COMPLETED",
+    statusColor: "bg-emerald-500",
     description:
       "Redesigned API gateway to handle 10M+ requests daily with improved caching and rate limiting",
     problem:
       "API gateway menjadi bottleneck dengan response time >500ms pada peak hours. Rate limiting tidak efektif dan caching strategy buruk.",
     solution:
       "Redesign dengan Redis cluster untuk distributed caching, implement token bucket algorithm untuk rate limiting, dan optimize routing logic. Response time turun ke <100ms.",
-    tech: ["Node.js", "Redis", "AWS", "Nginx"],
-    thumbnails: [],
-    sourceCode: "#",
-    liveDemo: "#",
+    tech: ["TypeScript", "Tailwind","FastAPI", "Express.js","TensorFlow", "Goggle Gemini","Streamlit","Neon Databasae","Docker"],
+    thumbnails: [
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051484/EMI1_as3hwa.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051482/EMI2_cwotxu.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051482/EMI3_xitfvh.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051481/EMI4_onhgnk.png",
+    ],
+    sourceCode: "https://github.com/EMIGRIA",
+    liveDemo: "https://www.emigria.my.id/",
     link: "#project-4",
     side: "left",
   },
+  {
+    id: 5,
+    phase: "PHASE 4: MARCH 2026",
+    phaseColor: "text-orange-500",
+    title: "SmartWealth",
+    role: "FULLSTACK DEVELOPER · 2026",
+    status: "COMPLETED",
+    statusColor: "bg-emerald-500",
+    description:
+      "Redesigned API gateway to handle 10M+ requests daily with improved caching and rate limiting",
+    problem:
+      "API gateway menjadi bottleneck dengan response time >500ms pada peak hours. Rate limiting tidak efektif dan caching strategy buruk.",
+    solution:
+      "Redesign dengan Redis cluster untuk distributed caching, implement token bucket algorithm untuk rate limiting, dan optimize routing logic. Response time turun ke <100ms.",
+    tech: ["TypeScript", "Tailwind", "FastAPI", "Google Gemini","Google OAUTH 2.0","Neon Database","LightGBM","Yahoo Finance API","CoinGecko API"],
+    thumbnails: [
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051481/welt1_koyaiv.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051484/welt2_uxd3rw.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051483/welt3_zxuelb.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051483/welt4_asfrlb.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051483/wel5_bmsj5j.png",
+    ],
+    sourceCode: "https://github.com/FazrinNugraha/be-smartwealth",
+    liveDemo: "https://fe-smartwealth.vercel.app/",
+    link: "#project5",
+    side: "left",
+  }
 ];
