@@ -22,7 +22,7 @@ export const projects: Project[] = [
     id: 1,
     phase: "PHASE : JUNE 2026",
     phaseColor: "text-purple-500",
-    title: "EMIGRIA",
+    title: "Emigria",
     role: "AI ENGINEER ",
     status: "FEATURED",
     statusColor: "bg-purple-500",
