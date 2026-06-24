@@ -28,7 +28,7 @@ export default function PhotoCarousel({ thumbnails }: PhotoCarouselProps) {
   if (!thumbnails || thumbnails.length === 0) {
     return (
       <div
-        className="h-[200px] sm:h-[250px] md:h-[320px] rounded-lg overflow-hidden flex items-center justify-center "
+        className="w-full aspect-video sm:aspect-[16/10] rounded-lg overflow-hidden flex items-center justify-center "
         style={{
           border: "1px solid var(--border-color)",
           backgroundColor: "var(--bg-card)",
@@ -83,10 +83,11 @@ export default function PhotoCarousel({ thumbnails }: PhotoCarouselProps) {
     <div className="relative w-full">
       {/* Image Container */}
       <div
-        className="relative h-[200px] sm:h-[250px] md:h-[320px] rounded-lg overflow-hidden cursor-pointer transition-colors"
+        className="relative w-full aspect-video rounded-lg overflow-hidden cursor-pointer transition-colors"
         style={{
           border: "1px solid var(--border-color)",
           backgroundColor: "var(--bg-card)",
+          maxHeight: "360px",
         }}
         onClick={() => setIsFullscreen(true)}
       >

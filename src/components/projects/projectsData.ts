@@ -34,9 +34,9 @@ export const projects: Project[] = [
       "FastAPI",
       "Express.js",
       "TensorFlow",
-      "Goggle Gemini",
+      "Google Gemini",
       "Streamlit",
-      "Neon Databasae",
+      "Neon Database",
       "Docker",
     ],
     thumbnails: [
@@ -59,7 +59,7 @@ export const projects: Project[] = [
     status: "COMPLETED",
     statusColor: "bg-emerald-500",
     description:
-      "A multi-asset investment portfolio tracker that brings stocks, crypto, mutual funds, and gold into one clean, unified dashboard. Instead of juggling multiple apps to keep tabs on different investments, SmartWealth gives users a single real-time view of their entire portfolio's performance.",
+      "A multi-asset investment portfolio tracker that brings stocks, crypto, mutual funds, and gold into one clean, unified dashboard, replacing the need to juggle multiple apps with a single real-time view of portfolio performance. Beyond tracking, the platform leverages AI to deliver personalized insights and stock price predictions, turning scattered financial data into clear, actionable investment guidance.",
     tech: [
       "TypeScript",
       "Tailwind",
@@ -125,7 +125,7 @@ export const projects: Project[] = [
     status: "COMPLETED",
     statusColor: "bg-emerald-500",
     description:
-      "A modern web-based learning management platform built to streamline course management, learning materials, and student progress tracking. The platform features a secure multi-role architecture that separates access and interface between Managers (Admins/Instructors) and Students.",
+      "A modern web-based learning management platform that streamlines course management, learning materials, and student progress tracking through a secure multi-role architecture for Managers and Students. Managers can create, update, and preview courses and materials, supporting video and text content, organize courses into categories, and manage student enrollment—all backed by secure authentication and route protection for a clean, responsive experience.",
     tech: ["React", "Express js", "Mongo DB", "Node js"],
     thumbnails: [
       "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051485/LMS1_yutst9.png",

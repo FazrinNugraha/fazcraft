@@ -21,16 +21,38 @@ function extractColorName(twClass: string): string {
   return match ? match[1] : "blue";
 }
 
-function StatusBadge({ status }: { status: Project["status"] }) {
-  const statusConfig = {
-    FEATURED: { bg: "bg-purple-500", label: "Featured" },
-    ONGOING: { bg: "bg-orange-500", label: "Ongoing" },
-    COMPLETED: { bg: "bg-emerald-500", label: "Completed" },
-  };
+const statusConfig = {
+  FEATURED: {
+    label: "Featured",
+    color: "#A855F7",
+    bg: "rgba(168, 85, 247, 0.1)",
+    border: "rgba(168, 85, 247, 0.3)",
+  },
+  ONGOING: {
+    label: "Ongoing",
+    color: "#F97316",
+    bg: "rgba(249, 115, 22, 0.1)",
+    border: "rgba(249, 115, 22, 0.3)",
+  },
+  COMPLETED: {
+    label: "Completed",
+    color: "#10B981",
+    bg: "rgba(16, 185, 129, 0.1)",
+    border: "rgba(16, 185, 129, 0.3)",
+  },
+};
 
+function StatusBadge({ status }: { status: Project["status"] }) {
   const config = statusConfig[status];
   return (
-    <span className={`text-xs px-2 py-1 ${config.bg} text-white rounded`}>
+    <span
+      className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full whitespace-nowrap inline-block"
+      style={{
+        backgroundColor: config.bg,
+        color: config.color,
+        border: `1px solid ${config.border}`,
+      }}
+    >
       {config.label}
     </span>
   );
@@ -45,18 +67,21 @@ function TechPill({
 }) {
   return (
     <span
-      className="text-xs px-2 py-1 bg-transparent rounded transition-all duration-300 cursor-default hover:-translate-y-2 hover:scale-105"
+      className="text-xs px-3 py-1 rounded transition-all duration-300 cursor-default hover:-translate-y-0.5 hover:scale-102 border font-medium inline-block"
       style={{
-        border: "1px solid var(--border-color)",
+        borderColor: "var(--border-color)",
+        backgroundColor: "var(--bg-secondary)",
         color: "var(--text-secondary)",
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = accentColor;
-        e.currentTarget.style.color = accentColor;
+        e.currentTarget.style.color = "var(--text-primary)";
+        e.currentTarget.style.backgroundColor = `${accentColor}1a`; // 10% opacity accent tint
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = "";
-        e.currentTarget.style.color = "";
+        e.currentTarget.style.borderColor = "var(--border-color)";
+        e.currentTarget.style.color = "var(--text-secondary)";
+        e.currentTarget.style.backgroundColor = "var(--bg-secondary)";
       }}
     >
       {tech}
@@ -72,7 +97,7 @@ function ProjectLinks({
   liveDemo: string;
 }) {
   return (
-    <div className="flex gap-6 text-sm font-medium">
+    <div className="flex items-center gap-6 text-sm font-medium">
       {sourceCode !== "#" && (
         <a
           href={sourceCode}
@@ -106,6 +131,7 @@ function ProjectLinks({
           </span>
         </a>
       )}
+      {/* Status Badge — pinned to the right */}
     </div>
   );
 }
@@ -119,28 +145,21 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     colorMap[extractColorName(project.statusColor)] || "#3B82F6";
 
   return (
-    <div className="relative">
+    <div className="relative pl-8 group">
       {/* Timeline Dot */}
       <div
-        className={`hidden md:block absolute left-1/2 top-24 w-4 h-4 ${project.statusColor} rounded-full -translate-x-1/2 z-10 border-4`}
-        style={{ borderColor: "var(--bg-primary)" }}
+        className={`absolute left-0 top-3 w-4 h-4 ${project.statusColor} rounded-full transition-transform group-hover:scale-125 z-10`}
       />
 
-      {/* Content - Compact Layout */}
-      <div
-        className={`grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-10 items-center max-w-4xl mx-auto `}
-      >
+      {/* Content - Stacked Layout */}
+      <div className="flex flex-col" style={{ gap: "1.25rem" }}>
         {/* Thumbnail */}
-        <div
-          className={`${project.side === "left" ? "md:order-1 " : "md:order-2"}`}
-        >
+        <div className="w-full">
           <PhotoCarousel thumbnails={project.thumbnails} />
         </div>
 
         {/* Project Info */}
-        <div
-          className={`block min-h-0 sm:min-h-[250px] md:min-h-[320px] flex flex-col justify-center ${project.side === "left" ? "md:order-2" : "md:order-1"}`}
-        >
+        <div className="flex flex-col">
           {/* Phase & Role Label */}
           <div className="mb-2 flex flex-wrap items-center gap-2">
             <span
@@ -157,13 +176,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </span>
           </div>
 
-          {/* Title */}
-          <h2
-            className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3"
-            style={{ color: "var(--text-primary)" }}
-          >
-            {project.title}
-          </h2>
+          {/* Title + Status Badge inline */}
+          <div className="flex items-center gap-3 mb-2 sm:mb-3 flex-wrap">
+            <h2
+              className="text-xl sm:text-2xl md:text-3xl font-bold"
+              style={{ color: "var(--text-primary)" }}
+            >
+              {project.title}
+            </h2>
+            <StatusBadge status={project.status} />
+          </div>
 
           {/* Description */}
           <p
@@ -173,12 +195,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.description}
           </p>
 
-          {/* Tech pills + status badge */}
-          <div className="flex flex-wrap gap-2 mb-3 items-center">
+          {/* Tech pills only — badge moved to links row */}
+          <div className="flex flex-wrap gap-1.5 mb-3 items-center">
             {project.tech.slice(0, 10).map((tech, idx) => (
               <TechPill key={idx} tech={tech} accentColor={accentColor} />
             ))}
-            <StatusBadge status={project.status} />
           </div>
 
           {/* Links */}

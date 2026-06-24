@@ -15,15 +15,15 @@ export default function Projects() {
           <ProjectsHeader />
 
           {/* Timeline Container */}
-          <div className="relative">
+          <div className="relative max-w-4xl mx-auto">
             {/* Vertical Timeline Line */}
             <div
-              className="hidden md:block absolute left-1/2 top-24 bottom-24 w-0.5 -translate-x-1/2"
+              className="absolute left-1.75 top-8 bottom-8 w-0.5"
               style={{ backgroundColor: "var(--border-color)" }}
             />
 
             {/* Projects */}
-            <div className="space-y-20">
+            <div className="flex flex-col" style={{ gap: "4.5rem" }}>
               {projects.map((project) => (
                 <ProjectCard key={project.id} project={project} />
               ))}
