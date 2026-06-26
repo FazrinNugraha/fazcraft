@@ -2,7 +2,7 @@
 title: "Capstone Project Coding Camp 2026"
 description: "A multimodal AI platform that helps Indonesian migrant worker candidates screen overseas job offers before trusting risky recruitment claims."
 summary: "Built Emigria as a Coding Camp 2026 capstone project powered by DBS Foundation. As an AI Engineer, I focused on AI model development for job offer fraud detection, combining structured data extraction, TensorFlow-based classification, PMI-specific red flag analysis, and explainable risk reports."
-date: "February 2026"
+date: "June 2026"
 type: "MILESTONE"
 accentColor: "#3B82F6"
 skills:
