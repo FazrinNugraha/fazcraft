@@ -5,7 +5,7 @@ summary: "A two-week intensive bootcamp where I built responsive websites using 
 date: "September 2024"
 type: "LEARNING"
 accentColor: "#10B981"
-skills: ["HTML", "CSS", "Java Script", "Git", "Responsive Design"]
+skills: ["HTML", "CSS", "Java Script", "Git", ]
 ---
 
 ## Overview

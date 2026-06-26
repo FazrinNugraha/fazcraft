@@ -5,7 +5,7 @@ summary: "An introduction to MySQL and database fundamentals — CRUD, relations
 date: "December 2024"
 type: "LEARNING"
 accentColor: "#10B981"
-skills: ["MySQL", "Database Management", "CRUD Operations", "Table Structure"]
+skills: ["MySQL", "PHP"]
 ---
 
 ## Overview

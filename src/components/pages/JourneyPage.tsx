@@ -105,6 +105,8 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
             {sortedPosts.map((item) => {
               const accentColor =
                 item.accentColor || typeColorMap[item.type?.toUpperCase()] || "#3B82F6";
+              // Card hover color always follows the TYPE (MILESTONE=purple, LEARNING=green, ACHIEVEMENT=blue)
+              const cardColor = typeColorMap[item.type?.toUpperCase()] || accentColor;
               const dotClass = getDotClass(item.type);
               const typeClasses = getTypeClasses(item.type);
 
@@ -138,28 +140,15 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
                       </span>
                     </div>
 
-                    {/* Title - hover changes to accent color */}
+                    {/* Title - hover changes to type color */}
                     <h4
-                      className="text-xl md:text-2xl font-bold mb-3 transition-colors duration-300 group-hover:!important"
-                      style={{
-                        color: "var(--text-primary)",
-                        ["--accent-color" as string]: accentColor,
-                      }}
+                      className="text-xl md:text-2xl font-bold mb-3"
+                      style={{ color: "var(--text-primary)" }}
                     >
                       <span
-                        className="transition-colors duration-300"
-                        style={{ color: "inherit" }}
-                        ref={(el) => {
-                          if (!el) return;
-                          const parent = el.closest(".group");
-                          if (!parent) return;
-                          parent.addEventListener("mouseenter", () => {
-                            el.style.color = accentColor;
-                          });
-                          parent.addEventListener("mouseleave", () => {
-                            el.style.color = "";
-                          });
-                        }}
+                        className="transition-colors duration-300 cursor-default"
+                        onMouseEnter={(e) => (e.currentTarget.style.color = cardColor)}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = "")}
                       >
                         {item.title}
                       </span>
@@ -195,8 +184,8 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
                                 color: "var(--text-primary)",
                               }}
                               onMouseEnter={(e) => {
-                                e.currentTarget.style.borderColor = accentColor;
-                                e.currentTarget.style.color = accentColor;
+                                e.currentTarget.style.borderColor = cardColor;
+                                e.currentTarget.style.color = cardColor;
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.borderColor = "";

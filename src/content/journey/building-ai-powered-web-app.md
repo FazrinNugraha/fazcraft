@@ -5,7 +5,7 @@ summary: "Built GlucoCheck to learn how to integrate AI into a real product — 
 date: "December 2025"
 type: "MILESTONE"
 accentColor: "#A855F7"
-skills: ["AI", "React", "Tailwind CSS", "Prompt Engineering", "API Integration"]
+skills: ["AI", "React", "Tailwind CSS", "Groq - AI"]
 ---
 
 ## The Project: GlucoCheck

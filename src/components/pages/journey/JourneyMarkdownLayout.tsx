@@ -55,7 +55,7 @@ export default function JourneyMarkdownLayout({
       numSpan.style.fontFamily = "var(--font-mono, monospace)";
       numSpan.style.fontWeight = "500";
       numSpan.style.opacity = "0.85";
-      
+
       // Pad the index to 2 digits (e.g., 01, 02)
       const formattedNum = String(index + 1).padStart(2, "0");
       numSpan.textContent = formattedNum;
@@ -134,6 +134,71 @@ export default function JourneyMarkdownLayout({
       });
     });
 
+    // --- Shields.io badge lookup (logo slug + color override) ---
+    // Format: [shields_logo_name, hex_bg_color, hex_logo_color?]
+    type ShieldsEntry = [string, string, string?];
+    const SHIELDS_MAP: Record<string, ShieldsEntry> = {
+      "html": ["html5", "E34F26"],
+      "css": ["css3", "1572B6"],
+      "javascript": ["javascript", "F7DF1E", "000000"],
+      "java script": ["javascript", "F7DF1E", "000000"],
+      "typescript": ["typescript", "007ACC"],
+      "react": ["react", "20232A", "61DAFB"],
+      "node.js": ["node.js", "339933"],
+      "express": ["express", "404040"],
+      "express js": ["express", "404040"],
+      "mongodb": ["mongodb", "47A248"],
+      "mysql": ["mysql", "4479A1"],
+      "php": ["php", "777BB4"],
+      "git": ["git", "F05032"],
+      "tailwind css": ["tailwind-css", "06B6D4"],
+      "python": ["python", "3670A0", "ffdd54"],
+      "fastapi": ["fastapi", "005571"],
+      "tensorflow": ["tensorflow", "FF6F00"],
+      "google gemini": ["google-gemini", "8E75C2"],
+      "google gemini api": ["google-gemini", "8E75C2"],
+      "google cloud vision": ["google-cloud", "4285F4"],
+      "google cloud": ["google-cloud", "4285F4"],
+      "chart.js": ["chart.js", "F5788D"],
+      "chart js": ["chart.js", "F5788D"],
+      "sigma.js": ["", "e67e22"],
+      "maplibre": ["", "296DB0"],
+      "neon database": ["neon", "00E599", "000000"],
+      "machine learning": ["", "FF6D00"],
+      "deep learning": ["", "7C3AED"],
+      "neural networks": ["", "0EA5E9"],
+      "data science": ["", "0F766E"],
+      "mlops": ["", "059669"],
+      "ai engineering": ["", "D97706"],
+      "ai": ["", "6366F1"],
+      "groq - ai": ["", "F54E42"],
+      "fraud detection": ["", "DC2626"],
+      "api integration": ["", "0369A1"],
+      "prompt engineering": ["", "7E22CE"],
+      "database management": ["", "1D4ED8"],
+      "crud operations": ["", "15803D"],
+      "table structure": ["", "64748B"],
+      "responsive design": ["", "0891B2"],
+    };
+
+    /** Build a shields.io badge URL for a given skill name */
+    const getShieldsUrl = (skill: string): string => {
+      const key = skill.toLowerCase().trim();
+      const entry = SHIELDS_MAP[key];
+      const label = encodeURIComponent(skill);
+
+      if (entry) {
+        const [logo, color, logoColor] = entry;
+        const lc = logoColor ?? "white";
+        const logoParam = logo ? `&logo=${encodeURIComponent(logo)}&logoColor=${lc}` : "";
+        return `https://img.shields.io/badge/${label}-${color}.svg?style=for-the-badge${logoParam}`;
+      }
+
+      // Unknown skill → use accentColor, no logo
+      const fallbackColor = accentColor.replace("#", "");
+      return `https://img.shields.io/badge/${label}-${fallbackColor}.svg?style=for-the-badge`;
+    };
+
     // Handle skill tags from data attributes
     const skillContainers = article.querySelectorAll(".journey-skills");
     skillContainers.forEach((container) => {
@@ -145,30 +210,27 @@ export default function JourneyMarkdownLayout({
       wrapper.style.display = "flex";
       wrapper.style.flexWrap = "wrap";
       wrapper.style.gap = "0.5rem";
+      wrapper.style.alignItems = "center";
 
       skills.forEach((skill) => {
-        const tag = document.createElement("span");
-        tag.textContent = skill;
-        tag.style.fontSize = "0.875rem";
-        tag.style.padding = "0.375rem 0.75rem";
-        tag.style.borderRadius = "4px";
-        tag.style.transition = "all 0.2s ease";
-        tag.style.cursor = "default";
-        tag.style.border = `1px solid ${accentColor}50`;
-        tag.style.color = accentColor;
-        tag.style.backgroundColor = "transparent";
+        const img = document.createElement("img");
+        img.src = getShieldsUrl(skill);
+        img.alt = skill;
+        img.style.height = "28px";
+        img.style.transition = "transform 0.15s ease, filter 0.15s ease";
+        img.style.cursor = "default";
+        img.style.display = "block";
 
-        tag.addEventListener("mouseenter", () => {
-          tag.style.borderColor = accentColor;
-          tag.style.backgroundColor = `${accentColor}10`;
+        img.addEventListener("mouseenter", () => {
+          img.style.transform = "translateY(-2px) scale(1.05)";
+          img.style.filter = "brightness(1.15)";
+        });
+        img.addEventListener("mouseleave", () => {
+          img.style.transform = "";
+          img.style.filter = "";
         });
 
-        tag.addEventListener("mouseleave", () => {
-          tag.style.borderColor = `${accentColor}50`;
-          tag.style.backgroundColor = "transparent";
-        });
-
-        wrapper.appendChild(tag);
+        wrapper.appendChild(img);
       });
 
       container.replaceWith(wrapper);
@@ -185,7 +247,7 @@ export default function JourneyMarkdownLayout({
           style={{ color: "var(--text-secondary)" }}
           onMouseEnter={(e) => (e.currentTarget.style.color = accentColor)}
           onMouseLeave={(e) =>
-            (e.currentTarget.style.color = "var(--text-secondary)")
+            (e.currentTarget.style.color = "var(--text-secondary)}")
           }
         >
           <span>←</span> Back to Journey
