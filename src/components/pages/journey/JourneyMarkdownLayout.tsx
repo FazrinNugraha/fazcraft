@@ -199,20 +199,36 @@ export default function JourneyMarkdownLayout({
       return `https://img.shields.io/badge/${label}-${fallbackColor}.svg?style=for-the-badge`;
     };
 
-    // Handle skill tags from data attributes
+    // Handle skill tags dari frontmatter.skills jika ada, jika tidak fallback ke data-skills
     const skillContainers = article.querySelectorAll(".journey-skills");
     skillContainers.forEach((container) => {
       const skillsData = container.getAttribute("data-skills");
-      if (!skillsData) return;
+      const skills = (frontmatter.skills && frontmatter.skills.length > 0)
+        ? frontmatter.skills
+        : (skillsData ? skillsData.split(",").map((s) => s.trim()) : []);
 
-      const skills = skillsData.split(",").map((s) => s.trim());
+      if (skills.length === 0) return;
+
       const wrapper = document.createElement("div");
       wrapper.style.display = "flex";
-      wrapper.style.flexWrap = "wrap";
-      wrapper.style.gap = "0.5rem";
-      wrapper.style.alignItems = "center";
+      wrapper.style.flexDirection = "column";
+      wrapper.style.gap = "0.875rem";
+      wrapper.style.alignItems = "flex-start";
 
       skills.forEach((skill) => {
+        const row = document.createElement("div");
+        row.style.display = "flex";
+        row.style.alignItems = "center";
+        row.style.gap = "0.75rem";
+
+        const marker = document.createElement("span");
+        marker.style.color = accentColor;
+        marker.style.fontSize = "1.25rem";
+        marker.style.fontWeight = "bold";
+        marker.style.lineHeight = "1";
+        marker.style.userSelect = "none";
+        marker.textContent = "›";
+
         const img = document.createElement("img");
         img.src = getShieldsUrl(skill);
         img.alt = skill;
@@ -222,7 +238,7 @@ export default function JourneyMarkdownLayout({
         img.style.display = "block";
 
         img.addEventListener("mouseenter", () => {
-          img.style.transform = "translateY(-2px) scale(1.05)";
+          img.style.transform = "translateX(4px) scale(1.03)";
           img.style.filter = "brightness(1.15)";
         });
         img.addEventListener("mouseleave", () => {
@@ -230,12 +246,14 @@ export default function JourneyMarkdownLayout({
           img.style.filter = "";
         });
 
-        wrapper.appendChild(img);
+        row.appendChild(marker);
+        row.appendChild(img);
+        wrapper.appendChild(row);
       });
 
       container.replaceWith(wrapper);
     });
-  }, [accentColor, children]);
+  }, [accentColor, children, frontmatter.skills]);
 
   return (
     <div className="min-h-screen">
