@@ -355,7 +355,7 @@ export default function HeroSection() {
                     className="text-base font-bold"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    AI Integration
+                    Applied AI
                   </p>
                 </div>
               </div>

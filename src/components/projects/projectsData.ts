@@ -51,7 +51,7 @@ export const projects: Project[] = [
     side: "left",
   },
   {
-    id: 1,
+    id: 2,
     phase: "PHASE : AUGUST 2026",
     phaseColor: "text-emerald-500",
     title: "HireVision",
@@ -73,9 +73,9 @@ export const projects: Project[] = [
       "Random Forest",
     ],
     thumbnails: [
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1783781602/hirevision1_gjqj1t.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/v1782475382/hr1_qgx5cb.png",
-      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1782475381/hr2_mrc4et.png",
-      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1782475381/hr3_yl06tf.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1783781602/hirevision2_dsy8px.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/v1782475380/hr4_natprs.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/v1782475380/hr5_xt6zw6.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/v1782475380/hr6_xqxfjz.png",
@@ -86,10 +86,10 @@ export const projects: Project[] = [
     side: "left",
   },
   {
-    id: 2,
+    id: 3,
     phase: "PHASE 4: MARCH 2026",
     phaseColor: "text-emerald-500",
-    title: "SmartWealth",
+    title: "Stashwise",
     role: "AI FULLSTACK ENGINEER",
     status: "COMPLETED",
     statusColor: "bg-emerald-500",
@@ -107,6 +107,7 @@ export const projects: Project[] = [
       "CoinGecko API",
     ],
     thumbnails: [
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1783782137/STASH_xe8y9x.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051481/welt1_koyaiv.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051484/welt2_uxd3rw.png",
       "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782051483/welt3_zxuelb.png",
@@ -119,7 +120,7 @@ export const projects: Project[] = [
     side: "right",
   },
   {
-    id: 3,
+    id: 5,
     phase: "PHASE : SEPT 2025",
     phaseColor: "text-purple-500",
     title: "SocialCollateral AI",
@@ -152,7 +153,7 @@ export const projects: Project[] = [
     side: "left",
   },
   {
-    id: 4,
+    id: 6,
     phase: "PHASE : OCT 2025",
     phaseColor: "text-emerald-500",
     title: "Learning Management System ",
@@ -173,27 +174,5 @@ export const projects: Project[] = [
     liveDemo: "https://lms-mern-fe.vercel.app/",
     link: "#project-3",
     side: "right",
-  },
-  {
-    id: 3,
-    phase: "PHASE : DES 2025",
-    phaseColor: "text-emerald-500",
-    title: "Gluco Check",
-    role: "FULLSTACK ENGINEER",
-    status: "COMPLETED",
-    statusColor: "bg-emerald-500",
-    description:
-      "GlucoCheck is an AI-powered web platform that provides personalized diabetes risk analysis through an accessible digital interface. Users complete a simple biodata form and health questionnaire covering lifestyle patterns, dietary habits, and physical activities. The AI engine then generates comprehensive risk assessments with detailed explanations in Bahasa Indonesia, categorizing users into risk levels while delivering personalized care recommendations.",
-    tech: ["React", "Tailwind", "React-Query", "Groq-AI"],
-    thumbnails: [
-      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782049835/glco1_nfrk6a.png",
-      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782049834/glco2_g0e3xo.png",
-      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782049834/glco4_iszih1.png",
-      "https://res.cloudinary.com/dopoy3rcs/image/upload/q_auto/f_auto/v1782049835/glco3_whoo4v.png",
-    ],
-    sourceCode: "https://github.com/FazrinNugraha/GlucoCheck",
-    liveDemo: "https://gluco-blue.vercel.app/",
-    link: "#project-2",
-    side: "left",
   },
 ];

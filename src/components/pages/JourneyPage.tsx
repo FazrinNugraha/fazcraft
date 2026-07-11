@@ -68,10 +68,10 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
   // Sort posts by the predefined order
   const sortedPosts = journeyPosts
     ? [...journeyPosts].sort((a, b) => {
-        const indexA = slugOrder.indexOf(a.slug);
-        const indexB = slugOrder.indexOf(b.slug);
-        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
-      })
+      const indexA = slugOrder.indexOf(a.slug);
+      const indexB = slugOrder.indexOf(b.slug);
+      return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+    })
     : [];
 
   return (
@@ -89,7 +89,7 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
           style={{ color: "var(--text-secondary)" }}
         >
           A timeline of my professional growth and learning progression. This
-          isn't a resume—it's a story of how I've evolved as an engineer, the
+          isn't a resume, it's a story of how I've evolved as an engineer, the
           pivotal moments that shaped my thinking, and the skills I've developed
           along the way.
         </p>

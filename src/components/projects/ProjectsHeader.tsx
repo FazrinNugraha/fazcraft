@@ -20,7 +20,7 @@ export default function ProjectsHeader() {
         style={{ color: "var(--text-secondary)" }}
       >
         Here's a collection of projects I've worked on. Each project tells a
-        story—why I built it, how I approached it, and what came out of it.
+        story about why I built it, how I approached it, and what came out of it.
         Together, they show my experience in building practical solutions that
         people can actually use.
       </p>
