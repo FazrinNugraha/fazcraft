@@ -81,7 +81,7 @@ export const projects: Project[] = [
       "https://res.cloudinary.com/dopoy3rcs/image/upload/v1782475380/hr6_xqxfjz.png",
     ],
     sourceCode: "https://github.com/FazrinNugraha/HireMapV2-fe",
-    liveDemo: "https://www.emigria.my.id/",
+    liveDemo: "https://hirevision-beryl.vercel.app/",
     link: "#project-4",
     side: "left",
   },
