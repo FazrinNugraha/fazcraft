@@ -59,6 +59,8 @@ const slugOrder = [
   "hackathon-amaratha-finalist",
   "building-ai-powered-web-app",
   "dbs-coding-camp-ai-engineer",
+  "capstone-emigria",
+  "asah-ai-engineer-dicoding-goto",
 ];
 
 export default function JourneyPage({ journeyPosts }: JourneyPageProps) {

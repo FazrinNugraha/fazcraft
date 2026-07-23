@@ -60,20 +60,20 @@ export default function AppWrapper({
             {page === "home" && <HomePage blogPosts={blogPosts} />}
             {page === "projects" && <Projects />}
             {page === "blog" && <BlogPage blogPosts={blogPosts} />}
-            {page === "blog_detail" && 
+            {page === "blog_detail" &&
               (blogFrontmatter ? (
                 <BlogMarkdownLayout frontmatter={blogFrontmatter}>
                   {children}
                 </BlogMarkdownLayout>
               ) : null)}
             {page === "journey" && <JourneyPage journeyPosts={journeyPosts} />}
-            {page === "journey_detail" && 
+            {page === "journey_detail" &&
               (journeyFrontmatter ? (
                 <JourneyMarkdownLayout frontmatter={journeyFrontmatter}>
                   {children}
                 </JourneyMarkdownLayout>
               ) : null)}
-            {page === "case_study_detail" && 
+            {page === "case_study_detail" &&
               (caseStudyFrontmatter ? (
                 <CaseStudyMarkdownLayout frontmatter={caseStudyFrontmatter}>
                   {children}
