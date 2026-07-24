@@ -56,7 +56,7 @@ export default function RecentActivities() {
 
       {/* Top divider & Header */}
       <div
-        className="pt-12 mb-8 flex justify-between items-center"
+        className="pt-12 sm:pt-16 mb-8 flex justify-between items-center"
         style={{ borderTop: "2px solid var(--border-color)" }}
       >
         <h2

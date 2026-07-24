@@ -10,91 +10,11 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="max-w-7xl mx-auto px-4 sm:px-5 md:px-6 pb-12 sm:pb-16"
+      className="max-w-7xl mx-auto px-4 sm:px-5 md:px-6 pb-0"
     >
-      <div
-        className="pt-12 pb-12"
-        style={{ borderTop: "2px solid var(--border-color)" }}
-      >
-        <div className="flex justify-between items-end mb-6">
-          <h2 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
-            Posts Writting
-          </h2>
-          <a
-            href="/blog"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-sm"
-            style={{
-              color: "var(--text-primary)",
-              border: "1px dashed var(--border-hover)",
-              backgroundColor: "transparent",
-              textDecoration: "none",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--text-secondary)";
-              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "var(--border-hover)";
-              e.currentTarget.style.backgroundColor = "transparent";
-            }}
-          >
-            <span>See all posts</span>
-            <ChevronRight size={13} />
-          </a>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Card 1 */}
-          <a
-            href="/blog/building-real-world-projects"
-            className="p-5 rounded-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg"
-            style={{
-              backgroundColor: "var(--bg-card)",
-              border: "1px solid var(--border-color)",
-            }}
-          >
-            <div className="flex justify-between items-start mb-3 gap-4">
-              <h3 className="font-semibold text-lg" style={{ color: "var(--text-primary)" }}>
-                MERN Stack LMS Backend Architecture Breakdown
-              </h3>
-              <div className="flex items-center gap-2 mt-1 flex-shrink-0">
-                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Feb 23, 2026</span>
-                <ArrowRight size={16} style={{ color: "var(--text-muted)" }} className="transform -rotate-45" />
-              </div>
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              What I learned while building fullstack applications with MERN stack.
-            </p>
-          </a>
-
-          {/* Card 2 */}
-          <a
-            href="/blog/integration-payment-gateway-midtrans"
-            className="p-5 rounded-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg"
-            style={{
-              backgroundColor: "var(--bg-card)",
-              border: "1px solid var(--border-color)",
-            }}
-          >
-            <div className="flex justify-between items-start mb-3 gap-4">
-              <h3 className="font-semibold text-lg" style={{ color: "var(--text-primary)" }}>
-                Integration Payment Gateway Midtrans
-              </h3>
-              <div className="flex items-center gap-2 mt-1 flex-shrink-0">
-                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Mar 28, 2026</span>
-                <ArrowRight size={16} style={{ color: "var(--text-muted)" }} className="transform -rotate-45" />
-              </div>
-            </div>
-            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-              A simple guide to integrating Midtrans payment gateway into your web application.
-            </p>
-          </a>
-        </div>
-      </div>
-
       {/* Bio Section */}
       <div
-        className="space-y-6 pt-12"
+        className="space-y-6 pt-12 sm:pt-16 pb-12 sm:pb-16"
         style={{ borderTop: "2px solid var(--border-color)" }}
       >
         <div className="flex items-center justify-between">
@@ -324,6 +244,87 @@ export default function AboutSection() {
             </p>
           </div>
         )}
+      </div>
+
+      {/* Writing Section */}
+      <div
+        className="pt-12 sm:pt-16 pb-12 sm:pb-16"
+        style={{ borderTop: "2px solid var(--border-color)" }}
+      >
+        <div className="flex justify-between items-end mb-6">
+          <h2 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>
+            Articles
+          </h2>
+          <a
+            href="/blog"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-sm"
+            style={{
+              color: "var(--text-primary)",
+              border: "1px dashed var(--border-hover)",
+              backgroundColor: "transparent",
+              textDecoration: "none",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--text-secondary)";
+              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--border-hover)";
+              e.currentTarget.style.backgroundColor = "transparent";
+            }}
+          >
+            <span>See all articles</span>
+            <ChevronRight size={13} />
+          </a>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Card 1 */}
+          <a
+            href="/blog/building-real-world-projects"
+            className="p-5 rounded-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: "1px solid var(--border-color)",
+            }}
+          >
+            <div className="flex justify-between items-start mb-3 gap-4">
+              <h3 className="font-semibold text-lg" style={{ color: "var(--text-primary)" }}>
+                MERN Stack LMS Backend Architecture Breakdown
+              </h3>
+              <div className="flex items-center gap-2 mt-1 flex-shrink-0">
+                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Feb 23, 2026</span>
+                <ArrowRight size={16} style={{ color: "var(--text-muted)" }} className="transform -rotate-45" />
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              What I learned while building fullstack applications with MERN stack.
+            </p>
+          </a>
+
+          {/* Card 2 */}
+          <a
+            href="/blog/integration-payment-gateway-midtrans"
+            className="p-5 rounded-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              border: "1px solid var(--border-color)",
+            }}
+          >
+            <div className="flex justify-between items-start mb-3 gap-4">
+              <h3 className="font-semibold text-lg" style={{ color: "var(--text-primary)" }}>
+                Integration Payment Gateway Midtrans
+              </h3>
+              <div className="flex items-center gap-2 mt-1 flex-shrink-0">
+                <span className="text-xs font-medium uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>Mar 28, 2026</span>
+                <ArrowRight size={16} style={{ color: "var(--text-muted)" }} className="transform -rotate-45" />
+              </div>
+            </div>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+              A simple guide to integrating Midtrans payment gateway into your web application.
+            </p>
+          </a>
+        </div>
       </div>
     </section>
   );
