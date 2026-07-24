@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Geist', 'Inter', 'system-ui', ...defaultTheme.fontFamily.sans],
+        sans: ['Inter', 'Geist', 'system-ui', ...defaultTheme.fontFamily.sans],
         mono: ['Geist Mono', 'JetBrains Mono', ...defaultTheme.fontFamily.mono],
       },
 

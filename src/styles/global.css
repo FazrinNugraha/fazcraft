@@ -2,7 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: "Geist", "Inter", sans-serif;
+  --font-sans: "Inter", "Geist", sans-serif;
   --font-mono: "Geist Mono", "JetBrains Mono", monospace;
 }
 
