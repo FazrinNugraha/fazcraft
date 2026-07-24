@@ -44,7 +44,7 @@ export default function BlogMarkdownLayout({
           style={{ color: "var(--text-secondary)" }}
         >
           <ArrowLeft size={16} />
-          Back to Blog
+          Back to Articles
         </a>
 
         {/* Article Header */}

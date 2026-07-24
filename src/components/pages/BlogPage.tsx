@@ -16,7 +16,7 @@ export default function BlogPage({ blogPosts }: BlogPageProps) {
           className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-center"
           style={{ color: "var(--text-primary)" }}
         >
-          Blog
+          Articles
         </h2>
         <p
           className="mb-4 max-w-3xl mx-auto text-center text-lg"
