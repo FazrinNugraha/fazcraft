@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRight, Github, Linkedin, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
 export default function HeroSection() {
@@ -201,7 +201,9 @@ export default function HeroSection() {
               </a>
 
               <a
-                href="/contact"
+                href="/files/CV_Muhamad_Fazrin_Nugraha.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg transition-all duration-200 ease-out text-sm hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5"
                 style={{
                   border: "1px solid var(--btn-secondary-border)",
@@ -209,8 +211,8 @@ export default function HeroSection() {
                   backgroundColor: "transparent",
                 }}
               >
-                Get in Touch
-                <ArrowRight size={16} />
+                View Resume
+                <Download size={16} />
               </a>
             </div>
 
