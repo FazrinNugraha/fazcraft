@@ -201,13 +201,13 @@ export default function HeroSection() {
               </a>
 
               <a
-                href="/files/CV_Muhamad_Fazrin_Nugraha.pdf"
+                href="/files/CV%20MUHAMAD%20FAZRIN%20NUGRAHA%20WORD.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/files/CV_Muhamad_Fazrin_Nugraha.pdf";
-                  link.download = "CV_Muhamad_Fazrin_Nugraha.pdf";
+                  link.href = "/files/CV%20MUHAMAD%20FAZRIN%20NUGRAHA%20WORD.pdf";
+                  link.download = "CV MUHAMAD FAZRIN NUGRAHA.pdf";
                   link.click();
                 }}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg transition-all duration-200 ease-out text-sm hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5"
