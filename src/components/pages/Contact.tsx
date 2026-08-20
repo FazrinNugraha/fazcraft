@@ -1,7 +1,6 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
-import { Github, Instagram, Linkedin } from "lucide-react";
-import { contactHeaderData, socialMediaSectionData } from "../../data/pages/contactData";
+import { contactHeaderData } from "../../data/pages/contactData";
 
 export default function Contact() {
   const { theme } = useTheme();
@@ -97,7 +96,7 @@ export default function Contact() {
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 w-full">
         {/* Let's Talk Header */}
-        <div className="text-left mb-16 md:mb-20">
+        <div className="text-left mb-8">
           <p
             className="text-base md:text-lg mb-4"
             style={{ color: "var(--text-secondary)" }}
@@ -122,51 +121,7 @@ export default function Contact() {
             {contactHeaderData.subText}
           </p>
         </div>
-
-        {/* Divider */}
-        <div
-          className="mb-8 md:mb-12"
-          style={{ borderTop: "1px solid var(--border-color)" }}
-        />
-
-        {/* Social Media Links */}
-        <div>
-          <p
-            className="text-xs md:text-sm font-semibold uppercase tracking-wider mb-4 md:mb-6"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            {socialMediaSectionData.title}
-          </p>
-          <div className="flex flex-wrap gap-4 mt-2">
-            {socialMediaSectionData.links.map((link) => {
-              const Icon =
-                link.type === "github"
-                  ? Github
-                  : link.type === "instagram"
-                  ? Instagram
-                  : Linkedin;
-              return (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3.5 rounded-full border transition-all duration-300 hover:-translate-y-1 hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] flex items-center justify-center"
-                  style={{
-                    backgroundColor: "var(--bg-secondary)",
-                    borderColor: "var(--border-color)",
-                    color: "var(--text-secondary)",
-                  }}
-                  title={link.name}
-                >
-                  <Icon size={20} />
-                </a>
-              );
-            })}
-          </div>
-        </div>
       </div>
     </section>
   );
 }
-
