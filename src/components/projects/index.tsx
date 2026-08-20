@@ -1,11 +1,10 @@
 import { useTheme } from "../../context/ThemeContext";
-import { projects } from "./projectsData";
+import { projects } from "../../data/projects/projectsData";
 import ProjectCard from "./ProjectCard";
 import ProjectsHeader from "./ProjectsHeader";
 
 export default function Projects() {
   const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   return (
     <div className="min-h-screen">
@@ -36,5 +35,6 @@ export default function Projects() {
 }
 
 // Re-export for convenience
-export { projects } from "./projectsData";
-export type { Project } from "./projectsData";
+export { projects } from "../../data/projects/projectsData";
+export type { Project } from "../../data/projects/projectsData";
+

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { highlights } from "./highlightsData";
+import { highlights } from "../../data/home/highlightsData";
 
 export default function RecentActivities() {
   const scrollRef = useRef<HTMLDivElement>(null);

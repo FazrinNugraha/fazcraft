@@ -169,7 +169,10 @@ export default function CaseStudyMarkdownLayout({
 
       // Add accent markers to li children
       const items = ul.querySelectorAll(":scope > li");
-      items.forEach((li) => {
+      items.forEach((el) => {
+        // Cast ke HTMLElement agar TypeScript tahu ada properti .style
+        const li = el as HTMLElement;
+
         // Check if the li already has a marker span
         if (!li.querySelector(".case-study-marker")) {
           li.style.display = "flex";

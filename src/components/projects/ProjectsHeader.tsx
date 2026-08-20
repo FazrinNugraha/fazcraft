@@ -1,5 +1,5 @@
 import { useTheme } from "../../context/ThemeContext";
-import { projects } from "./projectsData";
+import { projects } from "../../data/projects/projectsData";
 
 export default function ProjectsHeader() {
   const { theme } = useTheme();

@@ -1,28 +1,10 @@
 import React from "react";
 import { useTheme } from "../../context/ThemeContext";
 import { Github, Instagram, Linkedin } from "lucide-react";
+import { contactHeaderData, socialMediaSectionData } from "../../data/pages/contactData";
 
 export default function Contact() {
   const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  const socialLinks = [
-    {
-      name: "Github",
-      url: "https://github.com/FazrinNugraha",
-      icon: Github,
-    },
-    {
-      name: "Instagram",
-      url: "https://www.instagram.com/nugrahafazrinn?igsh=MXdkeXluZHM0cnN6dA",
-      icon: Instagram,
-    },
-    {
-      name: "LinkedIn",
-      url: "https://www.linkedin.com/in/muhamad-fazrin-nugraha-968733333/",
-      icon: Linkedin,
-    },
-  ];
 
   return (
     <section
@@ -114,27 +96,30 @@ export default function Contact() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 w-full">
-        {/* Let's Talk */}
+        {/* Let's Talk Header */}
         <div className="text-left mb-16 md:mb-20">
           <p
             className="text-base md:text-lg mb-4"
             style={{ color: "var(--text-secondary)" }}
           >
-            Let's Talk
+            {contactHeaderData.tagline}
           </p>
           <h2
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 md:mb-8 break-all sm:break-words"
             style={{ color: "var(--text-primary)" }}
           >
-            <a className="hover:text-blue-500 transition-colors">
-              nugrahafadzrin@gmail.com
+            <a
+              href={`mailto:${contactHeaderData.email}`}
+              className="hover:text-blue-500 transition-colors"
+            >
+              {contactHeaderData.email}
             </a>
           </h2>
           <p
             className="text-base md:text-lg max-w-2xl"
             style={{ color: "var(--text-secondary)" }}
           >
-            Send me a message and I'll reply within a few days
+            {contactHeaderData.subText}
           </p>
         </div>
 
@@ -144,17 +129,22 @@ export default function Contact() {
           style={{ borderTop: "1px solid var(--border-color)" }}
         />
 
-        {/* Elsewhere */}
+        {/* Social Media Links */}
         <div>
           <p
             className="text-xs md:text-sm font-semibold uppercase tracking-wider mb-4 md:mb-6"
             style={{ color: "var(--text-secondary)" }}
           >
-            Social Media
+            {socialMediaSectionData.title}
           </p>
           <div className="flex flex-wrap gap-4 mt-2">
-            {socialLinks.map((link) => {
-              const Icon = link.icon;
+            {socialMediaSectionData.links.map((link) => {
+              const Icon =
+                link.type === "github"
+                  ? Github
+                  : link.type === "instagram"
+                  ? Instagram
+                  : Linkedin;
               return (
                 <a
                   key={link.name}
@@ -179,3 +169,4 @@ export default function Contact() {
     </section>
   );
 }
+

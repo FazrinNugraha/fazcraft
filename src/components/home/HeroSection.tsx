@@ -1,10 +1,16 @@
 import React from "react";
 import { ArrowRight, Download, Github, Linkedin, Mail, MapPin } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
+import {
+  heroInfo,
+  heroRoleTags,
+  mobileConnectData,
+  ctaButtonsData,
+  profileCardData,
+} from "../../data/home/heroData";
 
 export default function HeroSection() {
   const { theme } = useTheme();
-  const isDark = theme === "dark";
 
   return (
     <section
@@ -22,38 +28,36 @@ export default function HeroSection() {
                 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight"
                 style={{ color: "var(--text-primary)" }}
               >
-                I like building things that work
+                {heroInfo.headline}
               </h1>
 
               <p
                 className="hidden lg:block text-base md:text-lg leading-relaxed max-w-xl"
                 style={{ color: "var(--text-secondary)" }}
               >
-                Building practical solutions that blend engineering, design, and
-                innovation. Transforming ideas into products that people
-                actually use.
+                {heroInfo.subHeadline}
               </p>
             </div>
 
-            {/* Mobile Profile Header (Minimalist flat redesign) */}
+            {/* Mobile Profile Header */}
             <div className="flex lg:hidden flex-col gap-6">
-              {/* Profile Header Row: Avatar left, Info right */}
               <div className="flex items-center gap-4">
                 {/* Avatar */}
                 <div className="relative flex-shrink-0">
                   <img
-                    src="/pp6.png"
-                    alt="Muhamad Fazrin Nugraha"
+                    src={heroInfo.avatarUrl}
+                    alt={heroInfo.name}
                     className="w-20 h-20 rounded-full object-cover"
-                    style={{
-                      border: "2px solid var(--border-color)",
-                    }}
+                    style={{ border: "2px solid var(--border-color)" }}
+                    loading="eager"
+                    decoding="async"
+                    width={80}
+                    height={80}
                   />
-                  {/* Pulsing Active Indicator */}
                   <span
                     className="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full border-2 animate-pulse"
                     style={{
-                      backgroundColor: "#10b981", // Emerald green
+                      backgroundColor: "#10b981",
                       borderColor: "var(--bg-primary)",
                     }}
                   />
@@ -65,29 +69,28 @@ export default function HeroSection() {
                     className="text-[11px] tracking-widest font-mono uppercase font-semibold"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Exploring, Building, Scaling...
+                    {heroInfo.tagline}
                   </span>
                   <div className="flex items-center gap-1.5">
                     <h3
                       className="text-lg font-black tracking-tight"
                       style={{ color: "var(--text-primary)" }}
                     >
-                      Muhamad Fazrin Nugraha
+                      {heroInfo.name}
                     </h3>
-                    {/* Blue Verified Badge */}
                     <svg
                       viewBox="0 0 24 24"
                       className="w-5 h-5 text-blue-500 fill-current inline-block flex-shrink-0"
                       aria-label="Verified"
                     >
-                      <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.99-3.818-3.99-.48 0-.94.1-1.348.27C14.825 2.515 13.512 1.5 12 1.5s-2.825 1.015-3.422 2.28c-.407-.17-.867-.27-1.348-.27-2.108 0-3.818 1.78-3.818 3.99 0 .495.084.965.238 1.4-1.273.65-2.148 2.02-2.148 3.6 0 1.58.875 2.95 2.148 3.6-.154.435-.238.905-.238 1.4 0 2.21 1.71 3.99 3.818 3.99.48 0 .94-.1 1.348-.27.597 1.265 1.91 2.28 3.422 2.28s2.825-1.015 3.422-2.28c.407.17.867.27 1.348.27 2.108 0 3.818-1.78 3.818-3.99 0-.495-.084-.965-.238-1.4 1.273-.65 2.148-2.02 2.148-3.6zm-12.72 4.19l-3.32-3.32 1.32-1.32 2 2 4.67-4.67 1.32 1.32-5.99 5.99z" />
+                      <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.99-3.818-3.99-.48 0-.94.1-1.348.27C14.825 2.515 13.512 1.5 12 1.5s-2.825 1.015-3.422 2.28c-.407-.17-.867-.27-1.348-.27-2.108 0-3.818 1.78-3.818 3.99 0 .495.084.965.238 1.4-1.273.65-2.148 2.02-2.148 3.6 0 1.58.875 2.95 2.148 3.6-.154.435-.238.905-.238 1.4 0 2.21 1.71 3.99 3.818 3.99.48 0 .94-.1 1.348-.27.597 1.265 1.91 2.28 3.422 2.28s2.825-1.015 3.422-2.28c.407.17.867.27 1.348.27 2.108 0-3.818-1.78-3.818-3.99 0-.495-.084-.965-.238-1.4 1.273-.65 2.148-2.02 2.148-3.6zm-12.72 4.19l-3.32-3.32 1.32-1.32 2 2 4.67-4.67 1.32 1.32-5.99 5.99z" />
                     </svg>
                   </div>
                   <span
                     className="text-xs sm:text-sm font-semibold"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Fullstack Developer × Applied AI
+                    {heroInfo.roleSubtitle}
                   </span>
                   <div className="flex items-center gap-1 mt-0.5">
                     <MapPin size={13} style={{ color: "var(--text-secondary)" }} />
@@ -95,13 +98,13 @@ export default function HeroSection() {
                       className="text-xs sm:text-sm"
                       style={{ color: "var(--text-secondary)" }}
                     >
-                      Indonesia
+                      {heroInfo.location}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Status Banner / Open to work */}
+              {/* Status Banner */}
               <div
                 className="py-2.5 px-3 border-y border-dashed text-[13px] sm:text-sm font-semibold flex items-center justify-center gap-2 text-center"
                 style={{
@@ -111,7 +114,7 @@ export default function HeroSection() {
                 }}
               >
                 <span>👋</span>
-                <span>Available for remote, hybrid, or on-site roles</span>
+                <span>{heroInfo.statusBanner}</span>
               </div>
             </div>
 
@@ -121,57 +124,47 @@ export default function HeroSection() {
                 className="text-xs font-bold uppercase tracking-widest"
                 style={{ color: "var(--text-primary)" }}
               >
-                Let's Connect
+                {mobileConnectData.title}
               </p>
 
               <p
                 className="text-sm leading-relaxed text-justify"
                 style={{ color: "var(--text-secondary)" }}
               >
-                I'm always open to discussing new opportunities, collaborating on
-                innovative projects, or sharing thoughts on engineering and AI.
-                Let's start a conversation!
+                {mobileConnectData.description}
               </p>
 
               <div className="flex flex-col gap-2.5">
-                <a
-                  href="https://github.com/FazrinNugraha"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-sm py-1 transition-colors duration-200"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  <Github size={16} style={{ color: "var(--text-secondary)" }} />
-                  <span>I ship code on <span className="underline font-semibold">GitHub</span></span>
-                </a>
-
-                <a
-                  href="https://www.linkedin.com/in/muhamad-fazrin-nugraha-968733333/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-sm py-1 transition-colors duration-200"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  <Linkedin size={16} style={{ color: "var(--text-secondary)" }} />
-                  <span>Let's connect on <span className="underline font-semibold">LinkedIn</span></span>
-                </a>
-
-                <a
-                  href="/contact"
-                  className="flex items-center gap-3 text-sm py-1 transition-colors duration-200"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  <Mail size={16} style={{ color: "var(--text-secondary)" }} />
-                  <span>Drop me a message on <span className="underline font-semibold">Email</span></span>
-                </a>
+                {mobileConnectData.links.map((link, idx) => {
+                  const Icon =
+                    link.type === "github"
+                      ? Github
+                      : link.type === "linkedin"
+                      ? Linkedin
+                      : Mail;
+                  return (
+                    <a
+                      key={idx}
+                      href={link.url}
+                      target={link.type !== "email" ? "_blank" : undefined}
+                      rel={link.type !== "email" ? "noopener noreferrer" : undefined}
+                      className="flex items-center gap-3 text-sm py-1 transition-colors duration-200"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      <Icon size={16} style={{ color: "var(--text-secondary)" }} />
+                      <span>
+                        {link.label}{" "}
+                        <span className="underline font-semibold">{link.highlight}</span>
+                      </span>
+                    </a>
+                  );
+                })}
               </div>
             </div>
 
-
-
-            {/* Desktop: Role tags only */}
+            {/* Desktop: Role tags */}
             <div className="hidden lg:flex flex-wrap gap-2">
-              {["FULLSTACK ENGINEER", "AI & ML ENGINEER"].map((skill, idx) => (
+              {heroRoleTags.map((skill, idx) => (
                 <span
                   key={idx}
                   className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded"
@@ -189,25 +182,25 @@ export default function HeroSection() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3">
               <a
-                href="/projects"
+                href={ctaButtonsData.projects.url}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg transition-all duration-200 ease-out text-sm hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5"
                 style={{
                   backgroundColor: "var(--btn-primary-bg)",
                   color: "var(--btn-primary-text)",
                 }}
               >
-                View Selected Projects
+                {ctaButtonsData.projects.label}
                 <ArrowRight size={16} />
               </a>
 
               <a
-                href="/files/CV%20MUHAMAD%20FAZRIN%20NUGRAHA%20WORD.pdf"
+                href={ctaButtonsData.resume.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
                   const link = document.createElement("a");
-                  link.href = "/files/CV%20MUHAMAD%20FAZRIN%20NUGRAHA%20WORD.pdf";
-                  link.download = "CV MUHAMAD FAZRIN NUGRAHA.pdf";
+                  link.href = ctaButtonsData.resume.url;
+                  link.download = ctaButtonsData.resume.filename;
                   link.click();
                 }}
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg transition-all duration-200 ease-out text-sm hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5"
@@ -217,40 +210,10 @@ export default function HeroSection() {
                   backgroundColor: "transparent",
                 }}
               >
-                View Resume
+                {ctaButtonsData.resume.label}
                 <Download size={16} />
               </a>
             </div>
-
-            {/* Social Links */}
-            {/* <div className="flex items-center gap-4 pt-4">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg transition-all duration-200 hover:-translate-y-1"
-                style={{
-                  backgroundColor: "var(--bg-secondary)",
-                  border: "1px solid var(--border-color)",
-                  color: "var(--text-secondary)",
-                }}
-              >
-                <Github size={18} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg transition-all duration-200 hover:-translate-y-1"
-                style={{
-                  backgroundColor: "var(--bg-secondary)",
-                  border: "1px solid var(--border-color)",
-                  color: "var(--text-secondary)",
-                }}
-              >
-                <Linkedin size={18} />
-              </a>
-            </div> */}
           </div>
 
           {/* ================= RIGHT COLUMN ================= */}
@@ -271,24 +234,26 @@ export default function HeroSection() {
                   style={{ minWidth: "140px" }}
                 >
                   <img
-                    src="/pp6.png"
-                    alt="Fazrin Nugraha"
+                    src={heroInfo.avatarUrl}
+                    alt={heroInfo.shortName}
                     className="w-20 h-20 rounded-[18px] object-cover"
-                    style={{
-                      border: "2px solid var(--border-color)",
-                    }}
+                    style={{ border: "2px solid var(--border-color)" }}
+                    loading="lazy"
+                    decoding="async"
+                    width={80}
+                    height={80}
                   />
                   <h3
                     className="text-base font-bold mt-3 whitespace-nowrap"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    Fazrin Nugraha
+                    {heroInfo.shortName}
                   </h3>
                   <p
                     className="text-[11px] uppercase tracking-[0.15em] mt-1"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    Based in Indonesia
+                    Based in {heroInfo.location}
                   </p>
                 </div>
 
@@ -301,7 +266,7 @@ export default function HeroSection() {
                     className="text-md leading-relaxed italic text-justify md:text-left"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    "I build AI-powered software that solves real problems - taking ideas all the way to production, with systems that ship reliably and work for actual users."
+                    {profileCardData.quote}
                   </p>
                 </div>
               </div>
@@ -311,52 +276,35 @@ export default function HeroSection() {
                 className="grid grid-cols-3 gap-6 mt-4 pt-4 items-center text-center"
                 style={{ borderTop: "1px solid var(--border-color)" }}
               >
-                <div>
-                  <p
-                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    Role
-                  </p>
-                  <p
-                    className="text-base font-bold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    Engineer
-                  </p>
-                </div>
-                <div className="flex flex-col items-center">
-                  <p
-                    className="text-[11px] font-bold uppercase tracking-widest mb-2"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    Status
-                  </p>
-                  <span
-                    className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full whitespace-nowrap inline-block"
-                    style={{
-                      backgroundColor: "rgba(37, 99, 235, 0.1)",
-                      color: "var(--link-blue)",
-                      border: "1px solid rgba(37, 99, 235, 0.2)",
-                    }}
-                  >
-                    Open to Work
-                  </span>
-                </div>
-                <div>
-                  <p
-                    className="text-[11px] font-bold uppercase tracking-widest mb-1"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
-                    Focus
-                  </p>
-                  <p
-                    className="text-base font-bold"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    Applied AI
-                  </p>
-                </div>
+                {profileCardData.stats.map((stat, idx) => (
+                  <div key={idx} className={stat.isBadge ? "flex flex-col items-center" : undefined}>
+                    <p
+                      className="text-[11px] font-bold uppercase tracking-widest mb-1"
+                      style={{ color: "var(--text-secondary)" }}
+                    >
+                      {stat.label}
+                    </p>
+                    {stat.isBadge ? (
+                      <span
+                        className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full whitespace-nowrap inline-block mt-1"
+                        style={{
+                          backgroundColor: "rgba(37, 99, 235, 0.1)",
+                          color: "var(--link-blue)",
+                          border: "1px solid rgba(37, 99, 235, 0.2)",
+                        }}
+                      >
+                        {stat.value}
+                      </span>
+                    ) : (
+                      <p
+                        className="text-base font-bold"
+                        style={{ color: "var(--text-primary)" }}
+                      >
+                        {stat.value}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -365,3 +313,4 @@ export default function HeroSection() {
     </section>
   );
 }
+

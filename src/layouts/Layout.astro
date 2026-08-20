@@ -100,12 +100,8 @@ const description =
       rel="stylesheet"
     />
 
-    <!-- Preconnect to CDNs for skill icons -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-    <link rel="preconnect" href="https://avatars.githubusercontent.com" />
-    <link rel="preconnect" href="https://astro.build" />
-    <link rel="preconnect" href="https://vitejs.dev" />
-    <link rel="preconnect" href="https://bun.sh" />
+    <!-- Preconnect ke Google Fonts saja — sudah cukup, jangan tambah yang lain -->
+    <!-- Sesuai rekomendasi Lighthouse: maksimal 4 preconnect, hanya untuk origin yang benar-benar dipakai -->
   </head>
   <body class="font-sans transition-colors duration-300 antialiased">
     <slot />

@@ -1,3 +1,10 @@
+/**
+ * FILE DATA: Recent Activities / Latest Highlights
+ * --------------------------------------------------------------------------
+ * Tempat untuk menambahkan atau mengubah kartu pencapaian & aktivitas terbaru
+ * yang muncul pada carousel di Halaman Home.
+ */
+
 export interface Highlight {
   role: string;
   phase: string;

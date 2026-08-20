@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
-import type { Project } from "./projectsData";
+import type { Project } from "../../data/projects/projectsData";
 import PhotoCarousel from "./PhotoCarousel";
 
 interface ProjectCardProps {

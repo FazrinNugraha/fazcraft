@@ -1,3 +1,10 @@
+/**
+ * FILE DATA: Daftar Proyek (Projects Page)
+ * --------------------------------------------------------------------------
+ * Tempat untuk menambah, mengubah, atau memperbarui detail portofolio proyek Anda.
+ * Anda dapat mengedit judul, deskripsi, teknologi yang digunakan, gambar, serta link demo/github.
+ */
+
 export interface Project {
   id: number;
   phase: string;
