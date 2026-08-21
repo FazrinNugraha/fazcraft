@@ -149,7 +149,7 @@ export default function Header() {
           <div className="flex items-center gap-1">
             <button
               onClick={toggleTheme}
-              className="transition-colors p-2 shrink-0"
+              className="transition-colors p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center shrink-0"
               style={{ color: "var(--toggle-text)" }}
               aria-label="Toggle dark mode"
             >
@@ -157,7 +157,7 @@ export default function Header() {
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="transition-colors p-2 shrink-0"
+              className="transition-colors p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center shrink-0"
               style={{ color: "var(--text-primary)" }}
               aria-label="Toggle menu"
             >

@@ -103,7 +103,7 @@ export default function Footer() {
                       target={social.url.startsWith("http") || social.url.startsWith("https") ? "_blank" : "_self"}
                       rel="noopener noreferrer"
                       aria-label={social.label}
-                      className="p-1.5 rounded-md transition-all duration-200 hover:-translate-y-0.5"
+                      className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-md transition-all duration-200 hover:-translate-y-0.5"
                       style={{
                         color: "var(--text-secondary)",
                         backgroundColor: "transparent",
@@ -134,14 +134,14 @@ export default function Footer() {
                   >
                     {section.title}
                   </h3>
-                  <ul className="space-y-1.5 text-xs sm:text-sm">
+                  <ul className="space-y-1 text-xs sm:text-sm">
                     {section.links.map((link) => (
                       <li key={link.label}>
                         <a
                           href={link.url}
                           target={link.isExternal ? "_blank" : "_self"}
                           rel={link.isExternal ? "noopener noreferrer" : undefined}
-                          className="transition-colors duration-200 inline-block hover:translate-x-0.5 py-0.5"
+                          className="transition-colors duration-200 inline-flex items-center hover:translate-x-0.5 py-2 px-1 -mx-1 min-h-[44px]"
                           style={{ color: "var(--text-secondary)" }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.color = "var(--text-primary)";

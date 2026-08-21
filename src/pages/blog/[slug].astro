@@ -19,7 +19,7 @@ const { Content } = post;
 ---
 
 <Layout>
-    <AppWrapper client:load page="blog_detail" blogFrontmatter={post.frontmatter}>
+    <AppWrapper client:idle page="blog_detail" blogFrontmatter={post.frontmatter}>
         <Content />
     </AppWrapper>
 </Layout>

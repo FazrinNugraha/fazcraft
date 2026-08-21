@@ -72,7 +72,7 @@ export default function RecentActivities() {
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
             aria-label="Previous highlight"
-            className={`p-1.5 rounded-lg border transition-all duration-200 ${
+            className={`p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border transition-all duration-200 ${
               canScrollLeft
                 ? "hover:scale-105 active:scale-95 cursor-pointer opacity-100"
                 : "opacity-30 cursor-not-allowed"
@@ -89,7 +89,7 @@ export default function RecentActivities() {
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
             aria-label="Next highlight"
-            className={`p-1.5 rounded-lg border transition-all duration-200 ${
+            className={`p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border transition-all duration-200 ${
               canScrollRight
                 ? "hover:scale-105 active:scale-95 cursor-pointer opacity-100"
                 : "opacity-30 cursor-not-allowed"
@@ -139,8 +139,7 @@ export default function RecentActivities() {
                         {item.phase}
                       </span>
                       <div
-                        className={`inline-flex items-center text-[9px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-md border ${item.badgeColor} ${item.badgeBorder}`}
-                        style={{ backgroundColor: item.badgeBg }}
+                        className={`inline-flex items-center text-[9px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-md border ${item.badgeColor} ${item.badgeBg} ${item.badgeBorder}`}
                       >
                         {item.role}
                       </div>
