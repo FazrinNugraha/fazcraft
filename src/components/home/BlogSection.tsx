@@ -42,12 +42,18 @@ export default function BlogSection({ blogPosts }: BlogSectionProps) {
   const getCategoryStyles = (category: string) => {
     switch (category?.toLowerCase()) {
       case "tutorial":
-        return { color: "#3b82f6", bg: "#3b82f61a", border: "#3b82f640" };
+        return isDark
+          ? { color: "#60a5fa", bg: "#3b82f61a", border: "#3b82f640" }
+          : { color: "#1d4ed8", bg: "#1d4ed81a", border: "#1d4ed840" };
       case "insight":
-        return { color: "#a855f7", bg: "#a855f71a", border: "#a855f740" };
+        return isDark
+          ? { color: "#c084fc", bg: "#a855f71a", border: "#a855f740" }
+          : { color: "#7e22ce", bg: "#7e22ce1a", border: "#7e22ce40" };
       case "article":
       default:
-        return { color: "#10b981", bg: "#10b9811a", border: "#10b98140" };
+        return isDark
+          ? { color: "#34d399", bg: "#10b9811a", border: "#10b98140" }
+          : { color: "#047857", bg: "#0478571a", border: "#04785740" };
     }
   };
 

@@ -1,20 +1,20 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import { ThemeProvider } from "../context/ThemeContext";
 import Header from "./common/Header";
 import Footer from "./common/Footer";
 
-// Lazy load page components to reduce initial bundle size
-const HomePage = lazy(() => import("./pages/HomePage"));
-const Projects = lazy(() => import("./projects"));
-const JourneyPage = lazy(() => import("./pages/JourneyPage"));
-const BlogPage = lazy(() => import("./pages/BlogPage"));
-const Skills = lazy(() => import("./pages/Skills"));
-const Contact = lazy(() => import("./pages/Contact"));
+// Direct component imports to allow full static HTML pre-rendering (SSG) in Astro
+import HomePage from "./pages/HomePage";
+import Projects from "./projects";
+import JourneyPage from "./pages/JourneyPage";
+import BlogPage from "./pages/BlogPage";
+import Skills from "./pages/Skills";
+import Contact from "./pages/Contact";
 
-//Lazy load for markdown layouts
-const BlogMarkdownLayout = lazy(() => import("./pages/blog/BlogMarkdownLayout"));
-const JourneyMarkdownLayout = lazy(() => import("./pages/journey/JourneyMarkdownLayout"));
-const CaseStudyMarkdownLayout = lazy(() => import("./pages/case-study/CaseStudyMarkdownLayout"));
+// Markdown layouts
+import BlogMarkdownLayout from "./pages/blog/BlogMarkdownLayout";
+import JourneyMarkdownLayout from "./pages/journey/JourneyMarkdownLayout";
+import CaseStudyMarkdownLayout from "./pages/case-study/CaseStudyMarkdownLayout";
 
 type PageType =
   | "home"
@@ -56,32 +56,30 @@ export default function AppWrapper({
       <div className="min-h-screen transition-colors duration-300">
         <Header />
         <main className="grow">
-          <Suspense fallback={<div className="min-h-screen"></div>}>
-            {page === "home" && <HomePage blogPosts={blogPosts} />}
-            {page === "projects" && <Projects />}
-            {page === "blog" && <BlogPage blogPosts={blogPosts} />}
-            {page === "blog_detail" &&
-              (blogFrontmatter ? (
-                <BlogMarkdownLayout frontmatter={blogFrontmatter}>
-                  {children}
-                </BlogMarkdownLayout>
-              ) : null)}
-            {page === "journey" && <JourneyPage journeyPosts={journeyPosts} />}
-            {page === "journey_detail" &&
-              (journeyFrontmatter ? (
-                <JourneyMarkdownLayout frontmatter={journeyFrontmatter}>
-                  {children}
-                </JourneyMarkdownLayout>
-              ) : null)}
-            {page === "case_study_detail" &&
-              (caseStudyFrontmatter ? (
-                <CaseStudyMarkdownLayout frontmatter={caseStudyFrontmatter}>
-                  {children}
-                </CaseStudyMarkdownLayout>
-              ) : null)}
-            {page === "skills" && <Skills />}
-            {page === "contact" && <Contact />}
-          </Suspense>
+          {page === "home" && <HomePage blogPosts={blogPosts} />}
+          {page === "projects" && <Projects />}
+          {page === "blog" && <BlogPage blogPosts={blogPosts} />}
+          {page === "blog_detail" &&
+            (blogFrontmatter ? (
+              <BlogMarkdownLayout frontmatter={blogFrontmatter}>
+                {children}
+              </BlogMarkdownLayout>
+            ) : null)}
+          {page === "journey" && <JourneyPage journeyPosts={journeyPosts} />}
+          {page === "journey_detail" &&
+            (journeyFrontmatter ? (
+              <JourneyMarkdownLayout frontmatter={journeyFrontmatter}>
+                {children}
+              </JourneyMarkdownLayout>
+            ) : null)}
+          {page === "case_study_detail" &&
+            (caseStudyFrontmatter ? (
+              <CaseStudyMarkdownLayout frontmatter={caseStudyFrontmatter}>
+                {children}
+              </CaseStudyMarkdownLayout>
+            ) : null)}
+          {page === "skills" && <Skills />}
+          {page === "contact" && <Contact />}
         </main>
         {page === "home" && <Footer />}
       </div>

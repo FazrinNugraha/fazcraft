@@ -23,9 +23,9 @@ export const highlights: Highlight[] = [
     title: "Asah led by Dicoding (Supported by GoTo)",
     description:
       "Accepted into ASAH program on the AI Engineer track. Continuing to elevate my AI development, MLOps, and scalable machine learning systems to industry standards.",
-    badgeColor: "text-purple-500",
-    badgeBg: "bg-purple-500/10",
-    badgeBorder: "border-purple-500/20",
+    badgeColor: "text-purple-700 dark:text-purple-300",
+    badgeBg: "bg-purple-500/15 dark:bg-purple-500/20",
+    badgeBorder: "border-purple-500/30",
     url: "/journey/asah-ai-engineer-dicoding-goto",
   },
   {
@@ -34,9 +34,9 @@ export const highlights: Highlight[] = [
     title: "Coding Camp 2026 by DBS Foundation",
     description:
       "Got into Coding Camp 2026 powered by DBS Foundation and chose the AI Engineer track.",
-    badgeColor: "text-blue-500",
-    badgeBg: "bg-blue-500/10",
-    badgeBorder: "border-blue-500/20",
+    badgeColor: "text-blue-700 dark:text-blue-300",
+    badgeBg: "bg-blue-500/15 dark:bg-blue-500/20",
+    badgeBorder: "border-blue-500/30",
     url: "/journey/dbs-coding-camp-ai-engineer",
   },
   {
@@ -45,9 +45,9 @@ export const highlights: Highlight[] = [
     title: "Finalist Hackaton x Amartha 2025",
     description:
       "My first hackathon — made it to Finalist Top 15 out of 150+ teams. Spent 24 hours building SocialCollateral AI as the Frontend Dev.",
-    badgeColor: "text-purple-500",
-    badgeBg: "bg-purple-500/10",
-    badgeBorder: "border-purple-500/20",
+    badgeColor: "text-purple-700 dark:text-purple-300",
+    badgeBg: "bg-purple-500/15 dark:bg-purple-500/20",
+    badgeBorder: "border-purple-500/30",
     url: "/journey/hackathon-amaratha-finalist",
   },
 ];
