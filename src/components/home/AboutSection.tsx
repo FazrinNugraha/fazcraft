@@ -67,13 +67,9 @@ export default function AboutSection() {
             {shortBio.map((paragraph, index) => (
               <p
                 key={index}
-                className={
-                  index === 0
-                    ? "text-xl font-bold text-justify leading-relaxed"
-                    : "text-lg text-justify leading-relaxed"
-                }
+                className="text-lg text-justify leading-relaxed"
                 style={{
-                  color: index === 0 ? "var(--text-primary)" : "var(--text-secondary)",
+                  color: "var(--text-secondary)",
                 }}
               >
                 {renderFormattedText(paragraph)}
@@ -83,12 +79,6 @@ export default function AboutSection() {
         ) : (
           /* Tampilan Versi Lengkap (Full Bio) */
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <p
-              className="text-xl font-bold text-justify leading-relaxed"
-              style={{ color: "var(--text-primary)" }}
-            >
-              {fullBio.title}
-            </p>
             {fullBio.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
@@ -166,4 +156,3 @@ export default function AboutSection() {
     </section>
   );
 }
-

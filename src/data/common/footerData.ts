@@ -23,8 +23,7 @@ export const footerData = {
   description:
     "If you want to get in touch with me about something or just to say hi, reach out on social media or send me an email.",
 
-  // 2. Judul & Daftar Ikon Sosial Media
-  socialTitle: "Elsewhere",
+  // 2. Daftar Ikon Sosial Media
   socialLinks: [
     {
       label: "GitHub",
