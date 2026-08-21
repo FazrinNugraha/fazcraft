@@ -69,33 +69,35 @@ export default function Footer() {
           style={{ borderTop: "2px solid var(--border-color)" }}
         >
           {/* Main Footer Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-6 pb-8">
-            {/* Kolom Kiri: Brand & Deskripsi */}
-            <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-between">
+          <div className="grid grid-cols-1 md:grid-cols-12 md:gap-12 pb-10 sm:pb-12">
+
+            {/* Kolom Kiri: Brand, Deskripsi & Elsewhere */}
+            <div className="md:col-span-7 lg:col-span-8 flex flex-col gap-8">
+              {/* Brand & Deskripsi */}
               <div>
                 <h2
-                  className="text-base font-bold tracking-tight mb-2"
+                  className="text-base sm:text-lg font-bold tracking-tight mb-2"
                   style={{ color: "var(--text-primary)" }}
                 >
                   {footerData.brandName}
                 </h2>
                 <p
-                  className="text-xs sm:text-sm max-w-md leading-relaxed mb-6"
+                  className="text-sm max-w-md leading-relaxed"
                   style={{ color: "var(--text-secondary)" }}
                 >
                   {footerData.description}
                 </p>
               </div>
 
-              {/* Deretan Ikon Sosial Media & Judul ELSEWHERE */}
+              {/* Elsewhere */}
               <div>
                 <p
-                  className="text-xs font-semibold uppercase tracking-wider mb-2"
-                  style={{ color: "var(--text-primary)" }}
+                  className="text-xs font-semibold uppercase mb-3"
+                  style={{ color: "var(--text-muted)", letterSpacing: "0.1em" }}
                 >
                   {footerData.socialTitle || "Elsewhere"}
                 </p>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   {footerData.socialLinks.map((social) => (
                     <a
                       key={social.label}
@@ -103,18 +105,15 @@ export default function Footer() {
                       target={social.url.startsWith("http") || social.url.startsWith("https") ? "_blank" : "_self"}
                       rel="noopener noreferrer"
                       aria-label={social.label}
-                      className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-md transition-all duration-200 hover:-translate-y-0.5"
-                      style={{
-                        color: "var(--text-secondary)",
-                        backgroundColor: "transparent",
-                      }}
+                      className="w-10 h-10 inline-flex items-center justify-center rounded-lg transition-all duration-200"
+                      style={{ color: "var(--text-secondary)", border: "1px solid var(--border-color)" }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.color = "var(--text-primary)";
-                        e.currentTarget.style.backgroundColor = "var(--bg-secondary)";
+                        e.currentTarget.style.borderColor = "var(--border-hover)";
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.color = "var(--text-secondary)";
-                        e.currentTarget.style.backgroundColor = "transparent";
+                        e.currentTarget.style.borderColor = "var(--border-color)";
                       }}
                     >
                       {renderSocialIcon(social.icon)}
@@ -124,24 +123,24 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Kolom Kanan: Tautan Navigasi (Pages & More) */}
-            <div className="md:col-span-5 lg:col-span-4 grid grid-cols-2 gap-6">
+            {/* Kolom Kanan: Navigation Links */}
+            <div className="mt-8 md:mt-0 md:col-span-5 lg:col-span-4 grid grid-cols-2 gap-8">
               {footerData.navSections.map((section) => (
                 <div key={section.title}>
                   <h3
-                    className="text-xs sm:text-sm font-semibold mb-2 tracking-wide"
+                    className="text-sm font-semibold mb-4 tracking-wide"
                     style={{ color: "var(--text-primary)" }}
                   >
                     {section.title}
                   </h3>
-                  <ul className="space-y-1 text-xs sm:text-sm">
+                  <ul className="space-y-3 text-sm">
                     {section.links.map((link) => (
                       <li key={link.label}>
                         <a
                           href={link.url}
                           target={link.isExternal ? "_blank" : "_self"}
                           rel={link.isExternal ? "noopener noreferrer" : undefined}
-                          className="transition-colors duration-200 inline-flex items-center hover:translate-x-0.5 py-2 px-1 -mx-1 min-h-[44px]"
+                          className="transition-colors duration-200 inline-flex items-center hover:translate-x-0.5 py-0.5"
                           style={{ color: "var(--text-secondary)" }}
                           onMouseEnter={(e) => {
                             e.currentTarget.style.color = "var(--text-primary)";
@@ -162,13 +161,12 @@ export default function Footer() {
 
           {/* Garis Pembatas Bawah & Copyright */}
           <div
-            className="pt-6 text-xs"
+            className="pt-6 sm:pt-8 text-xs sm:text-sm"
             style={{
               borderTop: "1px solid var(--border-color)",
               color: "var(--text-secondary)",
             }}
           >
-            {/* Hak Cipta */}
             <p>© {currentYear} {footerData.copyrightText}</p>
           </div>
         </div>
