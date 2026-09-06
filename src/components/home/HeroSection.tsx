@@ -80,10 +80,21 @@ export default function HeroSection() {
                     </h3>
                     <svg
                       viewBox="0 0 24 24"
-                      className="w-5 h-5 text-blue-500 fill-current inline-block flex-shrink-0"
+                      className="w-5 h-5 flex-shrink-0 inline-block text-blue-500"
                       aria-label="Verified"
                     >
-                      <path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.99-3.818-3.99-.48 0-.94.1-1.348.27C14.825 2.515 13.512 1.5 12 1.5s-2.825 1.015-3.422 2.28c-.407-.17-.867-.27-1.348-.27-2.108 0-3.818 1.78-3.818 3.99 0 .495.084.965.238 1.4-1.273.65-2.148 2.02-2.148 3.6 0 1.58.875 2.95 2.148 3.6-.154.435-.238.905-.238 1.4 0 2.21 1.71 3.99 3.818 3.99.48 0 .94-.1 1.348-.27.597 1.265 1.91 2.28 3.422 2.28s2.825-1.015 3.422-2.28c.407.17.867.27 1.348.27 2.108 0-3.818-1.78-3.818-3.99 0-.495-.084-.965-.238-1.4 1.273-.65 2.148-2.02 2.148-3.6zm-12.72 4.19l-3.32-3.32 1.32-1.32 2 2 4.67-4.67 1.32 1.32-5.99 5.99z" />
+                      <path
+                        fill="currentColor"
+                        d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.67-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z"
+                      />
+                      <path
+                        fill="none"
+                        stroke="#ffffff"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M7.75 12.25L10.5 15l6-6"
+                      />
                     </svg>
                   </div>
                   <span
@@ -243,12 +254,32 @@ export default function HeroSection() {
                     width={80}
                     height={80}
                   />
-                  <h3
-                    className="text-base font-bold mt-3 whitespace-nowrap"
-                    style={{ color: "var(--text-primary)" }}
-                  >
-                    {heroInfo.shortName}
-                  </h3>
+                  <div className="flex items-center gap-1.5 mt-3">
+                    <h3
+                      className="text-base font-bold whitespace-nowrap"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      {heroInfo.shortName}
+                    </h3>
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-4 h-4 flex-shrink-0 inline-block text-blue-500"
+                      aria-label="Verified"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.67-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91c-1.31.67-2.2 1.91-2.2 3.34s.89 2.67 2.2 3.34c-.46 1.39-.21 2.9.8 3.91s2.52 1.26 3.91.81c.67 1.31 1.91 2.19 3.34 2.19s2.67-.88 3.34-2.19c1.39.45 2.9.2 3.91-.81s1.27-2.52.81-3.91c1.31-.67 2.19-1.91 2.19-3.34z"
+                      />
+                      <path
+                        fill="none"
+                        stroke="#ffffff"
+                        strokeWidth="2.2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M7.75 12.25L10.5 15l6-6"
+                      />
+                    </svg>
+                  </div>
                   <p
                     className="text-[11px] uppercase tracking-[0.15em] mt-1"
                     style={{ color: "var(--text-secondary)" }}
