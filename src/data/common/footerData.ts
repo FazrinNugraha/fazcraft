@@ -69,7 +69,7 @@ export const footerData = {
       links: [
         {
           label: "Resume",
-          url: "/files/CV%20MUHAMAD%20FAZRIN%20NUGRAHA%20WORD.pdf",
+          url: "/files/CV_MUHAMAD_FAZRIN_NUGRAHA.pdf",
           isExternal: true,
         },
         { label: "Contact", url: "/contact" },

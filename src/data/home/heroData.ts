@@ -73,7 +73,7 @@ export const ctaButtonsData = {
   },
   resume: {
     label: "View Resume",
-    url: "/files/CV%20MUHAMAD%20FAZRIN%20NUGRAHA%20WORD.pdf",
+    url: "/files/CV_MUHAMAD_FAZRIN_NUGRAHA.pdf",
     filename: "CV MUHAMAD FAZRIN NUGRAHA.pdf",
   },
 };
