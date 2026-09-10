@@ -81,7 +81,7 @@ export const ctaButtonsData = {
 // 5. Data kartu profil sebelah kanan (Khusus tampilan Desktop)
 export const profileCardData = {
   quote:
-    '"I build AI-powered software that solves real problems - taking ideas all the way to production, with systems that ship reliably and work for actual users."',
+    '"Final-year Informatics student building full-stack web apps and integrating applied AI with TypeScript, Node.js, and Python. Seeking opportunities as a Software Engineer or AI Engineer."',
   stats: [
     { label: "Role", value: "Engineer" },
     { label: "Status", value: "Open to Work", isBadge: true },
