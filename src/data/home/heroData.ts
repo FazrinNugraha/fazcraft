@@ -81,7 +81,7 @@ export const ctaButtonsData = {
 // 5. Data kartu profil sebelah kanan (Khusus tampilan Desktop)
 export const profileCardData = {
   quote:
-    '"Final-year Informatics student building full-stack web apps and integrating applied AI with TypeScript, Node.js, and Python. Seeking opportunities as a Software Engineer or AI Engineer."',
+    '"Final-year Informatics student building full-stack apps & applied AI with TypeScript, Node.js, and Python. Open to Software/AI Engineer roles."',
   stats: [
     { label: "Role", value: "Engineer" },
     { label: "Status", value: "Open to Work", isBadge: true },
