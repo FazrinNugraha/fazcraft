@@ -20,16 +20,19 @@ export interface StatItem {
 
 // 1. Data utama identitas & judul pada Hero Section
 export const heroInfo = {
-  headline: "I like building things that work",
+  greeting: "Hi, I'm Fazrin Nugraha",
+  headlineLine1: "Software",
+  headlineLine2: "Developer",
+  headline: "Software Developer",
   subHeadline:
-    "Building practical solutions that blend engineering, design, and innovation. Transforming ideas into products that people actually use.",
+    "Building software I’d actually want to use, from the **engineering to the product side**. Turning ideas into products that **people actually use**.",
   name: "Muhamad Fazrin Nugraha",
   shortName: "Fazrin Nugraha",
   tagline: "Exploring, Building, Scaling...",
-  roleSubtitle: "Fullstack Developer × Applied AI",
+  roleSubtitle: "Software Developer × Applied AI",
   location: "Indonesia",
   statusBanner: "Available for remote, hybrid, or on-site roles",
-  avatarUrl: "/pp6.webp", // WebP 3KB (sebelumnya pp6.png = 6MB!)
+  avatarUrl: "/profilebrwn.png",
 };
 
 // 2. Tag keahlian utama (Badge yang muncul di desktop)
