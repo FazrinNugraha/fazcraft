@@ -6,7 +6,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeItem, setActiveItem] = useState("/");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);/*  */
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
