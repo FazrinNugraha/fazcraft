@@ -95,7 +95,7 @@ export default function Footer() {
                   className="text-xs font-semibold uppercase mb-3"
                   style={{ color: "var(--text-muted)", letterSpacing: "0.1em" }}
                 >
-                  {footerData.socialTitle || "Elsewhere"}
+                  {"Elsewhere"}
                 </p>
                 <div className="flex items-center gap-3">
                   {footerData.socialLinks.map((social) => (
