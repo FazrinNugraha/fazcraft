@@ -29,7 +29,7 @@ export const heroInfo = {
   name: "Muhamad Fazrin Nugraha",
   shortName: "Fazrin Nugraha",
   tagline: "Exploring, Building, Scaling...",
-  roleSubtitle: "Software Developer × Applied AI",
+  roleSubtitle: "Software Developer × Product Development",
   location: "Indonesia",
   statusBanner: "Available for remote, hybrid, or on-site roles",
   avatarUrl: "/profilebrwn.png",
