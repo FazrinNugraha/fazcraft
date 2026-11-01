@@ -38,6 +38,7 @@ export default function Header() {
   };
 
   const isDark = theme === "dark";
+  const currentYear = new Date().getFullYear();
 
   return (
     <header
@@ -318,7 +319,7 @@ export default function Header() {
                 letterSpacing: "0.1em",
               }}
             >
-              © 2025 Fazrin Portfolio
+              © {currentYear} Fazrin Portfolio
             </span>
           </div>
         </div>
