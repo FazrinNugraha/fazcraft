@@ -12,36 +12,18 @@ export interface SocialLink {
   type: "github" | "linkedin" | "email";
 }
 
-export interface StatItem {
-  label: string;
-  value: string;
-  isBadge?: boolean;
-}
-
 // 1. Data utama identitas & judul pada Hero Section
 export const heroInfo = {
-  greeting: "Hi, I'm Fazrin Nugraha",
-  headlineLine1: "Software",
-  headlineLine2: "Developer",
-  headline: "Software Developer",
   subHeadline:
     "Building software I’d actually want to use, from the **engineering to the product side**. Turning ideas into products that **people actually use**.",
   name: "Muhamad Fazrin Nugraha",
-  shortName: "Fazrin Nugraha",
   tagline: "Exploring, Building, Scaling...",
   roleSubtitle: "Software Developer × Product Development",
   location: "Indonesia",
-  statusBanner: "Available for remote, hybrid, or on-site roles",
   avatarUrl: "/profilebrwn.png",
 };
 
-// 2. Tag keahlian utama (Badge yang muncul di desktop)
-export const heroRoleTags: string[] = [
-  "FULLSTACK ENGINEER",
-  "AI & ML ENGINEER",
-];
-
-// 3. Tautan kontak & sosial media khusus tampilan mobile (Let's Connect)
+// 2. Tautan kontak & sosial media khusus tampilan mobile (Let's Connect)
 export const mobileConnectData = {
   title: "Let's Connect",
   description:
@@ -68,7 +50,7 @@ export const mobileConnectData = {
   ] as SocialLink[],
 };
 
-// 4. Tautan tombol aksi (CTA Buttons)
+// 3. Tautan tombol aksi (CTA Buttons)
 export const ctaButtonsData = {
   projects: {
     label: "View Selected Projects",
@@ -79,15 +61,4 @@ export const ctaButtonsData = {
     url: "/files/CV_MUHAMAD_FAZRIN_NUGRAHA.pdf",
     filename: "CV MUHAMAD FAZRIN NUGRAHA.pdf",
   },
-};
-
-// 5. Data kartu profil sebelah kanan (Khusus tampilan Desktop)
-export const profileCardData = {
-  quote:
-    '"Final-year Informatics student building full-stack apps & applied AI with TypeScript, Node.js, and Python. Open to Software/AI Engineer roles."',
-  stats: [
-    { label: "Role", value: "Engineer" },
-    { label: "Status", value: "Open to Work", isBadge: true },
-    { label: "Focus", value: "Applied AI" },
-  ] as StatItem[],
 };

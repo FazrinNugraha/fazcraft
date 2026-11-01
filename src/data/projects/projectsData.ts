@@ -14,14 +14,10 @@ export interface Project {
   status: "FEATURED" | "ONGOING" | "COMPLETED";
   statusColor: string;
   description: string;
-  problem?: string;
-  solution?: string;
   tech: string[];
   thumbnails: string[];
   sourceCode: string;
   liveDemo: string;
-  link: string;
-  side: "left" | "right";
 }
 
 export const projects: Project[] = [
@@ -57,7 +53,6 @@ export const projects: Project[] = [
     sourceCode: "https://github.com/aanharits/lost-n-found",
     liveDemo: "https://lost-n-found-pi-liart.vercel.app/board",
   },
-
   {
     id: 2,
     phase: "PHASE : JUNE 2026",
@@ -87,8 +82,6 @@ export const projects: Project[] = [
     ],
     sourceCode: "https://github.com/EMIGRIA",
     liveDemo: "https://www.emigria.my.id/",
-    link: "#project-4",
-    side: "left",
   },
   {
     id: 3,
@@ -122,8 +115,6 @@ export const projects: Project[] = [
     ],
     sourceCode: "https://github.com/FazrinNugraha/HireMapV2-fe",
     liveDemo: "https://hirevision-beryl.vercel.app/",
-    link: "#project-4",
-    side: "left",
   },
   {
     id: 4,
@@ -156,8 +147,6 @@ export const projects: Project[] = [
     ],
     sourceCode: "https://github.com/FazrinNugraha/be-smartwealth",
     liveDemo: "https://fe-smartwealth.vercel.app/",
-    link: "#project5",
-    side: "right",
   },
   {
     id: 5,
@@ -189,8 +178,6 @@ export const projects: Project[] = [
     ],
     sourceCode: "https://github.com/SocialCollateralAI",
     liveDemo: "https://socialcollateral-landingpage.vercel.app/",
-    link: "#project-1",
-    side: "left",
   },
   {
     id: 6,
@@ -212,7 +199,5 @@ export const projects: Project[] = [
     sourceCode:
       "https://github.com/FazrinNugraha/Learning-Management-System-Fe",
     liveDemo: "https://lms-mern-fe.vercel.app/",
-    link: "#project-3",
-    side: "right",
   },
 ];
