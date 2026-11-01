@@ -27,6 +27,39 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
+    phase: "PHASE : SEPT 2026",
+    phaseColor: "text-purple-500",
+    title: "Lost & Found",
+    role: "BACKEND ENGINEER ",
+    status: "FEATURED",
+    statusColor: "bg-purple-500",
+    description:
+      "Lost & Found is a real-time item recovery platform designed to secure and streamline community asset return. Powered by Circom Zero-Knowledge Proof circuits and Poseidon hashing, it cryptographically verifies ownership claims without exposing sensitive item details publicly. The platform integrates NLP keyword extraction and the Groq LLM API for semantic claim validation, seamlessly combining an interactive SvelteKit bulletin board with automated dispute resolution and digital security archive management. ",
+    tech: [
+      "SvelteKit",
+      "SnarkJS",
+      "Tailwind",
+      "Node.js",
+      "Express.js",
+      "Groq AI",
+      "Circom (ZKP)",
+      "PostgreSQL",
+      "Socket.io",
+      "ZOD",
+    ],
+    thumbnails: [
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1793498729/LOST1_ugmfbr.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1793498729/lost2_e8k9vw.png",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1793498728/lost3_qywxsv.jpg",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1793498728/lost4_g3a7gm.jpg",
+      "https://res.cloudinary.com/dopoy3rcs/image/upload/v1793498728/lost5_sig3w3.jpg",
+    ],
+    sourceCode: "https://github.com/aanharits/lost-n-found",
+    liveDemo: "https://lost-n-found-pi-liart.vercel.app/board",
+  },
+
+  {
+    id: 2,
     phase: "PHASE : JUNE 2026",
     phaseColor: "text-purple-500",
     title: "Emigria",
@@ -58,7 +91,7 @@ export const projects: Project[] = [
     side: "left",
   },
   {
-    id: 2,
+    id: 3,
     phase: "PHASE : AUGUST 2026",
     phaseColor: "text-emerald-500",
     title: "HireVision",
@@ -93,7 +126,7 @@ export const projects: Project[] = [
     side: "left",
   },
   {
-    id: 3,
+    id: 4,
     phase: "PHASE 4: MARCH 2026",
     phaseColor: "text-emerald-500",
     title: "Stashwise",
