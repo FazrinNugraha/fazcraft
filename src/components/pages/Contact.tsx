@@ -1,10 +1,7 @@
 import React from "react";
-import { useTheme } from "../../context/ThemeContext";
 import { contactHeaderData } from "../../data/pages/contactData";
 
 export default function Contact() {
-  const { theme } = useTheme();
-
   return (
     <section
       id="contact"

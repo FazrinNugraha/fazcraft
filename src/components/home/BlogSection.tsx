@@ -11,33 +11,7 @@ export default function BlogSection({ blogPosts }: BlogSectionProps) {
   const isDark = theme === "dark";
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  const placeholderPosts = [
-    {
-      slug: "integration-payment-gateway-midtrans",
-      title: "Integration Payment Gateway Midtrans",
-      description:
-        "Integrating Midtrans payment gateway into a web application.",
-      category: "Tutorial",
-      date: "28/3/2026",
-    },
-    {
-      slug: "why-astro-for-portfolio",
-      title: "Why I Chose Astro.js for My Portfolio",
-      description: "Why I use Astro.js for my portfolio.",
-      category: "Insight",
-      date: "8/10/2026",
-    },
-    {
-      slug: "building-real-world-projects",
-      title: "Building Real-World Projects",
-      description:
-        "What I learned while building fullstack applications with MERN stack.",
-      category: "Article",
-      date: "23/1/2026",
-    },
-  ];
-
-  const posts = blogPosts || placeholderPosts;
+  const posts = blogPosts || [];
 
   const getCategoryStyles = (category: string) => {
     switch (category?.toLowerCase()) {

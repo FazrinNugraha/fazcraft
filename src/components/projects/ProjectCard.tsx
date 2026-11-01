@@ -1,5 +1,4 @@
 import { ArrowRight } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
 import type { Project } from "../../data/projects/projectsData";
 import PhotoCarousel from "./PhotoCarousel";
 
@@ -137,9 +136,6 @@ function ProjectLinks({
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   // Get the accent hex color from the project's statusColor class
   const accentColor =
     colorMap[extractColorName(project.statusColor)] || "#3B82F6";

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ArrowRight, ChevronRight, ChevronDown, ChevronUp } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
 import { shortBio, fullBio, featuredArticles } from "../../data/home/aboutData";
 
 // Helper function sederhana untuk merender teks dengan format **kata tebal**
@@ -20,7 +19,6 @@ function renderFormattedText(text: string) {
 
 export default function AboutSection() {
   const [expandAbout, setExpandAbout] = useState(false);
-  const { theme } = useTheme();
 
   return (
     <section

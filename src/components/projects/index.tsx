@@ -1,11 +1,8 @@
-import { useTheme } from "../../context/ThemeContext";
 import { projects } from "../../data/projects/projectsData";
 import ProjectCard from "./ProjectCard";
 import ProjectsHeader from "./ProjectsHeader";
 
 export default function Projects() {
-  const { theme } = useTheme();
-
   return (
     <div className="min-h-screen">
       <main>

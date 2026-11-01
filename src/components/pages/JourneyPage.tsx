@@ -1,5 +1,4 @@
 import React from "react";
-import { useTheme } from "../../context/ThemeContext";
 
 // Color mapping for type to accent colors
 const typeColorMap: Record<string, string> = {
@@ -54,19 +53,14 @@ interface JourneyPageProps {
 // Define the desired display order by slug
 const slugOrder = [
   "bootcamp-revou-fundamental",
-  "getting-hands-on-with-mysql",
   "mern-stack-learning",
   "hackathon-amaratha-finalist",
-  "building-ai-powered-web-app",
   "dbs-coding-camp-ai-engineer",
   "capstone-emigria",
   "asah-ai-engineer-dicoding-goto",
 ];
 
 export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   // Sort posts by the predefined order
   const sortedPosts = journeyPosts
     ? [...journeyPosts].sort((a, b) => {

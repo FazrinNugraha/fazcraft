@@ -29,8 +29,6 @@ type PageType =
 
 interface AppWrapperProps {
   page: PageType;
-  blogSlug?: string;
-  journeySlug?: string;
   children?: React.ReactNode;
   blogPosts?: any[];
   blogFrontmatter?: any;
@@ -41,8 +39,6 @@ interface AppWrapperProps {
 
 export default function AppWrapper({
   page,
-  blogSlug,
-  journeySlug,
   children,
   blogPosts,
   blogFrontmatter,
@@ -56,7 +52,7 @@ export default function AppWrapper({
       <div className="min-h-screen transition-colors duration-300">
         <Header />
         <main className="grow">
-          {page === "home" && <HomePage blogPosts={blogPosts} />}
+          {page === "home" && <HomePage />}
           {page === "projects" && <Projects />}
           {page === "blog" && <BlogPage blogPosts={blogPosts} />}
           {page === "blog_detail" &&

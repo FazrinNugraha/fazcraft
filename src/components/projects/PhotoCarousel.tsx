@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext";
 
 interface PhotoCarouselProps {
   thumbnails: string[];
@@ -9,10 +8,6 @@ interface PhotoCarouselProps {
 export default function PhotoCarousel({ thumbnails }: PhotoCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-
 
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {

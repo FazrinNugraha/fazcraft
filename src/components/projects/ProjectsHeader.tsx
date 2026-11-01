@@ -1,10 +1,6 @@
-import { useTheme } from "../../context/ThemeContext";
 import { projects } from "../../data/projects/projectsData";
 
 export default function ProjectsHeader() {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   const featuredCount = projects.filter((p) => p.status === "FEATURED").length;
 
   return (

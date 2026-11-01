@@ -1,14 +1,11 @@
 import React from "react";
 import BlogSection from "../home/BlogSection";
-import { useTheme } from "../../context/ThemeContext";
 
 interface BlogPageProps {
   blogPosts?: any[];
 }
 
 export default function BlogPage({ blogPosts }: BlogPageProps) {
-  const { theme } = useTheme();
-
   return (
     <div className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-5 md:px-6 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24">
