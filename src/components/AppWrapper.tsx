@@ -1,7 +1,5 @@
 import React from "react";
-import { ThemeProvider } from "../context/ThemeContext";
-import Header from "./common/Header";
-import Footer from "./common/Footer";
+import AppShell from "./AppShell";
 
 // Direct component imports to allow full static HTML pre-rendering (SSG) in Astro
 import HomePage from "./pages/HomePage";
@@ -47,38 +45,31 @@ export default function AppWrapper({
   journeyPosts,
 }: AppWrapperProps) {
   return (
-    <ThemeProvider>
-      {/* Background color handled by global.css (body/html) to prevent flash */}
-      <div className="min-h-screen transition-colors duration-300">
-        <Header />
-        <main className="grow">
-          {page === "home" && <HomePage />}
-          {page === "projects" && <Projects />}
-          {page === "blog" && <BlogPage blogPosts={blogPosts} />}
-          {page === "blog_detail" &&
-            (blogFrontmatter ? (
-              <BlogMarkdownLayout frontmatter={blogFrontmatter}>
-                {children}
-              </BlogMarkdownLayout>
-            ) : null)}
-          {page === "journey" && <JourneyPage journeyPosts={journeyPosts} />}
-          {page === "journey_detail" &&
-            (journeyFrontmatter ? (
-              <JourneyMarkdownLayout frontmatter={journeyFrontmatter}>
-                {children}
-              </JourneyMarkdownLayout>
-            ) : null)}
-          {page === "case_study_detail" &&
-            (caseStudyFrontmatter ? (
-              <CaseStudyMarkdownLayout frontmatter={caseStudyFrontmatter}>
-                {children}
-              </CaseStudyMarkdownLayout>
-            ) : null)}
-          {page === "skills" && <Skills />}
-          {page === "contact" && <Contact />}
-        </main>
-        {page === "home" && <Footer />}
-      </div>
-    </ThemeProvider>
+    <AppShell showFooter={page === "home"}>
+      {page === "home" && <HomePage />}
+      {page === "projects" && <Projects />}
+      {page === "blog" && <BlogPage blogPosts={blogPosts} />}
+      {page === "blog_detail" &&
+        (blogFrontmatter ? (
+          <BlogMarkdownLayout frontmatter={blogFrontmatter}>
+            {children}
+          </BlogMarkdownLayout>
+        ) : null)}
+      {page === "journey" && <JourneyPage journeyPosts={journeyPosts} />}
+      {page === "journey_detail" &&
+        (journeyFrontmatter ? (
+          <JourneyMarkdownLayout frontmatter={journeyFrontmatter}>
+            {children}
+          </JourneyMarkdownLayout>
+        ) : null)}
+      {page === "case_study_detail" &&
+        (caseStudyFrontmatter ? (
+          <CaseStudyMarkdownLayout frontmatter={caseStudyFrontmatter}>
+            {children}
+          </CaseStudyMarkdownLayout>
+        ) : null)}
+      {page === "skills" && <Skills />}
+      {page === "contact" && <Contact />}
+    </AppShell>
   );
 }

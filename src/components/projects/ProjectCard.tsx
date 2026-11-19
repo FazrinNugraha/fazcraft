@@ -1,9 +1,12 @@
+import React from "react";
 import { ArrowRight } from "lucide-react";
 import type { Project } from "../../data/projects/projectsData";
 import PhotoCarousel from "./PhotoCarousel";
 
 interface ProjectCardProps {
   project: Project;
+  isPriority?: boolean;
+  deferred?: boolean;
 }
 
 // Color mapping for status colors to actual hex values
@@ -66,22 +69,8 @@ function TechPill({
 }) {
   return (
     <span
-      className="text-xs px-3 py-1 rounded transition-all duration-300 cursor-default hover:-translate-y-0.5 hover:scale-102 border font-medium inline-block"
-      style={{
-        borderColor: "var(--border-color)",
-        backgroundColor: "var(--bg-secondary)",
-        color: "var(--text-secondary)",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = accentColor;
-        e.currentTarget.style.color = "var(--text-primary)";
-        e.currentTarget.style.backgroundColor = `${accentColor}1a`; // 10% opacity accent tint
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = "var(--border-color)";
-        e.currentTarget.style.color = "var(--text-secondary)";
-        e.currentTarget.style.backgroundColor = "var(--bg-secondary)";
-      }}
+      className="accent-hover-pill text-xs px-3 py-1 rounded transition-transform duration-200 cursor-default hover:-translate-y-0.5 hover:scale-102 border font-medium inline-block"
+      style={{ "--accent": accentColor } as React.CSSProperties}
     >
       {tech}
     </span>
@@ -109,7 +98,7 @@ function ProjectLinks({
             <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-blue-500 transition-all duration-300 group-hover/link:w-full" />
           </span>
           <span className="inline-block transition-transform duration-300 group-hover/link:translate-x-1.5">
-            <ArrowRight size={14} />
+            <ArrowRight size={14} aria-hidden="true" />
           </span>
         </a>
       )}
@@ -126,22 +115,24 @@ function ProjectLinks({
             <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-blue-500 transition-all duration-300 group-hover/link:w-full" />
           </span>
           <span className="inline-block transition-transform duration-300 group-hover/link:translate-x-1.5">
-            <ArrowRight size={14} />
+            <ArrowRight size={14} aria-hidden="true" />
           </span>
         </a>
       )}
-      {/* Status Badge — pinned to the right */}
     </div>
   );
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
-  // Get the accent hex color from the project's statusColor class
+export default function ProjectCard({
+  project,
+  isPriority = false,
+  deferred = false,
+}: ProjectCardProps) {
   const accentColor =
     colorMap[extractColorName(project.statusColor)] || "#3B82F6";
 
   return (
-    <div className="relative pl-8 group">
+    <div className={`relative pl-8 group ${deferred ? "deferred-card" : ""}`}>
       {/* Timeline Dot */}
       <div
         className={`absolute left-0 top-3 w-4 h-4 ${project.statusColor} rounded-full transition-transform group-hover:scale-125 z-10`}
@@ -151,7 +142,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex flex-col" style={{ gap: "1.25rem" }}>
         {/* Thumbnail */}
         <div className="w-full">
-          <PhotoCarousel thumbnails={project.thumbnails} />
+          <PhotoCarousel
+            thumbnails={project.thumbnails}
+            isPriority={isPriority}
+            title={project.title}
+          />
         </div>
 
         {/* Project Info */}
@@ -163,7 +158,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             >
               {project.phase}
             </span>
-            <span className="text-xs text-neutral-500 select-none mx-1">•</span>
+            <span className="text-xs text-neutral-500 select-none mx-1" aria-hidden="true">•</span>
             <span
               className="text-xs font-semibold uppercase tracking-wider"
               style={{ color: "var(--text-secondary)" }}
@@ -191,7 +186,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.description}
           </p>
 
-          {/* Tech pills only — badge moved to links row */}
+          {/* Tech pills */}
           <div className="flex flex-wrap gap-1.5 mb-3 items-center">
             {project.tech.slice(0, 10).map((tech, idx) => (
               <TechPill key={idx} tech={tech} accentColor={accentColor} />

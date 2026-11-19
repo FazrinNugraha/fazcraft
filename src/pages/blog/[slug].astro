@@ -1,10 +1,10 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import AppWrapper from "../../components/AppWrapper.tsx";
+import BlogDetailIsland from "../../components/islands/BlogDetailIsland.tsx";
 
 export async function getStaticPaths() {
     const posts = await Astro.glob('../../content/blog/*.md');
-    
+
     return posts.map(post => {
         const slug = post.file.split('/').pop()?.split('.').shift() || '';
         return {
@@ -18,8 +18,11 @@ const { post } = Astro.props;
 const { Content } = post;
 ---
 
-<Layout>
-    <AppWrapper client:idle page="blog_detail" blogFrontmatter={post.frontmatter}>
+<Layout
+    title={post.frontmatter?.title ? `${post.frontmatter.title} | Fazrin Portfolio` : "Article | Fazrin Portfolio"}
+    description={post.frontmatter?.description}
+>
+    <BlogDetailIsland client:idle frontmatter={post.frontmatter}>
         <Content />
-    </AppWrapper>
+    </BlogDetailIsland>
 </Layout>

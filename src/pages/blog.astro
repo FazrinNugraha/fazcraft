@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import AppWrapper from "../components/AppWrapper.tsx";
+import BlogIsland from "../components/islands/BlogIsland.tsx";
 
 const posts = await Astro.glob('../content/blog/*.md');
 
@@ -13,6 +13,6 @@ const blogPosts = posts.map(post => {
 });
 ---
 
-<Layout>
-    <AppWrapper client:idle page="blog" blogPosts={blogPosts} />
+<Layout title="Articles | Fazrin Portfolio">
+    <BlogIsland client:idle blogPosts={blogPosts} />
 </Layout>

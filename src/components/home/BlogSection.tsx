@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 
@@ -9,7 +9,6 @@ interface BlogSectionProps {
 export default function BlogSection({ blogPosts }: BlogSectionProps) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const posts = blogPosts || [];
 
@@ -42,12 +41,12 @@ export default function BlogSection({ blogPosts }: BlogSectionProps) {
           const styles = getCategoryStyles(post.category);
           return (
             <a
-              key={index}
+              key={post.slug || index}
               href={`/blog/${post.slug}`}
-              className="group flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 pb-6 px-4 -mx-4 transition-all duration-300 cursor-pointer hover:pl-2"
+              className={`group flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 pb-6 px-4 -mx-4 cursor-pointer hover:pl-2 ${
+                index >= 4 ? "deferred-card" : ""
+              }`}
               style={{ borderBottom: "2px solid var(--border-color)" }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="flex-1 min-w-0">
                 {/* Tag */}
@@ -62,31 +61,15 @@ export default function BlogSection({ blogPosts }: BlogSectionProps) {
                 </span>
 
                 {/* Title */}
-                <h3
-                  className="text-xl sm:text-xl font-bold mb-2 transition-all"
-                  style={{
-                    color:
-                      hoveredIndex === index
-                        ? isDark
-                          ? "white"
-                          : "#000"
-                        : "var(--text-primary)",
-                  }}
+                <h2
+                  className="text-xl font-bold mb-2 transition-colors duration-200 text-[var(--text-primary)] group-hover:text-[var(--nav-text-hover)]"
                 >
                   {post.title}
-                </h3>
+                </h2>
 
                 {/* Description */}
                 <p
-                  className="text-md leading-relaxed mb-4 transition-all"
-                  style={{
-                    color:
-                      hoveredIndex === index
-                        ? isDark
-                          ? "white"
-                          : "#000"
-                        : "var(--text-secondary)",
-                  }}
+                  className="text-md leading-relaxed mb-4 transition-colors duration-200 text-[var(--text-secondary)] group-hover:text-[var(--text-primary)]"
                 >
                   {post.description}
                 </p>
@@ -95,18 +78,10 @@ export default function BlogSection({ blogPosts }: BlogSectionProps) {
               {/* Date - Stay on the right on larger screens */}
               <div className="sm:flex-shrink-0 sm:text-right">
                 <div
-                  className="text-base flex items-center gap-2 sm:justify-end transition-all group-hover:font-bold"
-                  style={{
-                    color:
-                      hoveredIndex === index
-                        ? isDark
-                          ? "white"
-                          : "#000"
-                        : "var(--text-muted)",
-                  }}
+                  className="text-base flex items-center gap-2 sm:justify-end transition-colors duration-200 text-[var(--text-muted)] group-hover:text-[var(--text-primary)] group-hover:font-bold"
                 >
                   {post.date}
-                  <ArrowUpRight size={14} className="flex-shrink-0" />
+                  <ArrowUpRight size={14} className="flex-shrink-0" aria-hidden="true" />
                 </div>
               </div>
             </a>

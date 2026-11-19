@@ -15,14 +15,33 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function syncDocumentTheme(theme: Theme) {
+  const root = document.documentElement;
+  const isLight = theme === "light";
+
+  if (isLight) {
+    root.classList.add("light-theme");
+    root.classList.remove("dark-theme");
+  } else {
+    root.classList.add("dark-theme");
+    root.classList.remove("light-theme");
+  }
+
+  const schemeMeta = document.querySelector('meta[name="color-scheme"]');
+  if (schemeMeta) {
+    schemeMeta.setAttribute("content", theme);
+  }
+
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+  if (themeColorMeta) {
+    themeColorMeta.setAttribute("content", isLight ? "#f9fafb" : "#141414");
+  }
+}
+
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  // Read initial theme from DOM class that Astro already set
-  // This prevents hydration mismatch - React must match what Astro rendered
+  // Read initial theme from DOM class that Astro already set to avoid hydration mismatch
   const [theme, setTheme] = useState<Theme>(() => {
-    // Check if we're in browser environment
     if (typeof window !== "undefined") {
-      // First, check what class Astro already applied to <html>
-      // This ensures React's initial state matches the server-rendered HTML
       const root = document.documentElement;
       if (root.classList.contains("light-theme")) {
         return "light";
@@ -30,28 +49,40 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       if (root.classList.contains("dark-theme")) {
         return "dark";
       }
-      // Fallback to localStorage if no class found
-      const savedTheme = localStorage.getItem("theme") as Theme;
-      if (savedTheme === "light" || savedTheme === "dark") {
-        return savedTheme;
+      try {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "light" || savedTheme === "dark") {
+          return savedTheme;
+        }
+      } catch {
+        // Ignore storage access failures
       }
     }
-    return "dark"; // Default to dark if no saved preference
+    return "dark";
   });
 
   useEffect(() => {
-    // Apply theme to document
-    const root = document.documentElement;
-    if (theme === "light") {
-      root.classList.add("light-theme");
-      root.classList.remove("dark-theme");
-    } else {
-      root.classList.add("dark-theme");
-      root.classList.remove("light-theme");
+    syncDocumentTheme(theme);
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {
+      // Ignore storage access failures
     }
-    // Save to localStorage
-    localStorage.setItem("theme", theme);
   }, [theme]);
+
+  // Keep theme in sync across browser tabs
+  useEffect(() => {
+    const handleStorage = (event: StorageEvent) => {
+      if (
+        event.key === "theme" &&
+        (event.newValue === "light" || event.newValue === "dark")
+      ) {
+        setTheme(event.newValue);
+      }
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));

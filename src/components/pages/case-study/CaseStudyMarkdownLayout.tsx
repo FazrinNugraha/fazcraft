@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useTheme } from "../../../context/ThemeContext";
 
 interface CaseStudyMarkdownLayoutProps {
   frontmatter: {
@@ -17,7 +16,6 @@ export default function CaseStudyMarkdownLayout({
   frontmatter,
   children,
 }: CaseStudyMarkdownLayoutProps) {
-  const { theme } = useTheme();
   const contentRef = useRef<HTMLDivElement>(null);
   const accentColor = frontmatter.accentColor || "#3B82F6";
 
@@ -26,7 +24,6 @@ export default function CaseStudyMarkdownLayout({
 
     const article = contentRef.current;
 
-    // Style h2 headings with dynamic sequential numbering (01, 02, etc.)
     const headings = article.querySelectorAll("h2");
     headings.forEach((h2, index) => {
       h2.style.fontSize = "1.5rem";
@@ -37,17 +34,11 @@ export default function CaseStudyMarkdownLayout({
       h2.style.borderLeft = "none";
       h2.style.color = "var(--text-primary)";
 
-      // Clean up previous prefixes to avoid duplication on hot reloads
       const existingSlash = h2.querySelector(".heading-prefix");
-      if (existingSlash) {
-        existingSlash.remove();
-      }
+      if (existingSlash) existingSlash.remove();
       const existingNumber = h2.querySelector(".heading-number");
-      if (existingNumber) {
-        existingNumber.remove();
-      }
+      if (existingNumber) existingNumber.remove();
 
-      // Add modern numbering prefix
       const numSpan = document.createElement("span");
       numSpan.className = "heading-number";
       numSpan.style.color = accentColor;
@@ -55,14 +46,10 @@ export default function CaseStudyMarkdownLayout({
       numSpan.style.fontFamily = "var(--font-mono, monospace)";
       numSpan.style.fontWeight = "500";
       numSpan.style.opacity = "0.85";
-      
-      // Pad the index to 2 digits (e.g., 01, 02)
-      const formattedNum = String(index + 1).padStart(2, "0");
-      numSpan.textContent = formattedNum;
+      numSpan.textContent = String(index + 1).padStart(2, "0");
       h2.insertBefore(numSpan, h2.firstChild);
     });
 
-    // Style h3 headings
     const h3s = article.querySelectorAll("h3");
     h3s.forEach((h3) => {
       h3.style.fontSize = "1.25rem";
@@ -72,7 +59,6 @@ export default function CaseStudyMarkdownLayout({
       h3.style.color = "var(--text-primary)";
     });
 
-    // Style paragraphs
     const paragraphs = article.querySelectorAll("p");
     paragraphs.forEach((p) => {
       p.style.fontSize = "clamp(1.025rem, 2.2vw, 1.1rem)";
@@ -82,7 +68,6 @@ export default function CaseStudyMarkdownLayout({
       p.style.marginBottom = "1.25rem";
     });
 
-    // Style tables if any
     const tables = article.querySelectorAll("table");
     tables.forEach((table) => {
       table.style.width = "100%";
@@ -108,7 +93,6 @@ export default function CaseStudyMarkdownLayout({
       td.style.color = "var(--text-secondary)";
     });
 
-    // Style hr elements as gradient separators
     const hrs = article.querySelectorAll("hr");
     hrs.forEach((hr) => {
       hr.style.border = "none";
@@ -118,7 +102,6 @@ export default function CaseStudyMarkdownLayout({
       hr.style.marginBottom = "2.5rem";
     });
 
-    // Style details and summary blocks (like Table of Contents)
     const details = article.querySelectorAll("details");
     details.forEach((detail) => {
       detail.style.border = "1px solid var(--border-color)";
@@ -136,24 +119,20 @@ export default function CaseStudyMarkdownLayout({
       summary.style.outline = "none";
     });
 
-    // Style list items with accent markers
     const listItems = article.querySelectorAll("li");
     listItems.forEach((li) => {
       li.style.fontSize = "clamp(0.95rem, 2vw, 1.05rem)";
       li.style.lineHeight = "1.75";
       li.style.color = "var(--text-secondary)";
 
-      // Style strong elements inside li
       const strong = li.querySelector("strong");
       if (strong) {
         strong.style.color = "var(--text-primary)";
       }
     });
 
-    // Style ul elements if they are not inside TOC or summaries
     const uls = article.querySelectorAll("ul");
     uls.forEach((ul) => {
-      // Skip if inside details / Table of Contents
       if (ul.closest("details")) {
         ul.style.paddingLeft = "1.5rem";
         ul.style.marginTop = "0.5rem";
@@ -167,13 +146,9 @@ export default function CaseStudyMarkdownLayout({
       ul.style.flexDirection = "column";
       ul.style.gap = "0.75rem";
 
-      // Add accent markers to li children
       const items = ul.querySelectorAll(":scope > li");
       items.forEach((el) => {
-        // Cast ke HTMLElement agar TypeScript tahu ada properti .style
         const li = el as HTMLElement;
-
-        // Check if the li already has a marker span
         if (!li.querySelector(".case-study-marker")) {
           li.style.display = "flex";
           li.style.alignItems = "flex-start";
@@ -188,7 +163,6 @@ export default function CaseStudyMarkdownLayout({
           marker.textContent = "›";
           li.insertBefore(marker, li.firstChild);
 
-          // Wrap the remaining content in a span
           const content = document.createElement("span");
           while (li.childNodes.length > 1) {
             content.appendChild(li.childNodes[1]);
@@ -198,7 +172,6 @@ export default function CaseStudyMarkdownLayout({
       });
     });
 
-    // Style ol elements
     const ols = article.querySelectorAll("ol");
     ols.forEach((ol) => {
       ol.style.paddingLeft = "1.5rem";
@@ -215,14 +188,10 @@ export default function CaseStudyMarkdownLayout({
         {/* Back Button */}
         <a
           href="/"
-          className="inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors"
-          style={{ color: "var(--text-secondary)" }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = accentColor)}
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.color = "var(--text-secondary)")
-          }
+          className="accent-hover-link inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors"
+          style={{ "--accent": accentColor } as React.CSSProperties}
         >
-          <span>←</span> Back to Home
+          <span aria-hidden="true">←</span> Back to Home
         </a>
 
         {/* Header */}
@@ -265,7 +234,7 @@ export default function CaseStudyMarkdownLayout({
         {/* Footer */}
         <footer
           className="mt-16 pt-8"
-          style={{ borderTop: `1px solid var(--border-color)` }}
+          style={{ borderTop: "1px solid var(--border-color)" }}
         >
           <div className="text-sm" style={{ color: "var(--text-muted)" }}>
             Project Case Study Showcase &middot; Muhamad Fazrin Nugraha

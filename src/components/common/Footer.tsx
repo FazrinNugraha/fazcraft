@@ -35,23 +35,22 @@ function WhatsAppIcon({ size = 16 }: { size?: number }) {
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
-  // Helper render ikon sosial media
   const renderSocialIcon = (type: string) => {
     switch (type) {
       case "github":
-        return <Github size={16} />;
+        return <Github size={16} aria-hidden="true" />;
       case "linkedin":
-        return <Linkedin size={16} />;
+        return <Linkedin size={16} aria-hidden="true" />;
       case "instagram":
-        return <Instagram size={16} />;
+        return <Instagram size={16} aria-hidden="true" />;
       case "whatsapp":
         return <WhatsAppIcon size={16} />;
       case "mail":
-        return <Mail size={16} />;
+        return <Mail size={16} aria-hidden="true" />;
       case "x":
         return <XIcon size={16} />;
       case "rss":
-        return <Rss size={16} />;
+        return <Rss size={16} aria-hidden="true" />;
       default:
         return null;
     }
@@ -70,10 +69,8 @@ export default function Footer() {
         >
           {/* Main Footer Grid */}
           <div className="grid grid-cols-1 md:grid-cols-12 md:gap-12 pb-10 sm:pb-12">
-
             {/* Kolom Kiri: Brand, Deskripsi & Elsewhere */}
             <div className="md:col-span-7 lg:col-span-8 flex flex-col gap-8">
-              {/* Brand & Deskripsi */}
               <div>
                 <h2
                   className="text-base sm:text-lg font-bold tracking-tight mb-2"
@@ -89,36 +86,29 @@ export default function Footer() {
                 </p>
               </div>
 
-              {/* Elsewhere */}
               <div>
                 <p
                   className="text-xs font-semibold uppercase mb-3"
                   style={{ color: "var(--text-muted)", letterSpacing: "0.1em" }}
                 >
-                  {"Elsewhere"}
+                  Elsewhere
                 </p>
                 <div className="flex items-center gap-3">
-                  {footerData.socialLinks.map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.url}
-                      target={social.url.startsWith("http") || social.url.startsWith("https") ? "_blank" : "_self"}
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                      className="w-10 h-10 inline-flex items-center justify-center rounded-lg transition-all duration-200"
-                      style={{ color: "var(--text-secondary)", border: "1px solid var(--border-color)" }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.color = "var(--text-primary)";
-                        e.currentTarget.style.borderColor = "var(--border-hover)";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.color = "var(--text-secondary)";
-                        e.currentTarget.style.borderColor = "var(--border-color)";
-                      }}
-                    >
-                      {renderSocialIcon(social.icon)}
-                    </a>
-                  ))}
+                  {footerData.socialLinks.map((social) => {
+                    const isExternal = social.url.startsWith("http");
+                    return (
+                      <a
+                        key={social.label}
+                        href={social.url}
+                        target={isExternal ? "_blank" : undefined}
+                        rel={isExternal ? "noopener noreferrer" : undefined}
+                        aria-label={social.label}
+                        className="footer-social-btn w-10 h-10 inline-flex items-center justify-center rounded-lg"
+                      >
+                        {renderSocialIcon(social.icon)}
+                      </a>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -138,16 +128,9 @@ export default function Footer() {
                       <li key={link.label}>
                         <a
                           href={link.url}
-                          target={link.isExternal ? "_blank" : "_self"}
+                          target={link.isExternal ? "_blank" : undefined}
                           rel={link.isExternal ? "noopener noreferrer" : undefined}
-                          className="transition-colors duration-200 inline-flex items-center hover:translate-x-0.5 py-0.5"
-                          style={{ color: "var(--text-secondary)" }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.color = "var(--text-primary)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.color = "var(--text-secondary)";
-                          }}
+                          className="footer-nav-link inline-flex items-center hover:translate-x-0.5 py-0.5"
                         >
                           {link.label}
                         </a>
@@ -167,7 +150,9 @@ export default function Footer() {
               color: "var(--text-secondary)",
             }}
           >
-            <p>© {currentYear} {footerData.copyrightText}</p>
+            <p>
+              © {currentYear} {footerData.copyrightText}
+            </p>
           </div>
         </div>
       </div>

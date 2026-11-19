@@ -1,6 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
+import {
+  closeTopLayer,
+  supportsClosedBy,
+} from "../../utils/dialog";
+
+const MENU_ITEMS = [
+  { label: "HOME", href: "/" },
+  { label: "PROJECTS", href: "/projects" },
+  { label: "ARTICLES", href: "/blog" },
+  { label: "JOURNEY", href: "/journey" },
+  { label: "TECH STACK", href: "/skills" },
+  { label: "CONTACT", href: "/contact" },
+];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -8,32 +21,105 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
 
+  const drawerRef = useRef<HTMLDialogElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+    const updateScrolled = () => {
+      const next = window.scrollY > 10;
+      setIsScrolled((prev) => (prev === next ? prev : next));
     };
-    window.addEventListener("scroll", handleScroll);
 
-    // Set active item based on current path
-    if (typeof window !== "undefined") {
+    const syncPath = () => {
       setActiveItem(window.location.pathname);
-    }
+    };
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    updateScrolled();
+    syncPath();
+
+    window.addEventListener("scroll", updateScrolled, { passive: true });
+    document.addEventListener("astro:page-load", syncPath);
+
+    return () => {
+      window.removeEventListener("scroll", updateScrolled);
+      document.removeEventListener("astro:page-load", syncPath);
+    };
   }, []);
 
-  const menuItems = [
-    { label: "HOME", href: "/" },
-    { label: "PROJECTS", href: "/projects" },
-    { label: "ARTICLES", href: "/blog" },
-    { label: "JOURNEY", href: "/journey" },
-    { label: "TECH STACK", href: "/skills" },
-    { label: "CONTACT", href: "/contact" },
-  ];
+  const openDrawer = useCallback(() => {
+    const dialog = drawerRef.current;
+    if (!dialog || dialog.open) return;
+    dialog.removeAttribute("data-closing");
+    dialog.showModal();
+    setIsMobileMenuOpen(true);
+  }, []);
+
+  const closeDrawer = useCallback(async () => {
+    const dialog = drawerRef.current;
+    if (!dialog || !dialog.open) {
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    await closeTopLayer(dialog);
+    setIsMobileMenuOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const dialog = drawerRef.current;
+    if (!dialog) return;
+
+    const handleCancel = (event: Event) => {
+      if (event.cancelable) {
+        event.preventDefault();
+        void closeDrawer();
+      }
+    };
+
+    const handleClose = () => {
+      dialog.removeAttribute("data-closing");
+      setIsMobileMenuOpen(false);
+    };
+
+    dialog.addEventListener("cancel", handleCancel);
+    dialog.addEventListener("close", handleClose);
+
+    // Fallback light-dismiss when clicking backdrop outside the drawer sheet
+    let pressedOutside = false;
+    const isOutsideSheet = (target: EventTarget | null) =>
+      Boolean(sheetRef.current && target instanceof Node && !sheetRef.current.contains(target));
+
+    const handlePointerDown = (e: PointerEvent) => {
+      pressedOutside = isOutsideSheet(e.target);
+    };
+
+    const handlePointerUp = (e: PointerEvent) => {
+      if (pressedOutside && isOutsideSheet(e.target)) {
+        void closeDrawer();
+      }
+      pressedOutside = false;
+    };
+
+    if (!supportsClosedBy()) {
+      dialog.addEventListener("pointerdown", handlePointerDown);
+      dialog.addEventListener("pointerup", handlePointerUp);
+    } else {
+      // Even with closedby="any", clicking inside the full-bleed dialog outside the sheet
+      // lands on the dialog itself rather than ::backdrop, so handle outside sheet clicks cleanly.
+      dialog.addEventListener("pointerdown", handlePointerDown);
+      dialog.addEventListener("pointerup", handlePointerUp);
+    }
+
+    return () => {
+      dialog.removeEventListener("cancel", handleCancel);
+      dialog.removeEventListener("close", handleClose);
+      dialog.removeEventListener("pointerdown", handlePointerDown);
+      dialog.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [closeDrawer]);
 
   const handleNavClick = (href: string) => {
     setActiveItem(href);
-    setIsMobileMenuOpen(false);
+    void closeDrawer();
   };
 
   const isDark = theme === "dark";
@@ -41,7 +127,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-sm ${isScrolled ? "shadow-lg" : ""}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 backdrop-blur-sm ${isScrolled ? "shadow-lg" : ""}`}
       style={{
         backgroundColor: isScrolled
           ? "var(--header-scrolled-bg)"
@@ -52,53 +138,36 @@ export default function Header() {
       }}
     >
       {/* Desktop Navigation */}
-      <nav className="hidden md:block max-w-7xl mx-auto px-6 lg:px-8">
+      <nav aria-label="Primary" className="hidden md:block max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-center h-16">
           {/* Desktop Menu - Centered */}
           <div className="flex items-center justify-center flex-1">
             <div className="flex items-center space-x-8">
-              {menuItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => handleNavClick(item.href)}
-                  className="text-sm font-medium tracking-wide transition-colors duration-300"
-                  style={{
-                    color:
-                      activeItem === item.href
-                        ? "var(--nav-text-active)"
-                        : "var(--nav-text)",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (activeItem !== item.href) {
-                      e.currentTarget.style.color = "var(--nav-text-hover)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (activeItem !== item.href) {
-                      e.currentTarget.style.color = "var(--nav-text)";
-                    }
-                  }}
-                >
-                  {item.label}
-                </a>
-              ))}
+              {MENU_ITEMS.map((item) => {
+                const isActive = activeItem === item.href;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => handleNavClick(item.href)}
+                    aria-current={isActive ? "page" : undefined}
+                    className="nav-link text-sm font-medium tracking-wide transition-colors duration-200"
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
             </div>
           </div>
 
           {/* Dark Mode Toggle (Desktop) */}
           <div className="flex items-center space-x-4">
             <button
+              type="button"
               onClick={toggleTheme}
-              className="transition-colors p-1"
-              style={{ color: "var(--toggle-text)" }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--toggle-hover)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--toggle-text)";
-              }}
-              aria-label="Toggle dark mode"
+              className="theme-toggle-btn transition-colors p-1 cursor-pointer"
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              aria-pressed={!isDark}
             >
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
@@ -107,7 +176,7 @@ export default function Header() {
       </nav>
 
       {/* Mobile Navigation - Clean Burger Menu */}
-      <nav className="md:hidden">
+      <nav aria-label="Mobile" className="md:hidden">
         {/* Top Bar */}
         <div
           className="flex items-center justify-between h-14 px-4"
@@ -119,26 +188,16 @@ export default function Header() {
             className="flex items-center shrink-0 transition-opacity duration-200 hover:opacity-75"
             style={{ textDecoration: "none" }}
           >
-            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1, gap: "4px" }}>
+            <div className="flex flex-col leading-none gap-1">
               <span
-                style={{
-                  fontSize: "9px",
-                  fontWeight: 400,
-                  letterSpacing: "0.18em",
-                  color: "var(--text-secondary)",
-                  textTransform: "uppercase",
-                }}
+                className="text-[9px] font-normal tracking-[0.18em] uppercase"
+                style={{ color: "var(--text-secondary)" }}
               >
                 FAZRIN
               </span>
               <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: 700,
-                  letterSpacing: "0.06em",
-                  color: "var(--text-primary)",
-                  textTransform: "uppercase",
-                }}
+                className="text-[10px] font-bold tracking-[0.06em] uppercase"
+                style={{ color: "var(--text-primary)" }}
               >
                 PORTFOLIO
               </span>
@@ -148,180 +207,105 @@ export default function Header() {
           {/* Right: Theme Toggle + Burger */}
           <div className="flex items-center gap-1">
             <button
+              type="button"
               onClick={toggleTheme}
-              className="transition-colors p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center shrink-0"
-              style={{ color: "var(--toggle-text)" }}
-              aria-label="Toggle dark mode"
+              className="theme-toggle-btn transition-colors p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center shrink-0 cursor-pointer"
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              aria-pressed={!isDark}
             >
               {isDark ? <Sun size={17} /> : <Moon size={17} />}
             </button>
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="transition-colors p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center shrink-0"
+              type="button"
+              onClick={() => (isMobileMenuOpen ? void closeDrawer() : openDrawer())}
+              className="transition-colors p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center shrink-0 cursor-pointer"
               style={{ color: "var(--text-primary)" }}
-              aria-label="Toggle menu"
+              aria-label="Open navigation menu"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-nav-drawer"
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
-        {/* Backdrop Overlay */}
-        <div
-          onClick={() => setIsMobileMenuOpen(false)}
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 40,
-            backgroundColor: "rgba(0,0,0,0.55)",
-            backdropFilter: "blur(4px)",
-            WebkitBackdropFilter: "blur(4px)",
-            opacity: isMobileMenuOpen ? 1 : 0,
-            pointerEvents: isMobileMenuOpen ? "auto" : "none",
-            transition: "opacity 0.3s ease",
-          }}
-        />
-
-        {/* Side Drawer - slides from right */}
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            right: 0,
-            height: "100dvh",
-            width: "72vw",
-            maxWidth: "300px",
-            zIndex: 50,
-            display: "flex",
-            flexDirection: "column",
-            backgroundColor: "var(--bg-primary)",
-            borderLeft: "1px solid var(--border-color)",
-            transform: isMobileMenuOpen ? "translateX(0)" : "translateX(100%)",
-            transition: "transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-          }}
+        {/* Native Top-Layer Modal Navigation Drawer */}
+        <dialog
+          ref={drawerRef}
+          id="mobile-nav-drawer"
+          aria-label="Navigation menu"
+          className="nav-drawer-dialog"
         >
-          {/* Drawer Header */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 20px",
-              height: "56px",
-              borderBottom: "1px solid var(--border-color)",
-              flexShrink: 0,
-            }}
-          >
-            <span
-              style={{
-                fontSize: "10px",
-                fontWeight: 600,
-                letterSpacing: "0.2em",
-                color: "var(--text-secondary)",
-                textTransform: "uppercase",
-              }}
+          <div ref={sheetRef} className="nav-drawer-sheet">
+            {/* Drawer Header */}
+            <div
+              className="flex items-center justify-between px-5 h-14 shrink-0"
+              style={{ borderBottom: "1px solid var(--border-color)" }}
             >
-              Navigation
-            </span>
-            <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              style={{
-                color: "var(--text-secondary)",
-                padding: "6px",
-                borderRadius: "6px",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-              }}
-              aria-label="Close menu"
-            >
-              <X size={18} />
-            </button>
-          </div>
-
-          {/* Nav Items */}
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              padding: "8px 0",
-              overflowY: "auto",
-            }}
-          >
-            {menuItems.map((item, idx) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={() => handleNavClick(item.href)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "16px 20px",
-                  textDecoration: "none",
-                  fontSize: "13px",
-                  fontWeight: activeItem === item.href ? 700 : 500,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: activeItem === item.href
-                    ? "var(--nav-text-active)"
-                    : "var(--nav-text)",
-                  borderBottom: idx < menuItems.length - 1
-                    ? "1px solid var(--border-color)"
-                    : "none",
-                  transition: "padding-left 0.15s ease, color 0.15s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.paddingLeft = "28px";
-                  if (activeItem !== item.href) {
-                    e.currentTarget.style.color = "var(--nav-text-hover)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.paddingLeft = "20px";
-                  if (activeItem !== item.href) {
-                    e.currentTarget.style.color = "var(--nav-text)";
-                  }
-                }}
+              <span
+                className="text-[10px] font-semibold tracking-[0.2em] uppercase"
+                style={{ color: "var(--text-secondary)" }}
               >
-                {item.label}
-                {activeItem === item.href && (
-                  <span
-                    style={{
-                      width: "5px",
-                      height: "5px",
-                      borderRadius: "50%",
-                      backgroundColor: "var(--nav-text-active)",
-                      flexShrink: 0,
-                    }}
-                  />
-                )}
-              </a>
-            ))}
-          </div>
+                Navigation
+              </span>
+              <button
+                type="button"
+                autoFocus
+                onClick={() => void closeDrawer()}
+                className="p-2 rounded-md cursor-pointer inline-flex items-center justify-center min-w-[40px] min-h-[40px]"
+                style={{ color: "var(--text-secondary)" }}
+                aria-label="Close navigation menu"
+              >
+                <X size={18} />
+              </button>
+            </div>
 
-          {/* Drawer Footer */}
-          <div
-            style={{
-              padding: "16px 20px",
-              borderTop: "1px solid var(--border-color)",
-              flexShrink: 0,
-            }}
-          >
-            <span
-              style={{
-                fontSize: "10px",
-                color: "var(--text-secondary)",
-                letterSpacing: "0.1em",
-              }}
+            {/* Nav Items */}
+            <div className="flex-1 flex flex-col py-2 overflow-y-auto">
+              {MENU_ITEMS.map((item, idx) => {
+                const isActive = activeItem === item.href;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => handleNavClick(item.href)}
+                    aria-current={isActive ? "page" : undefined}
+                    className="drawer-nav-link flex items-center justify-between px-5 py-4 text-[13px] tracking-[0.12em] uppercase no-underline"
+                    style={{
+                      fontWeight: isActive ? 700 : 500,
+                      borderBottom:
+                        idx < MENU_ITEMS.length - 1
+                          ? "1px solid var(--border-color)"
+                          : "none",
+                    }}
+                  >
+                    {item.label}
+                    {isActive && (
+                      <span
+                        className="w-[5px] h-[5px] rounded-full shrink-0"
+                        style={{ backgroundColor: "var(--nav-text-active)" }}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* Drawer Footer */}
+            <div
+              className="px-5 py-4 shrink-0"
+              style={{ borderTop: "1px solid var(--border-color)" }}
             >
-              © {currentYear} Fazrin Portfolio
-            </span>
+              <span
+                className="text-[10px] tracking-[0.1em]"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                © {currentYear} Fazrin Portfolio
+              </span>
+            </div>
           </div>
-        </div>
+        </dialog>
       </nav>
     </header>
   );

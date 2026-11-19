@@ -2,26 +2,42 @@
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 
-const title = "Fazrin | Portfolio";
-const description =
-  "Full-stack developer crafting user-centric web solutions with React, Node.js, and modern technologies.";
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Fazrin | Portfolio",
+  description = "Full-stack developer crafting user-centric web solutions with React, Node.js, and modern technologies.",
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="no-transition">
   <head>
-    <!-- 
-      CRITICAL: Theme initialization script MUST be first in <head>
-      This prevents Flash of Inaccurate Color Theme (FOIT) 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#141414" />
+
+    <!--
+      CRITICAL: Theme initialization script MUST run before paint
+      to prevent Flash of Un-themed Content (FOUC) and sync <meta name="color-scheme">
     -->
     <script is:inline>
       (function () {
-        // Immediately read theme from localStorage
-        var savedTheme = localStorage.getItem("theme");
-        var root = document.documentElement;
+        var savedTheme = null;
+        try {
+          savedTheme = localStorage.getItem("theme");
+        } catch (e) {}
 
-        // Apply correct theme class instantly
-        if (savedTheme === "light") {
+        var root = document.documentElement;
+        var isLight = savedTheme === "light";
+        var schemeMeta = document.querySelector('meta[name="color-scheme"]');
+        var themeColorMeta = document.querySelector('meta[name="theme-color"]');
+
+        if (isLight) {
           root.classList.add("light-theme");
           root.classList.remove("dark-theme");
         } else {
@@ -29,8 +45,14 @@ const description =
           root.classList.remove("light-theme");
         }
 
+        if (schemeMeta) {
+          schemeMeta.setAttribute("content", isLight ? "light" : "dark");
+        }
+        if (themeColorMeta) {
+          themeColorMeta.setAttribute("content", isLight ? "#f9fafb" : "#141414");
+        }
+
         // Re-enable transitions after first paint so toggle still animates
-        // Using double-rAF to wait for the browser to paint once
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
             root.classList.remove("no-transition");
@@ -49,36 +71,44 @@ const description =
       }
     </style>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#ffffff" />
     <ClientRouter />
 
     <!-- Handle theme persistence during Astro View Transitions -->
     <script is:inline>
       document.addEventListener("astro:before-swap", function (event) {
-        // Before swap: read current theme
-        var currentTheme = localStorage.getItem("theme");
+        var currentTheme = null;
+        try {
+          currentTheme = localStorage.getItem("theme");
+        } catch (e) {}
 
-        // Apply theme to the NEW document before it's swapped in
-        var newRoot = event.newDocument.documentElement;
+        var newDoc = event.newDocument;
+        var newRoot = newDoc.documentElement;
+        var isLight = currentTheme === "light";
 
         // Block transitions during swap to prevent flash
         newRoot.classList.add("no-transition");
 
-        if (currentTheme === "light") {
+        if (isLight) {
           newRoot.classList.add("light-theme");
           newRoot.classList.remove("dark-theme");
         } else {
           newRoot.classList.add("dark-theme");
           newRoot.classList.remove("light-theme");
         }
+
+        var schemeMeta = newDoc.querySelector('meta[name="color-scheme"]');
+        if (schemeMeta) {
+          schemeMeta.setAttribute("content", isLight ? "light" : "dark");
+        }
+        var themeColorMeta = newDoc.querySelector('meta[name="theme-color"]');
+        if (themeColorMeta) {
+          themeColorMeta.setAttribute("content", isLight ? "#f9fafb" : "#141414");
+        }
       });
 
-      // Re-enable transitions after swap completes
       document.addEventListener("astro:after-swap", function () {
         requestAnimationFrame(function () {
           requestAnimationFrame(function () {
@@ -108,77 +138,8 @@ const description =
         href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600;700&family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       />
     </noscript>
-
-    <!-- Preconnect ke Google Fonts saja — sudah cukup, jangan tambah yang lain -->
-    <!-- Sesuai rekomendasi Lighthouse: maksimal 4 preconnect, hanya untuk origin yang benar-benar dipakai -->
   </head>
   <body class="font-sans transition-colors duration-300 antialiased">
     <slot />
-
-    <style is:global>
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes fadeLeft {
-        from {
-          opacity: 0;
-          transform: translateX(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes fadeRight {
-        from {
-          opacity: 0;
-          transform: translateX(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes zoomIn {
-        from {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      .animate-fade-up {
-        animation: fadeUp 0.6s ease-out forwards;
-        opacity: 0;
-      }
-
-      .animate-fade-left {
-        animation: fadeLeft 0.6s ease-out forwards;
-        opacity: 0;
-      }
-
-      .animate-fade-right {
-        animation: fadeRight 0.6s ease-out forwards;
-        opacity: 0;
-      }
-
-      .animate-zoom-in {
-        animation: zoomIn 0.6s ease-out forwards;
-        opacity: 0;
-      }
-    </style>
   </body>
 </html>

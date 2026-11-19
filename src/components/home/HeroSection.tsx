@@ -46,7 +46,7 @@ function ConnectBlock({ className = "" }: { className?: string }) {
               className="inline-flex items-center gap-3 py-1 text-sm sm:text-base transition-opacity duration-200 hover:opacity-80"
               style={{ color: "var(--text-primary)" }}
             >
-              <Icon size={18} style={{ color: "var(--text-secondary)" }} />
+              <Icon size={18} style={{ color: "var(--text-secondary)" }} aria-hidden="true" />
               <span>
                 {link.label}{" "}
                 <span className="underline font-semibold">{link.highlight}</span>
@@ -90,7 +90,7 @@ function CtaActionButtons({ className = "" }: { className?: string }) {
       {/* Primary: View Selected Projects */}
       <a
         href={ctaButtonsData.projects.url}
-        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-semibold rounded-xl transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 group cursor-pointer"
+        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-semibold rounded-xl transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 group cursor-pointer"
         style={{
           backgroundColor: "var(--btn-primary-bg)",
           color: "var(--btn-primary-text)",
@@ -99,6 +99,7 @@ function CtaActionButtons({ className = "" }: { className?: string }) {
         <span>{ctaButtonsData.projects.label}</span>
         <ArrowRight
           size={16}
+          aria-hidden="true"
           className="transition-transform duration-200 group-hover:translate-x-1"
         />
       </a>
@@ -114,23 +115,10 @@ function CtaActionButtons({ className = "" }: { className?: string }) {
           link.download = ctaButtonsData.resume.filename;
           link.click();
         }}
-        className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-semibold rounded-xl transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 cursor-pointer"
-        style={{
-          border: "1px solid var(--btn-secondary-border)",
-          color: "var(--btn-secondary-text)",
-          backgroundColor: "transparent",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = "var(--border-hover)";
-          e.currentTarget.style.backgroundColor = "var(--bg-secondary)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = "var(--btn-secondary-border)";
-          e.currentTarget.style.backgroundColor = "transparent";
-        }}
+        className="surface-btn inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 text-sm font-semibold rounded-xl hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 cursor-pointer"
       >
         <span>{ctaButtonsData.resume.label}</span>
-        <Download size={16} />
+        <Download size={16} aria-hidden="true" />
       </a>
     </div>
   );
@@ -151,23 +139,36 @@ export default function HeroSection() {
             <div className="flex items-center gap-5 sm:gap-6 lg:gap-6">
               {/* Circular Avatar */}
               <div className="relative shrink-0">
-                <img
-                  src={heroInfo.avatarUrl}
-                  alt={heroInfo.name}
-                  className="w-24 h-24 sm:w-28 sm:h-28 lg:w-28 lg:h-28 rounded-full object-cover shadow-sm"
-                  style={{ border: "2px solid var(--border-color)" }}
-                  loading="eager"
-                  decoding="async"
-                  width={112}
-                  height={112}
-                />
+                <picture>
+                  <source
+                    type="image/avif"
+                    srcSet="/profilebrwn-224.avif 224w, /profilebrwn-448.avif 448w"
+                    sizes="(min-width: 640px) 112px, 96px"
+                  />
+                  <source
+                    type="image/webp"
+                    srcSet="/profilebrwn-224.webp 224w, /profilebrwn-448.webp 448w"
+                    sizes="(min-width: 640px) 112px, 96px"
+                  />
+                  <img
+                    src="/profilebrwn-224.png"
+                    alt={heroInfo.name}
+                    className="w-24 h-24 sm:w-28 sm:h-28 lg:w-28 lg:h-28 rounded-full object-cover shadow-sm"
+                    style={{ border: "2px solid var(--border-color)" }}
+                    loading="eager"
+                    decoding="async"
+                    fetchPriority="high"
+                    width={112}
+                    height={112}
+                  />
+                </picture>
                 <span
                   className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 animate-pulse"
                   style={{
                     backgroundColor: "#10b981",
                     borderColor: "var(--bg-primary)",
                   }}
-                  title="Available for opportunities"
+                  aria-label="Available for opportunities"
                 />
               </div>
 
@@ -189,7 +190,7 @@ export default function HeroSection() {
                     <svg
                       viewBox="0 0 24 24"
                       className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 text-blue-500 inline-block"
-                      aria-label="Verified"
+                      aria-hidden="true"
                     >
                       <path
                         fill="currentColor"
@@ -215,7 +216,7 @@ export default function HeroSection() {
                 </p>
 
                 <div className="flex items-center gap-1.5 mt-0.5">
-                  <MapPin size={14} style={{ color: "var(--text-secondary)" }} />
+                  <MapPin size={14} style={{ color: "var(--text-secondary)" }} aria-hidden="true" />
                   <span
                     className="text-xs sm:text-sm font-medium"
                     style={{ color: "var(--text-secondary)" }}

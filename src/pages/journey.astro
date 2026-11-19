@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import AppWrapper from "../components/AppWrapper.tsx";
+import JourneyIsland from "../components/islands/JourneyIsland.tsx";
 
 const posts = await Astro.glob('../content/journey/*.md');
 
@@ -13,6 +13,6 @@ const journeyPosts = posts.map(post => {
 });
 ---
 
-<Layout>
-    <AppWrapper client:idle page="journey" journeyPosts={journeyPosts} />
+<Layout title="Journey | Fazrin Portfolio">
+    <JourneyIsland client:idle journeyPosts={journeyPosts} />
 </Layout>

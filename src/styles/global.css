@@ -12,6 +12,8 @@ body {
 
 /* Theme CSS Variables */
 :root {
+  color-scheme: light dark;
+
   --bg-primary: #141414;
   --bg-secondary: #1a1a1a;
   --bg-card: #1a1a1a;
@@ -51,9 +53,29 @@ body {
   /* Toggle icon */
   --toggle-text: #9ca3af;
   --toggle-hover: #ffffff;
+
+  /* Scrollbar */
+  --scrollbar-track: #1a1a1a;
+  --scrollbar-thumb: #404040;
+  --scrollbar-thumb-hover: #606060;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+
+  &:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+  }
+
+  &:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+  }
+}
+
+.dark-theme {
+  color-scheme: dark;
 }
 
 .light-theme {
+  color-scheme: light;
+
   --bg-primary: #f9fafb;
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
@@ -93,51 +115,54 @@ body {
   /* Toggle icon */
   --toggle-text: #6b7280;
   --toggle-hover: #111827;
+
+  /* Scrollbar */
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #c1c1c1;
+  --scrollbar-thumb-hover: #a1a1a1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @view-transition {
+    navigation: auto;
+  }
 }
 
 html {
-  scroll-behavior: smooth;
   background-color: var(--bg-primary);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s ease;
 }
 
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
-/* Light theme scrollbar */
-.light-theme ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
+/* Legacy scrollbar fallback for browsers without scrollbar-color */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-.light-theme ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-}
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
 
-.light-theme ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
-}
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 5px;
+  }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #404040;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #606060;
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
 }
 
 /* Hide scrollbar utility */
@@ -150,26 +175,76 @@ body {
   display: none;
 }
 
-/* Animations */
-@keyframes fadeInUp {
+/* Skip link for keyboard navigation */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.625rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border: 1px solid var(--border-hover);
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: 2px solid var(--link-blue);
+  outline-offset: 2px;
+}
+
+/* Defer off-screen rendering for long card lists below the fold */
+.deferred-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
+
+/* Animations (opted in only when reduced motion is not preferred) */
+@keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
+@keyframes fadeLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
   }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
 
-  100% {
-    background-position: 1000px 0;
+@keyframes fadeRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
@@ -177,22 +252,35 @@ body {
   0% {
     box-shadow: 0 0 0 0 rgba(88, 166, 255, 0.7);
   }
-
   70% {
     box-shadow: 0 0 0 10px rgba(88, 166, 255, 0);
   }
-
   100% {
     box-shadow: 0 0 0 0 rgba(88, 166, 255, 0);
   }
 }
 
-.animate-fadeInUp {
-  animation: fadeInUp 0.6s ease-out;
-}
+@media (prefers-reduced-motion: no-preference) {
+  .animate-fadeInUp,
+  .animate-fade-up {
+    animation: fadeUp 0.45s ease-out both;
+  }
 
-.animate-pulse-ring {
-  animation: pulse-ring 2s infinite;
+  .animate-fade-left {
+    animation: fadeLeft 0.5s ease-out both;
+  }
+
+  .animate-fade-right {
+    animation: fadeRight 0.5s ease-out both;
+  }
+
+  .animate-zoom-in {
+    animation: zoomIn 0.5s ease-out both;
+  }
+
+  .animate-pulse-ring {
+    animation: pulse-ring 2s infinite;
+  }
 }
 
 /* Gradient text */
@@ -212,7 +300,7 @@ body {
 
 /* Card hover effect */
 .card-hover {
-  transition: all 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .card-hover:hover {
@@ -220,24 +308,307 @@ body {
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
 }
 
-/* Social link hover */
-.social-link:hover {
-  font-weight: bold;
-  color: #ffffff !important;
-}
-
-.light-theme .social-link:hover {
-  color: #000000 !important;
-}
-
-/* Smooth transitions */
+/* Interactive transitions (avoid transitioning `all` to prevent layout/paint overhead) */
 a,
 button {
-  transition: all 0.3s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Pure CSS interactive states replacing JS onMouseEnter/onMouseLeave handlers */
+.nav-link {
+  color: var(--nav-text);
+}
+
+.nav-link[aria-current="page"],
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--nav-text-hover);
+}
+
+.theme-toggle-btn {
+  color: var(--toggle-text);
+}
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn:focus-visible {
+  color: var(--toggle-hover);
+}
+
+.drawer-nav-link {
+  color: var(--nav-text);
+  transition:
+    padding-inline-start 0.15s ease,
+    color 0.15s ease;
+}
+
+.drawer-nav-link[aria-current="page"] {
+  color: var(--nav-text-active);
+}
+
+.drawer-nav-link:hover,
+.drawer-nav-link:focus-visible {
+  padding-inline-start: 28px;
+  color: var(--nav-text-hover);
+}
+
+.surface-btn {
+  border: 1px solid var(--btn-secondary-border);
+  color: var(--btn-secondary-text);
+  background-color: transparent;
+}
+
+.surface-btn:hover,
+.surface-btn:focus-visible {
+  border-color: var(--border-hover);
+  background-color: var(--bg-secondary);
+}
+
+.dashed-action-btn {
+  color: var(--text-primary);
+  border: 1px dashed var(--border-hover);
+  background-color: transparent;
+}
+
+.dashed-action-btn:hover,
+.dashed-action-btn:focus-visible {
+  border-color: var(--text-secondary);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.light-theme .dashed-action-btn:hover,
+.light-theme .dashed-action-btn:focus-visible {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.footer-social-btn {
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+.footer-social-btn:hover,
+.footer-social-btn:focus-visible {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+}
+
+.footer-nav-link {
+  color: var(--text-secondary);
+}
+
+.footer-nav-link:hover,
+.footer-nav-link:focus-visible {
+  color: var(--text-primary);
+}
+
+.accent-hover-link {
+  color: var(--text-secondary);
+}
+
+.accent-hover-link:hover,
+.accent-hover-link:focus-visible {
+  color: var(--accent, var(--text-primary));
+}
+
+.accent-hover-text:hover {
+  color: var(--accent, var(--text-primary));
+}
+
+.accent-hover-pill {
+  border-color: var(--border-color);
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.accent-hover-pill:hover {
+  border-color: var(--accent, var(--border-hover));
+  color: var(--text-primary);
+  background-color: color-mix(in srgb, var(--accent, #3b82f6) 10%, transparent);
+}
+
+.journey-skill-pill {
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+.journey-skill-pill:hover {
+  border-color: var(--accent, var(--border-hover));
+  color: var(--accent, var(--text-primary));
+}
+
+.journey-badge-img {
+  height: 28px;
+  display: block;
+  cursor: default;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .journey-badge-img:hover {
+    transform: translateX(4px) scale(1.03);
+    filter: brightness(1.15);
+  }
+}
+
+/* Native Modal <dialog> Containment & Top-Layer Animations */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+/* Lightbox modal dialog */
+.lightbox-dialog {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  opacity: 0;
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 0.22s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lightbox-dialog {
+    transform: scale(0.96);
+  }
+}
+
+.lightbox-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0);
+  transition-property: background-color, display, overlay;
+  transition-duration: 0.22s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+
+.lightbox-dialog[open]:where(:not([data-closing])) {
+  opacity: 1;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transform: scale(1);
+
+    @starting-style {
+      transform: scale(0.96);
+    }
+  }
+
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.92);
+
+    @starting-style {
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+}
+
+/* Navigation drawer modal dialog (slides from right edge) */
+.nav-drawer-dialog {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+  transition-property: display, overlay;
+  transition-duration: 0.28s;
+  transition-behavior: allow-discrete;
+}
+
+.nav-drawer-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  transition-property: background-color, backdrop-filter, display, overlay;
+  transition-duration: 0.28s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+
+.nav-drawer-sheet {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100svh;
+  width: min(300px, 72vw);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  border-left: 1px solid var(--border-color);
+  opacity: 0;
+  transition-property: opacity, transform;
+  transition-duration: 0.28s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nav-drawer-sheet {
+    transform: translateX(100%);
+  }
+}
+
+.nav-drawer-dialog[open]:where(:not([data-closing])) {
+  &::backdrop {
+    background-color: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+
+    @starting-style {
+      background-color: rgba(0, 0, 0, 0);
+      backdrop-filter: blur(0px);
+    }
+  }
+
+  & .nav-drawer-sheet {
+    opacity: 1;
+
+    @starting-style {
+      opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transform: translateX(0);
+
+      @starting-style {
+        transform: translateX(100%);
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-dialog,
+  .lightbox-dialog::backdrop,
+  .nav-drawer-dialog,
+  .nav-drawer-dialog::backdrop,
+  .nav-drawer-sheet {
+    transition-duration: 0.1s;
+  }
 }
 
 /* Responsive breakpoints improvement */
-/* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) {
   html {
     font-size: 14px;
@@ -259,14 +630,12 @@ button {
   }
 }
 
-/* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
   html {
     font-size: 15px;
   }
 }
 
-/* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
   html {
     font-size: 16px;

@@ -38,24 +38,17 @@ export default function AboutSection() {
             About
           </h2>
           <button
-            onClick={() => setExpandAbout(!expandAbout)}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer"
-            style={{
-              color: "var(--text-primary)",
-              border: "1px dashed var(--border-hover)",
-              backgroundColor: "transparent",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--text-secondary)";
-              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "var(--border-hover)";
-              e.currentTarget.style.backgroundColor = "transparent";
-            }}
+            type="button"
+            onClick={() => setExpandAbout((prev) => !prev)}
+            aria-expanded={expandAbout}
+            className="dashed-action-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider cursor-pointer"
           >
             <span>{expandAbout ? "Show Less" : "Full Version"}</span>
-            {expandAbout ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+            {expandAbout ? (
+              <ChevronUp size={13} aria-hidden="true" />
+            ) : (
+              <ChevronDown size={13} aria-hidden="true" />
+            )}
           </button>
         </div>
 
@@ -66,9 +59,7 @@ export default function AboutSection() {
               <p
                 key={index}
                 className="text-lg text-justify leading-relaxed"
-                style={{
-                  color: "var(--text-secondary)",
-                }}
+                style={{ color: "var(--text-secondary)" }}
               >
                 {renderFormattedText(paragraph)}
               </p>
@@ -76,7 +67,7 @@ export default function AboutSection() {
           </div>
         ) : (
           /* Tampilan Versi Lengkap (Full Bio) */
-          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="space-y-6 animate-fade-up">
             {fullBio.paragraphs.map((paragraph, index) => (
               <p
                 key={index}
@@ -101,24 +92,10 @@ export default function AboutSection() {
           </h2>
           <a
             href="/blog"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all duration-300 hover:shadow-sm"
-            style={{
-              color: "var(--text-primary)",
-              border: "1px dashed var(--border-hover)",
-              backgroundColor: "transparent",
-              textDecoration: "none",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--text-secondary)";
-              e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "var(--border-hover)";
-              e.currentTarget.style.backgroundColor = "transparent";
-            }}
+            className="dashed-action-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:shadow-sm no-underline"
           >
             <span>See all articles</span>
-            <ChevronRight size={13} />
+            <ChevronRight size={13} aria-hidden="true" />
           </a>
         </div>
 
@@ -127,7 +104,7 @@ export default function AboutSection() {
             <a
               key={index}
               href={article.url}
-              className="p-5 rounded-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg"
+              className="p-5 rounded-xl transition-transform duration-200 ease-out hover:-translate-y-1 hover:shadow-lg"
               style={{
                 backgroundColor: "var(--bg-card)",
                 border: "1px solid var(--border-color)",
@@ -141,7 +118,7 @@ export default function AboutSection() {
                   <span className="text-xs font-medium uppercase tracking-wider" style={{ color: "var(--text-muted)" }}>
                     {article.date}
                   </span>
-                  <ArrowRight size={16} style={{ color: "var(--text-muted)" }} className="transform -rotate-45" />
+                  <ArrowRight size={16} style={{ color: "var(--text-muted)" }} className="transform -rotate-45" aria-hidden="true" />
                 </div>
               </div>
               <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>

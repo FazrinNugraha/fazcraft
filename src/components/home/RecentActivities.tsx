@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { highlights } from "../../data/home/highlightsData";
 
@@ -6,27 +6,40 @@ export default function RecentActivities() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const rafRef = useRef<number | null>(null);
 
-  const checkScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      setCanScrollLeft(scrollLeft > 10);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
-  };
+  const checkScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    const nextLeft = scrollLeft > 10;
+    const nextRight = scrollLeft < scrollWidth - clientWidth - 10;
+    setCanScrollLeft((prev) => (prev === nextLeft ? prev : nextLeft));
+    setCanScrollRight((prev) => (prev === nextRight ? prev : nextRight));
+  }, []);
 
   useEffect(() => {
+    const scheduleCheck = () => {
+      if (rafRef.current !== null) return;
+      rafRef.current = requestAnimationFrame(() => {
+        rafRef.current = null;
+        checkScroll();
+      });
+    };
+
     checkScroll();
     const el = scrollRef.current;
     if (el) {
-      el.addEventListener("scroll", checkScroll);
-      window.addEventListener("resize", checkScroll);
+      el.addEventListener("scroll", scheduleCheck, { passive: true });
     }
+    window.addEventListener("resize", scheduleCheck, { passive: true });
+
     return () => {
-      if (el) el.removeEventListener("scroll", checkScroll);
-      window.removeEventListener("resize", checkScroll);
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      if (el) el.removeEventListener("scroll", scheduleCheck);
+      window.removeEventListener("resize", scheduleCheck);
     };
-  }, []);
+  }, [checkScroll]);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -48,12 +61,6 @@ export default function RecentActivities() {
       className="max-w-7xl mx-auto px-4 sm:px-5 md:px-6 pb-12 sm:pb-16 scroll-mt-20 transition-colors duration-300"
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
-      <style>{`
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
-
       {/* Top divider & Header */}
       <div
         className="pt-12 sm:pt-16 mb-8 flex justify-between items-center"
@@ -69,10 +76,11 @@ export default function RecentActivities() {
         {/* Arrow Navigation — right side */}
         <div className="flex items-center gap-1.5">
           <button
+            type="button"
             onClick={() => scroll("left")}
             disabled={!canScrollLeft}
             aria-label="Previous highlight"
-            className={`p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border transition-all duration-200 ${
+            className={`p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border ${
               canScrollLeft
                 ? "hover:scale-105 active:scale-95 cursor-pointer opacity-100"
                 : "opacity-30 cursor-not-allowed"
@@ -83,13 +91,14 @@ export default function RecentActivities() {
               color: "var(--text-primary)",
             }}
           >
-            <ChevronLeft size={16} />
+            <ChevronLeft size={16} aria-hidden="true" />
           </button>
           <button
+            type="button"
             onClick={() => scroll("right")}
             disabled={!canScrollRight}
             aria-label="Next highlight"
-            className={`p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border transition-all duration-200 ${
+            className={`p-2.5 min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-lg border ${
               canScrollRight
                 ? "hover:scale-105 active:scale-95 cursor-pointer opacity-100"
                 : "opacity-30 cursor-not-allowed"
@@ -100,7 +109,7 @@ export default function RecentActivities() {
               color: "var(--text-primary)",
             }}
           >
-            <ChevronRight size={16} />
+            <ChevronRight size={16} aria-hidden="true" />
           </button>
         </div>
       </div>
@@ -109,11 +118,7 @@ export default function RecentActivities() {
       <div className="overflow-hidden w-full">
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 pt-1 no-scrollbar"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
+          className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 pt-1 scrollbar-hide"
         >
           {highlights.map((item, idx) => (
             <a
@@ -122,7 +127,7 @@ export default function RecentActivities() {
               className="group block flex-shrink-0 w-full md:w-[calc(50%-8px)] snap-start"
             >
               <div
-                className="p-5 sm:p-6 rounded-xl transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg relative overflow-hidden flex h-full flex-col justify-between"
+                className="p-5 sm:p-6 rounded-xl transition-transform duration-200 ease-out hover:-translate-y-1 hover:shadow-lg relative overflow-hidden flex h-full flex-col justify-between"
                 style={{
                   backgroundColor: "var(--bg-card)",
                   border: "1px solid var(--border-color)",
@@ -147,7 +152,7 @@ export default function RecentActivities() {
 
                     {/* Highlight Title */}
                     <h3
-                      className="text-xl font-bold leading-snug mb-3 transition-colors duration-300 group-hover:text-blue-400"
+                      className="text-xl font-bold leading-snug mb-3 transition-colors duration-200 group-hover:text-blue-400"
                       style={{ color: "var(--text-primary)" }}
                     >
                       {item.title}
@@ -168,14 +173,14 @@ export default function RecentActivities() {
                   className="mt-6 flex items-center justify-between text-[10px] uppercase tracking-[0.2em] relative z-10"
                   style={{ color: "var(--text-secondary)" }}
                 >
-                  <span className="group-hover:text-white transition-colors duration-300 font-semibold">
+                  <span className="group-hover:text-[var(--text-primary)] transition-colors duration-200 font-semibold">
                     View Case Study
                   </span>
                   <span
-                    className="flex h-6 w-6 items-center justify-center rounded-full border bg-transparent transition-colors duration-300 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)]"
+                    className="flex h-6 w-6 items-center justify-center rounded-full border bg-transparent transition-colors duration-200 group-hover:bg-[var(--text-primary)] group-hover:text-[var(--bg-primary)]"
                     style={{ borderColor: "var(--border-color)" }}
                   >
-                    <ArrowUpRight size={12} />
+                    <ArrowUpRight size={12} aria-hidden="true" />
                   </span>
                 </div>
               </div>

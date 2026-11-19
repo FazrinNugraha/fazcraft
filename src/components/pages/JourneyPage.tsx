@@ -61,25 +61,25 @@ const slugOrder = [
 ];
 
 export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
-  // Sort posts by the predefined order
+  // Sort posts by the predefined order using non-mutating toSorted()
   const sortedPosts = journeyPosts
-    ? [...journeyPosts].sort((a, b) => {
-      const indexA = slugOrder.indexOf(a.slug);
-      const indexB = slugOrder.indexOf(b.slug);
-      return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
-    })
+    ? journeyPosts.toSorted((a, b) => {
+        const indexA = slugOrder.indexOf(a.slug);
+        const indexB = slugOrder.indexOf(b.slug);
+        return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+      })
     : [];
 
   return (
     <div className="min-h-screen">
       {/* Journey Timeline */}
       <section className="max-w-4xl mx-auto px-4 sm:px-5 md:px-6 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24">
-        <h2
+        <h1
           className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-center"
           style={{ color: "var(--text-primary)" }}
         >
           Journey
-        </h2>
+        </h1>
         <p
           className="mb-16 max-w-3xl mx-auto text-center text-lg"
           style={{ color: "var(--text-secondary)" }}
@@ -95,31 +95,37 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
           <div
             className="absolute left-1.75 top-0 bottom-0 w-0.5"
             style={{ backgroundColor: "var(--border-color)" }}
-          ></div>
+          />
 
           <div className="space-y-6">
-            {sortedPosts.map((item) => {
+            {sortedPosts.map((item, index) => {
               const accentColor =
-                item.accentColor || typeColorMap[item.type?.toUpperCase()] || "#3B82F6";
-              // Card hover color always follows the TYPE (MILESTONE=purple, LEARNING=green, ACHIEVEMENT=blue)
-              const cardColor = typeColorMap[item.type?.toUpperCase()] || accentColor;
+                item.accentColor ||
+                typeColorMap[item.type?.toUpperCase()] ||
+                "#3B82F6";
+              const cardColor =
+                typeColorMap[item.type?.toUpperCase()] || accentColor;
               const dotClass = getDotClass(item.type);
               const typeClasses = getTypeClasses(item.type);
 
               return (
-                <div key={item.slug} className="relative pl-8 group">
+                <div
+                  key={item.slug}
+                  className={`relative pl-8 group ${index >= 2 ? "deferred-card" : ""}`}
+                >
                   {/* Timeline dot */}
                   <div
                     className={`absolute left-0 top-3 w-4 h-4 ${dotClass} rounded-full transition-transform group-hover:scale-125`}
-                  ></div>
+                  />
 
                   {/* Card Content */}
                   <div
-                    className="rounded-lg p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5"
+                    className="rounded-lg p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5"
                     style={{
                       border: "1px solid var(--border-color)",
                       backgroundColor: "var(--bg-card)",
-                    }}
+                      "--accent": cardColor,
+                    } as React.CSSProperties}
                   >
                     {/* Date and Type Badge */}
                     <div className="flex items-center gap-3 mb-3">
@@ -136,19 +142,15 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
                       </span>
                     </div>
 
-                    {/* Title - hover changes to type color */}
-                    <h4
+                    {/* Title - hover changes to type color via CSS */}
+                    <h2
                       className="text-xl md:text-2xl font-bold mb-3"
                       style={{ color: "var(--text-primary)" }}
                     >
-                      <span
-                        className="transition-colors duration-300 cursor-default"
-                        onMouseEnter={(e) => (e.currentTarget.style.color = cardColor)}
-                        onMouseLeave={(e) => (e.currentTarget.style.color = "")}
-                      >
+                      <span className="accent-hover-text transition-colors duration-200 cursor-default">
                         {item.title}
                       </span>
-                    </h4>
+                    </h2>
 
                     {/* Description */}
                     {(item.summary || item.description) && (
@@ -173,20 +175,7 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
                           {item.skills.map((skill, skillIndex) => (
                             <span
                               key={skillIndex}
-                              className="text-xs px-3 py-1.5 rounded transition-all duration-300 cursor-default"
-                              style={{
-                                border: "1px solid var(--border-color)",
-                                backgroundColor: "var(--bg-card)",
-                                color: "var(--text-primary)",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.borderColor = cardColor;
-                                e.currentTarget.style.color = cardColor;
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.borderColor = "";
-                                e.currentTarget.style.color = "";
-                              }}
+                              className="journey-skill-pill text-xs px-3 py-1.5 rounded transition-colors duration-200 cursor-default"
                             >
                               {skill}
                             </span>
@@ -208,7 +197,12 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
                           style={{ backgroundColor: accentColor }}
                         />
                       </span>
-                      <span className="inline-block transition-transform duration-300 group-hover/link:translate-x-1">→</span>
+                      <span
+                        className="inline-block transition-transform duration-300 group-hover/link:translate-x-1"
+                        aria-hidden="true"
+                      >
+                        →
+                      </span>
                     </a>
                   </div>
                 </div>

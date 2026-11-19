@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useTheme } from "../../../context/ThemeContext";
 
 interface JourneyMarkdownLayoutProps {
   frontmatter: {
@@ -17,8 +16,6 @@ export default function JourneyMarkdownLayout({
   frontmatter,
   children,
 }: JourneyMarkdownLayoutProps) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
   const contentRef = useRef<HTMLDivElement>(null);
   const accentColor = frontmatter.accentColor || "#3B82F6";
 
@@ -37,17 +34,11 @@ export default function JourneyMarkdownLayout({
       h2.style.borderLeft = "none";
       h2.style.color = "var(--text-primary)";
 
-      // Clean up previous prefixes to avoid duplication on hot reloads
       const existingSlash = h2.querySelector(".heading-prefix");
-      if (existingSlash) {
-        existingSlash.remove();
-      }
+      if (existingSlash) existingSlash.remove();
       const existingNumber = h2.querySelector(".heading-number");
-      if (existingNumber) {
-        existingNumber.remove();
-      }
+      if (existingNumber) existingNumber.remove();
 
-      // Add modern numbering prefix
       const numSpan = document.createElement("span");
       numSpan.className = "heading-number";
       numSpan.style.color = accentColor;
@@ -55,14 +46,10 @@ export default function JourneyMarkdownLayout({
       numSpan.style.fontFamily = "var(--font-mono, monospace)";
       numSpan.style.fontWeight = "500";
       numSpan.style.opacity = "0.85";
-
-      // Pad the index to 2 digits (e.g., 01, 02)
-      const formattedNum = String(index + 1).padStart(2, "0");
-      numSpan.textContent = formattedNum;
+      numSpan.textContent = String(index + 1).padStart(2, "0");
       h2.insertBefore(numSpan, h2.firstChild);
     });
 
-    // Style paragraphs
     const paragraphs = article.querySelectorAll("p");
     paragraphs.forEach((p) => {
       p.style.fontSize = "clamp(1rem, 2vw, 1.125rem)";
@@ -72,7 +59,6 @@ export default function JourneyMarkdownLayout({
       p.style.marginBottom = "0";
     });
 
-    // Style hr elements as gradient separators
     const hrs = article.querySelectorAll("hr");
     hrs.forEach((hr) => {
       hr.style.border = "none";
@@ -82,7 +68,6 @@ export default function JourneyMarkdownLayout({
       hr.style.marginBottom = "3rem";
     });
 
-    // Style list items with accent markers
     const listItems = article.querySelectorAll("li");
     listItems.forEach((li) => {
       li.style.display = "flex";
@@ -93,14 +78,12 @@ export default function JourneyMarkdownLayout({
       li.style.color = "var(--text-secondary)";
       li.style.listStyle = "none";
 
-      // Style strong elements inside li
       const strong = li.querySelector("strong");
       if (strong) {
         strong.style.color = "var(--text-primary)";
       }
     });
 
-    // Style ul elements
     const uls = article.querySelectorAll("ul");
     uls.forEach((ul) => {
       ul.style.listStyle = "none";
@@ -110,10 +93,8 @@ export default function JourneyMarkdownLayout({
       ul.style.flexDirection = "column";
       ul.style.gap = "1rem";
 
-      // Add accent markers to li children
       const items = ul.querySelectorAll(":scope > li");
       items.forEach((li) => {
-        // Check if the li already has a marker span
         if (!li.querySelector(".journey-marker")) {
           const marker = document.createElement("span");
           marker.className = "journey-marker";
@@ -124,7 +105,6 @@ export default function JourneyMarkdownLayout({
           marker.textContent = "›";
           li.insertBefore(marker, li.firstChild);
 
-          // Wrap the remaining content in a span
           const content = document.createElement("span");
           while (li.childNodes.length > 1) {
             content.appendChild(li.childNodes[1]);
@@ -134,8 +114,6 @@ export default function JourneyMarkdownLayout({
       });
     });
 
-    // --- Shields.io badge lookup (logo slug + color override) ---
-    // Format: [shields_logo_name, hex_bg_color, hex_logo_color?]
     type ShieldsEntry = [string, string, string?];
     const SHIELDS_MAP: Record<string, ShieldsEntry> = {
       "html": ["html5", "E34F26"],
@@ -181,7 +159,6 @@ export default function JourneyMarkdownLayout({
       "responsive design": ["", "0891B2"],
     };
 
-    /** Build a shields.io badge URL for a given skill name */
     const getShieldsUrl = (skill: string): string => {
       const key = skill.toLowerCase().trim();
       const entry = SHIELDS_MAP[key];
@@ -194,18 +171,19 @@ export default function JourneyMarkdownLayout({
         return `https://img.shields.io/badge/${label}-${color}.svg?style=for-the-badge${logoParam}`;
       }
 
-      // Unknown skill → use accentColor, no logo
       const fallbackColor = accentColor.replace("#", "");
       return `https://img.shields.io/badge/${label}-${fallbackColor}.svg?style=for-the-badge`;
     };
 
-    // Handle skill tags dari frontmatter.skills jika ada, jika tidak fallback ke data-skills
     const skillContainers = article.querySelectorAll(".journey-skills");
     skillContainers.forEach((container) => {
       const skillsData = container.getAttribute("data-skills");
-      const skills = (frontmatter.skills && frontmatter.skills.length > 0)
-        ? frontmatter.skills
-        : (skillsData ? skillsData.split(",").map((s) => s.trim()) : []);
+      const skills =
+        frontmatter.skills && frontmatter.skills.length > 0
+          ? frontmatter.skills
+          : skillsData
+            ? skillsData.split(",").map((s) => s.trim())
+            : [];
 
       if (skills.length === 0) return;
 
@@ -232,19 +210,10 @@ export default function JourneyMarkdownLayout({
         const img = document.createElement("img");
         img.src = getShieldsUrl(skill);
         img.alt = skill;
-        img.style.height = "28px";
-        img.style.transition = "transform 0.15s ease, filter 0.15s ease";
-        img.style.cursor = "default";
-        img.style.display = "block";
-
-        img.addEventListener("mouseenter", () => {
-          img.style.transform = "translateX(4px) scale(1.03)";
-          img.style.filter = "brightness(1.15)";
-        });
-        img.addEventListener("mouseleave", () => {
-          img.style.transform = "";
-          img.style.filter = "";
-        });
+        img.height = 28;
+        img.loading = "lazy";
+        img.decoding = "async";
+        img.className = "journey-badge-img";
 
         row.appendChild(marker);
         row.appendChild(img);
@@ -261,14 +230,10 @@ export default function JourneyMarkdownLayout({
         {/* Back Button */}
         <a
           href="/journey"
-          className="inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors"
-          style={{ color: "var(--text-secondary)" }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = accentColor)}
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.color = "var(--text-secondary)}")
-          }
+          className="accent-hover-link inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors"
+          style={{ "--accent": accentColor } as React.CSSProperties}
         >
-          <span>←</span> Back to Journey
+          <span aria-hidden="true">←</span> Back to Journey
         </a>
 
         {/* Header */}
@@ -311,7 +276,7 @@ export default function JourneyMarkdownLayout({
         {/* Footer */}
         <footer
           className="mt-16 pt-8"
-          style={{ borderTop: `1px solid var(--border-color)` }}
+          style={{ borderTop: "1px solid var(--border-color)" }}
         >
           <div className="text-sm" style={{ color: "var(--text-muted)" }}>
             Part of my development journey
