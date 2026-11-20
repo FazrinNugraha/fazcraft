@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/*
+  The site theme is class-based (.dark-theme on <html>), not OS-driven.
+  Tailwind v4 defaults `dark:` to prefers-color-scheme, which made dark:
+  utilities track the OS instead of the site theme — remap it to the class.
+*/
+@custom-variant dark (&:where(.dark-theme, .dark-theme *));
+
 @theme {
   --font-sans: "Inter", "Geist", sans-serif;
   --font-mono: "Geist Mono", "JetBrains Mono", monospace;
@@ -49,6 +56,18 @@ body {
   /* Link colors */
   --link-blue: #60a5fa;
   --link-blue-hover: #93c5fd;
+
+  /*
+    Accent tones for badges, pills and timeline markers.
+    `--tone-*` is the readable foreground for its own theme; the tint and
+    border variants are derived from it so contrast stays AA (>= 4.5:1)
+    on both themes without duplicating hex values across components.
+  */
+  --tone-purple: #d8b4fe;
+  --tone-blue: #8ec5ff;
+  --tone-emerald: #6ee7b7;
+  --tone-orange: #ffb86a;
+  --tone-tint-strength: 20%;
 
   /* Toggle icon */
   --toggle-text: #9ca3af;
@@ -111,6 +130,13 @@ body {
   /* Link colors */
   --link-blue: #2563eb;
   --link-blue-hover: #1d4ed8;
+
+  /* Accent tones (light theme: darker foreground on a light tint) */
+  --tone-purple: #7e22ce;
+  --tone-blue: #1447e6;
+  --tone-emerald: #065f46;
+  --tone-orange: #9a3412;
+  --tone-tint-strength: 12%;
 
   /* Toggle icon */
   --toggle-text: #6b7280;
@@ -428,6 +454,45 @@ button {
   border-color: var(--accent, var(--border-hover));
   color: var(--text-primary);
   background-color: color-mix(in srgb, var(--accent, #3b82f6) 10%, transparent);
+}
+
+/*
+  Tone badge: single source of truth for accent-coloured labels.
+  Set `--tone` via a modifier (.tone-purple, .tone-blue, ...) or inline;
+  foreground/tint/border are all derived so contrast never drifts.
+*/
+.tone-badge {
+  color: var(--tone, var(--text-primary));
+  background-color: color-mix(in srgb, var(--tone, transparent) var(--tone-tint-strength, 16%), transparent);
+  border: 1px solid color-mix(in srgb, var(--tone, transparent) 35%, transparent);
+}
+
+.tone-purple {
+  --tone: var(--tone-purple);
+  --accent: var(--tone-purple);
+}
+
+.tone-blue {
+  --tone: var(--tone-blue);
+  --accent: var(--tone-blue);
+}
+
+.tone-emerald {
+  --tone: var(--tone-emerald);
+  --accent: var(--tone-emerald);
+}
+
+.tone-orange {
+  --tone: var(--tone-orange);
+  --accent: var(--tone-orange);
+}
+
+.tone-text {
+  color: var(--tone, var(--text-primary));
+}
+
+.tone-dot {
+  background-color: var(--tone, var(--border-color));
 }
 
 .journey-skill-pill {
