@@ -214,12 +214,20 @@ export default function PhotoCarousel({
                   type="button"
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
-                  className={`w-2.5 h-2.5 rounded-full transition-colors cursor-pointer ${
-                    idx === currentIndex ? "bg-white" : "bg-white/40"
-                  }`}
+                  className="group/dot flex items-center justify-center min-w-6 min-h-6 p-0 border-0 bg-transparent cursor-pointer"
                   aria-label={`Go to photo ${idx + 1}`}
                   aria-current={idx === currentIndex ? "true" : undefined}
-                />
+                >
+                  {/* Visual dot stays small; the 24px button is the touch target */}
+                  <span
+                    className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                      idx === currentIndex
+                        ? "bg-white"
+                        : "bg-white/40 group-hover/dot:bg-white/70"
+                    }`}
+                    aria-hidden="true"
+                  />
+                </button>
               ))}
             </div>
 
@@ -293,11 +301,19 @@ export default function PhotoCarousel({
                     type="button"
                     key={idx}
                     onClick={() => setCurrentIndex(idx)}
-                    className={`w-2.5 h-2.5 rounded-full transition-colors cursor-pointer ${
-                      idx === currentIndex ? "bg-white" : "bg-white/40"
-                    }`}
+                    className="group/dot flex items-center justify-center min-w-6 min-h-6 p-0 border-0 bg-transparent cursor-pointer"
                     aria-label={`Go to photo ${idx + 1}`}
-                  />
+                    aria-current={idx === currentIndex ? "true" : undefined}
+                  >
+                    <span
+                      className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                        idx === currentIndex
+                          ? "bg-white"
+                          : "bg-white/40 group-hover/dot:bg-white/70"
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
                 ))}
               </div>
 
