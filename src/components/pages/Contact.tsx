@@ -65,7 +65,7 @@ export default function Contact() {
           >
             <a
               href={`mailto:${contactHeaderData.email}`}
-              className="hover:text-blue-500 transition-colors"
+              className="transition-colors hover:text-[var(--link-blue)]"
             >
               {contactHeaderData.email}
             </a>

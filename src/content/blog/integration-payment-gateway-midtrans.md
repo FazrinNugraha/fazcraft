@@ -10,7 +10,7 @@ Accepting payments online is no longer a luxury—it is a necessity. Whether you
 
 In Indonesia, **Midtrans** has become the gold standard for this. But how does it actually work behind the scenes? Based on my recent project, I’ve broken down the integration process into five simple, non-technical steps.
 
-### 1. The "Handshake" Concept
+## 1. The "Handshake" Concept
 
 Before any money moves, your website and Midtrans need to have a conversation. Think of it as a "handshake." When a user clicks "Checkout," your server sends a request to Midtrans with two main pieces of information:
 
@@ -19,7 +19,7 @@ Before any money moves, your website and Midtrans need to have a conversation. T
 
 Midtrans then replies with a **Snap Token**—this is like a digital key that opens the payment window for your customer.
 
-### 2. Preparing Your Dashboard
+## 2. Preparing Your Dashboard
 
 To make the integration work, you first need to visit your Midtrans Dashboard. There are two "environments" you should know:
 
@@ -28,7 +28,7 @@ To make the integration work, you first need to visit your Midtrans Dashboard. T
 
 From the dashboard, you will get a **Server Key**. Treat this like a password; it is what allows your website to talk to Midtrans securely.
 
-### 3. The Customer Experience
+## 3. The Customer Experience
 
 Once your server has the Snap Token, a secure payment popup appears on your website. The beauty of Midtrans is that you don’t have to build the payment UI yourself. Customers can choose their preferred method:
 
@@ -37,13 +37,13 @@ Once your server has the Snap Token, a secure payment popup appears on your webs
 - Credit Cards
 - Convenience Stores (Alfamart/Indomaret)
 
-### 4. Real-time Status Tracking
+## 4. Real-time Status Tracking
 
 After the customer pays, the transaction status doesn't change instantly on your database. It usually starts as "Pending." Your system needs to be ready to listen for updates.
 
 Midtrans provides a "Notification" service (often called a **Webhook**). As soon as the customer finishes their payment at the bank or via their app, Midtrans automatically pings your server to say: "Hey, Order #123 is now paid!"
 
-### 5. Automating the Delivery
+## 5. Automating the Delivery
 
 The final step is the most important for your business. Once your server receives the "Success" notification, you can automate your business logic:
 

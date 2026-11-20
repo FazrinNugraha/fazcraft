@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../../../context/ThemeContext";
 import { ArrowLeft, Calendar, Clock, Tag } from "lucide-react";
+import type { Tone } from "../../../utils/tone";
 
 interface BlogMarkdownLayoutProps {
   frontmatter: {
@@ -13,6 +14,13 @@ interface BlogMarkdownLayoutProps {
   children: React.ReactNode;
 }
 
+/** Article category → accent tone (contrast-safe in both themes). */
+const CATEGORY_TONES: Record<string, Tone> = {
+  tutorial: "blue",
+  insight: "purple",
+  article: "emerald",
+};
+
 export default function BlogMarkdownLayout({
   frontmatter,
   children,
@@ -20,19 +28,7 @@ export default function BlogMarkdownLayout({
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  const getCategoryStyles = (category: string) => {
-    switch (category?.toLowerCase()) {
-      case "tutorial":
-        return { color: "#3b82f6", bg: "#3b82f61a", border: "#3b82f640" };
-      case "insight":
-        return { color: "#a855f7", bg: "#a855f71a", border: "#a855f740" };
-      case "article":
-      default:
-        return { color: "#10b981", bg: "#10b9811a", border: "#10b98140" };
-    }
-  };
-
-  const styles = getCategoryStyles(frontmatter.category || "");
+  const tone = CATEGORY_TONES[frontmatter.category?.toLowerCase() ?? ""] ?? "emerald";
 
   return (
     <div className="min-h-screen pt-24 pb-16">
@@ -40,7 +36,7 @@ export default function BlogMarkdownLayout({
         {/* Back Link */}
         <a
           href="/blog"
-          className="inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors hover:text-white"
+          className="inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors hover:text-[var(--text-primary)]"
           style={{ color: "var(--text-secondary)" }}
         >
           <ArrowLeft size={16} />
@@ -52,14 +48,9 @@ export default function BlogMarkdownLayout({
           <div className="flex items-center gap-4 mb-4">
             {frontmatter.category && (
               <span
-                className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded"
-                style={{
-                  border: `1px solid ${styles.border}`,
-                  backgroundColor: styles.bg,
-                  color: styles.color,
-                }}
+                className={`tone-badge tone-${tone} inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded`}
               >
-                <Tag size={12} />
+                <Tag size={12} aria-hidden="true" />
                 {frontmatter.category}
               </span>
             )}
