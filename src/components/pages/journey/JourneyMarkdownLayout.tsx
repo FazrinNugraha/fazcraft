@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { resolveTone, toneClass, toneHex } from "../../../utils/tone";
 
 interface JourneyMarkdownLayoutProps {
   frontmatter: {
@@ -17,7 +18,8 @@ export default function JourneyMarkdownLayout({
   children,
 }: JourneyMarkdownLayoutProps) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const accentColor = frontmatter.accentColor || "#3B82F6";
+  const tone = resolveTone(frontmatter.accentColor);
+  const accent = `var(--tone-${tone})`;
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -41,7 +43,7 @@ export default function JourneyMarkdownLayout({
 
       const numSpan = document.createElement("span");
       numSpan.className = "heading-number";
-      numSpan.style.color = accentColor;
+      numSpan.style.color = accent;
       numSpan.style.marginRight = "0.75rem";
       numSpan.style.fontFamily = "var(--font-mono, monospace)";
       numSpan.style.fontWeight = "500";
@@ -63,7 +65,7 @@ export default function JourneyMarkdownLayout({
     hrs.forEach((hr) => {
       hr.style.border = "none";
       hr.style.height = "1px";
-      hr.style.background = `linear-gradient(to right, ${accentColor}40, transparent)`;
+      hr.style.background = `linear-gradient(to right, color-mix(in srgb, ${accent} 40%, transparent), transparent)`;
       hr.style.marginTop = "3rem";
       hr.style.marginBottom = "3rem";
     });
@@ -98,7 +100,7 @@ export default function JourneyMarkdownLayout({
         if (!li.querySelector(".journey-marker")) {
           const marker = document.createElement("span");
           marker.className = "journey-marker";
-          marker.style.color = accentColor;
+          marker.style.color = accent;
           marker.style.marginTop = "0.375rem";
           marker.style.fontSize = "1.125rem";
           marker.style.flexShrink = "0";
@@ -171,7 +173,7 @@ export default function JourneyMarkdownLayout({
         return `https://img.shields.io/badge/${label}-${color}.svg?style=for-the-badge${logoParam}`;
       }
 
-      const fallbackColor = accentColor.replace("#", "");
+      const fallbackColor = toneHex(tone);
       return `https://img.shields.io/badge/${label}-${fallbackColor}.svg?style=for-the-badge`;
     };
 
@@ -200,7 +202,7 @@ export default function JourneyMarkdownLayout({
         row.style.gap = "0.75rem";
 
         const marker = document.createElement("span");
-        marker.style.color = accentColor;
+        marker.style.color = accent;
         marker.style.fontSize = "1.25rem";
         marker.style.fontWeight = "bold";
         marker.style.lineHeight = "1";
@@ -222,16 +224,15 @@ export default function JourneyMarkdownLayout({
 
       container.replaceWith(wrapper);
     });
-  }, [accentColor, children, frontmatter.skills]);
+  }, [accent, children, frontmatter.skills]);
 
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen ${toneClass(tone)}`}>
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24">
         {/* Back Button */}
         <a
           href="/journey"
           className="accent-hover-link inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors"
-          style={{ "--accent": accentColor } as React.CSSProperties}
         >
           <span aria-hidden="true">←</span> Back to Journey
         </a>
@@ -246,8 +247,7 @@ export default function JourneyMarkdownLayout({
               {frontmatter.date}
             </span>
             <span
-              className="text-xs font-semibold border px-2.5 py-1 rounded"
-              style={{ borderColor: accentColor, color: accentColor }}
+              className="tone-badge text-xs font-semibold px-2.5 py-1 rounded"
             >
               {frontmatter.type}
             </span>

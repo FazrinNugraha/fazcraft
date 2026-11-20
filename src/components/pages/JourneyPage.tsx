@@ -1,39 +1,5 @@
 import React from "react";
-
-// Color mapping for type to accent colors
-const typeColorMap: Record<string, string> = {
-  LEARNING: "#10B981",
-  MILESTONE: "#A855F7",
-  ACHIEVEMENT: "#3B82F6",
-};
-
-// Determine type color classes for badge styling
-function getTypeClasses(type: string): string {
-  switch (type?.toUpperCase()) {
-    case "LEARNING":
-      return "border-emerald-500 text-emerald-500";
-    case "MILESTONE":
-      return "border-purple-500 text-purple-500";
-    case "ACHIEVEMENT":
-      return "border-blue-500 text-blue-500";
-    default:
-      return "border-blue-500 text-blue-500";
-  }
-}
-
-// Determine dot color class
-function getDotClass(type: string): string {
-  switch (type?.toUpperCase()) {
-    case "LEARNING":
-      return "bg-emerald-500";
-    case "MILESTONE":
-      return "bg-purple-500";
-    case "ACHIEVEMENT":
-      return "bg-blue-500";
-    default:
-      return "bg-blue-500";
-  }
-}
+import { toneFromJourneyType, type Tone } from "../../utils/tone";
 
 interface JourneyPost {
   slug: string;
@@ -99,14 +65,7 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
 
           <div className="space-y-6">
             {sortedPosts.map((item, index) => {
-              const accentColor =
-                item.accentColor ||
-                typeColorMap[item.type?.toUpperCase()] ||
-                "#3B82F6";
-              const cardColor =
-                typeColorMap[item.type?.toUpperCase()] || accentColor;
-              const dotClass = getDotClass(item.type);
-              const typeClasses = getTypeClasses(item.type);
+              const tone: Tone = toneFromJourneyType(item.type);
 
               return (
                 <div
@@ -115,17 +74,17 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
                 >
                   {/* Timeline dot */}
                   <div
-                    className={`absolute left-0 top-3 w-4 h-4 ${dotClass} rounded-full transition-transform group-hover:scale-125`}
+                    className={`tone-dot tone-${tone} absolute left-0 top-3 w-4 h-4 rounded-full transition-transform group-hover:scale-125`}
+                    aria-hidden="true"
                   />
 
                   {/* Card Content */}
                   <div
-                    className="rounded-lg p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5"
+                    className={`tone-${tone} rounded-lg p-6 transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg active:translate-y-0.5`}
                     style={{
                       border: "1px solid var(--border-color)",
                       backgroundColor: "var(--bg-card)",
-                      "--accent": cardColor,
-                    } as React.CSSProperties}
+                    }}
                   >
                     {/* Date and Type Badge */}
                     <div className="flex items-center gap-3 mb-3">
@@ -136,7 +95,7 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
                         {item.date}
                       </span>
                       <span
-                        className={`text-xs font-semibold border px-2.5 py-1 rounded ${typeClasses}`}
+                        className="tone-badge text-xs font-semibold px-2.5 py-1 rounded"
                       >
                         {item.type}
                       </span>
@@ -187,14 +146,12 @@ export default function JourneyPage({ journeyPosts }: JourneyPageProps) {
                     {/* Read More Link */}
                     <a
                       href={`/journey/${item.slug}`}
-                      className="text-sm font-medium inline-flex items-center gap-1.5 group/link relative overflow-hidden"
-                      style={{ color: accentColor }}
+                      className="tone-text inline-flex items-center gap-1.5 group/link relative overflow-hidden text-sm font-medium"
                     >
                       <span className="relative">
                         Read more
                         <span
-                          className="absolute bottom-0 left-0 h-[1px] w-0 transition-all duration-300 group-hover/link:w-full"
-                          style={{ backgroundColor: accentColor }}
+                          className="absolute bottom-0 left-0 h-[1px] w-0 bg-current transition-all duration-300 group-hover/link:w-full"
                         />
                       </span>
                       <span

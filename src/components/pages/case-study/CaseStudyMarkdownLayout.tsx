@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { resolveTone, toneClass } from "../../../utils/tone";
 
 interface CaseStudyMarkdownLayoutProps {
   frontmatter: {
@@ -17,7 +18,8 @@ export default function CaseStudyMarkdownLayout({
   children,
 }: CaseStudyMarkdownLayoutProps) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const accentColor = frontmatter.accentColor || "#3B82F6";
+  const tone = resolveTone(frontmatter.accentColor);
+  const accent = `var(--tone-${tone})`;
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -41,7 +43,7 @@ export default function CaseStudyMarkdownLayout({
 
       const numSpan = document.createElement("span");
       numSpan.className = "heading-number";
-      numSpan.style.color = accentColor;
+      numSpan.style.color = accent;
       numSpan.style.marginRight = "0.75rem";
       numSpan.style.fontFamily = "var(--font-mono, monospace)";
       numSpan.style.fontWeight = "500";
@@ -97,7 +99,7 @@ export default function CaseStudyMarkdownLayout({
     hrs.forEach((hr) => {
       hr.style.border = "none";
       hr.style.height = "1px";
-      hr.style.background = `linear-gradient(to right, ${accentColor}40, transparent)`;
+      hr.style.background = `linear-gradient(to right, color-mix(in srgb, ${accent} 40%, transparent), transparent)`;
       hr.style.marginTop = "2.5rem";
       hr.style.marginBottom = "2.5rem";
     });
@@ -156,7 +158,7 @@ export default function CaseStudyMarkdownLayout({
 
           const marker = document.createElement("span");
           marker.className = "case-study-marker";
-          marker.style.color = accentColor;
+          marker.style.color = accent;
           marker.style.marginTop = "0.25rem";
           marker.style.fontSize = "1.125rem";
           marker.style.flexShrink = "0";
@@ -180,16 +182,15 @@ export default function CaseStudyMarkdownLayout({
       ol.style.flexDirection = "column";
       ol.style.gap = "0.5rem";
     });
-  }, [accentColor, children]);
+  }, [accent, children]);
 
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen ${toneClass(tone)}`}>
       <section className="max-w-3xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 md:pt-32 pb-16 sm:pb-20 md:pb-24">
         {/* Back Button */}
         <a
           href="/"
           className="accent-hover-link inline-flex items-center gap-2 mb-8 text-sm font-medium transition-colors"
-          style={{ "--accent": accentColor } as React.CSSProperties}
         >
           <span aria-hidden="true">←</span> Back to Home
         </a>
@@ -204,8 +205,7 @@ export default function CaseStudyMarkdownLayout({
               {frontmatter.date}
             </span>
             <span
-              className="text-xs font-semibold border px-2.5 py-1 rounded"
-              style={{ borderColor: accentColor, color: accentColor }}
+              className="tone-badge text-xs font-semibold px-2.5 py-1 rounded"
             >
               {frontmatter.type}
             </span>
