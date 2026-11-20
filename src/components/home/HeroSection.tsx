@@ -168,8 +168,9 @@ export default function HeroSection() {
                     backgroundColor: "#10b981",
                     borderColor: "var(--bg-primary)",
                   }}
-                  aria-label="Available for opportunities"
+                  aria-hidden="true"
                 />
+                <span className="sr-only">Available for opportunities</span>
               </div>
 
               {/* Info Stack */}
@@ -189,7 +190,8 @@ export default function HeroSection() {
                     <span>{heroInfo.name}</span>
                     <svg
                       viewBox="0 0 24 24"
-                      className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 text-blue-500 inline-block"
+                      className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 inline-block"
+                      style={{ color: "var(--link-blue)" }}
                       aria-hidden="true"
                     >
                       <path
