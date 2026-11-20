@@ -144,7 +144,7 @@ export default function RecentActivities() {
                         {item.phase}
                       </span>
                       <div
-                        className={`inline-flex items-center text-[9px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-md border ${item.badgeColor} ${item.badgeBg} ${item.badgeBorder}`}
+                        className={`tone-badge tone-${item.tone} inline-flex items-center text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-md`}
                       >
                         {item.role}
                       </div>
@@ -152,7 +152,7 @@ export default function RecentActivities() {
 
                     {/* Highlight Title */}
                     <h3
-                      className="text-xl font-bold leading-snug mb-3 transition-colors duration-200 group-hover:text-blue-400"
+                      className="text-xl font-bold leading-snug mb-3 transition-colors duration-200 group-hover:text-[var(--tone-blue)]"
                       style={{ color: "var(--text-primary)" }}
                     >
                       {item.title}
