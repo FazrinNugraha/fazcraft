@@ -5,14 +5,19 @@
  * Anda dapat mengedit judul, deskripsi, teknologi yang digunakan, gambar, serta link demo/github.
  */
 
+import type { Tone } from "../../utils/tone";
+
+/** Accent tone name mapped to the `.tone-*` utilities in global.css. */
+export type ProjectTone = Tone;
+
 export interface Project {
   id: number;
   phase: string;
-  phaseColor: string;
+  phaseTone: ProjectTone;
   title: string;
   role: string;
   status: "FEATURED" | "ONGOING" | "COMPLETED";
-  statusColor: string;
+  statusTone: ProjectTone;
   description: string;
   tech: string[];
   thumbnails: string[];
@@ -24,11 +29,11 @@ export const projects: Project[] = [
   {
     id: 1,
     phase: "PHASE : SEPT 2026",
-    phaseColor: "text-purple-500",
+    phaseTone: "purple",
     title: "Lost & Found",
     role: "BACKEND ENGINEER ",
     status: "FEATURED",
-    statusColor: "bg-purple-500",
+    statusTone: "purple",
     description:
       "Lost & Found is a real-time item recovery platform designed to secure and streamline community asset return. Powered by Circom Zero-Knowledge Proof circuits and Poseidon hashing, it cryptographically verifies ownership claims without exposing sensitive item details publicly. The platform integrates NLP keyword extraction and the Groq LLM API for semantic claim validation, seamlessly combining an interactive SvelteKit bulletin board with automated dispute resolution and digital security archive management. ",
     tech: [
@@ -56,11 +61,11 @@ export const projects: Project[] = [
   {
     id: 2,
     phase: "PHASE : JUNE 2026",
-    phaseColor: "text-purple-500",
+    phaseTone: "purple",
     title: "Emigria",
     role: "AI ENGINEER ",
     status: "FEATURED",
-    statusColor: "bg-purple-500",
+    statusTone: "purple",
     description:
       "Emigria is a multimodal AI platform that detects overseas job fraud, helping Indonesian migrant worker candidates quickly check job offers before trusting recruitment claims. As job opportunities spread through social media, chat apps, posters, and informal agents, candidates face an information gap - promises sound convincing, but official signals, real salary data, recruiter legitimacy, and safety indicators stay hard to verify.",
     tech: [
@@ -86,11 +91,11 @@ export const projects: Project[] = [
   {
     id: 3,
     phase: "PHASE : AUGUST 2026",
-    phaseColor: "text-emerald-500",
+    phaseTone: "emerald",
     title: "HireVision",
     role: "AI FULLSTACK ENGINEER",
     status: "COMPLETED",
-    statusColor: "bg-emerald-500",
+    statusTone: "emerald",
     description:
       "HireVision is a web based career decision support system designed to navigate the complex Jabodetabek job market. Powered by dual Random Forest Regressor models , it accurately predicts market salaries and rental housing costs. The platform integrates a Multiplicative Adjustment Factor for dynamic user profiling and leverages the Gemini API for personalized AI career consulting , seamlessly balancing personal financial planning with regional spatial job opportunities.",
     tech: [
@@ -119,11 +124,11 @@ export const projects: Project[] = [
   {
     id: 4,
     phase: "PHASE 4: MARCH 2026",
-    phaseColor: "text-emerald-500",
+    phaseTone: "emerald",
     title: "Stashwise",
     role: "AI FULLSTACK ENGINEER",
     status: "COMPLETED",
-    statusColor: "bg-emerald-500",
+    statusTone: "emerald",
     description:
       "A multi-asset investment portfolio tracker that brings stocks, crypto, mutual funds, and gold into one clean, unified dashboard, replacing the need to juggle multiple apps with a single real-time view of portfolio performance. Beyond tracking, the platform leverages AI to deliver personalized insights and stock price predictions, turning scattered financial data into clear, actionable investment guidance.",
     tech: [
@@ -151,11 +156,11 @@ export const projects: Project[] = [
   {
     id: 5,
     phase: "PHASE : SEPT 2025",
-    phaseColor: "text-purple-500",
+    phaseTone: "purple",
     title: "SocialCollateral AI",
     role: "FRONTEND ENGINEER",
     status: "FEATURED",
-    statusColor: "bg-purple-500",
+    statusTone: "purple",
     description:
       'We introducing the Hackathon x Amartha 2025 team project called "Jaringan Amanah" is a system specialized to transforms qualitative social assets into quantitative Group Trust Scores using Social Graph Engine. This solution integrates advanced graph analysis, NLP powered by Google Gemini, and Computer Vision to calculate comprehensive trust metrics.',
     tech: [
@@ -182,11 +187,11 @@ export const projects: Project[] = [
   {
     id: 6,
     phase: "PHASE : OCT 2025",
-    phaseColor: "text-emerald-500",
+    phaseTone: "emerald",
     title: "Learning Management System ",
     role: "FULLSTACK ENGINEER ",
     status: "COMPLETED",
-    statusColor: "bg-emerald-500",
+    statusTone: "emerald",
     description:
       "A modern web-based learning management platform that streamlines course management, learning materials, and student progress tracking through a secure multi-role architecture for Managers and Students. Managers can create, update, and preview courses and materials, supporting video and text content, organize courses into categories, and manage student enrollment—all backed by secure authentication and route protection for a clean, responsive experience.",
     tech: ["React", "Express js", "Mongo DB", "Node js"],

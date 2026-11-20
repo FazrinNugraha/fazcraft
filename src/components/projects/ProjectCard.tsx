@@ -1,6 +1,6 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
-import type { Project } from "../../data/projects/projectsData";
+import type { Project, ProjectTone } from "../../data/projects/projectsData";
 import PhotoCarousel from "./PhotoCarousel";
 
 interface ProjectCardProps {
@@ -9,69 +9,32 @@ interface ProjectCardProps {
   deferred?: boolean;
 }
 
-// Color mapping for status colors to actual hex values
-const colorMap: Record<string, string> = {
-  emerald: "#10B981",
-  purple: "#A855F7",
-  blue: "#3B82F6",
-  orange: "#F97316",
+/** Badge label per status; colour comes from the project's statusTone. */
+const statusLabels: Record<Project["status"], string> = {
+  FEATURED: "Featured",
+  ONGOING: "Ongoing",
+  COMPLETED: "Completed",
 };
 
-// Extract color name from Tailwind class like "bg-purple-500" → "purple"
-function extractColorName(twClass: string): string {
-  const match = twClass.match(/(?:bg|text|border)-(\w+)-\d+/);
-  return match ? match[1] : "blue";
-}
-
-const statusConfig = {
-  FEATURED: {
-    label: "Featured",
-    color: "#A855F7",
-    bg: "rgba(168, 85, 247, 0.1)",
-    border: "rgba(168, 85, 247, 0.3)",
-  },
-  ONGOING: {
-    label: "Ongoing",
-    color: "#F97316",
-    bg: "rgba(249, 115, 22, 0.1)",
-    border: "rgba(249, 115, 22, 0.3)",
-  },
-  COMPLETED: {
-    label: "Completed",
-    color: "#10B981",
-    bg: "rgba(16, 185, 129, 0.1)",
-    border: "rgba(16, 185, 129, 0.3)",
-  },
-};
-
-function StatusBadge({ status }: { status: Project["status"] }) {
-  const config = statusConfig[status];
+function StatusBadge({
+  status,
+  tone,
+}: {
+  status: Project["status"];
+  tone: ProjectTone;
+}) {
   return (
     <span
-      className="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full whitespace-nowrap inline-block"
-      style={{
-        backgroundColor: config.bg,
-        color: config.color,
-        border: `1px solid ${config.border}`,
-      }}
+      className={`tone-badge tone-${tone} text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full whitespace-nowrap inline-block`}
     >
-      {config.label}
+      {statusLabels[status]}
     </span>
   );
 }
 
-function TechPill({
-  tech,
-  accentColor,
-}: {
-  tech: string;
-  accentColor: string;
-}) {
+function TechPill({ tech }: { tech: string }) {
   return (
-    <span
-      className="accent-hover-pill text-xs px-3 py-1 rounded transition-transform duration-200 cursor-default hover:-translate-y-0.5 hover:scale-102 border font-medium inline-block"
-      style={{ "--accent": accentColor } as React.CSSProperties}
-    >
+    <span className="accent-hover-pill text-xs px-3 py-1 rounded transition-transform duration-200 cursor-default hover:-translate-y-0.5 hover:scale-102 border font-medium inline-block">
       {tech}
     </span>
   );
@@ -91,11 +54,11 @@ function ProjectLinks({
           href={sourceCode}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 inline-flex items-center gap-2 group/link relative overflow-hidden"
+          className="tone-text tone-blue inline-flex items-center gap-2 group/link relative overflow-hidden"
         >
           <span className="relative">
             Source Code
-            <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-blue-500 transition-all duration-300 group-hover/link:w-full" />
+            <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-current transition-all duration-300 group-hover/link:w-full" />
           </span>
           <span className="inline-block transition-transform duration-300 group-hover/link:translate-x-1.5">
             <ArrowRight size={14} aria-hidden="true" />
@@ -108,11 +71,11 @@ function ProjectLinks({
           href={liveDemo}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 inline-flex items-center gap-2 group/link relative overflow-hidden"
+          className="tone-text tone-blue inline-flex items-center gap-2 group/link relative overflow-hidden"
         >
           <span className="relative">
             Live Demo
-            <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-blue-500 transition-all duration-300 group-hover/link:w-full" />
+            <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-current transition-all duration-300 group-hover/link:w-full" />
           </span>
           <span className="inline-block transition-transform duration-300 group-hover/link:translate-x-1.5">
             <ArrowRight size={14} aria-hidden="true" />
@@ -128,14 +91,14 @@ export default function ProjectCard({
   isPriority = false,
   deferred = false,
 }: ProjectCardProps) {
-  const accentColor =
-    colorMap[extractColorName(project.statusColor)] || "#3B82F6";
-
   return (
-    <div className={`relative pl-8 group ${deferred ? "deferred-card" : ""}`}>
+    <div
+      className={`tone-${project.statusTone} relative pl-8 group ${deferred ? "deferred-card" : ""}`}
+    >
       {/* Timeline Dot */}
       <div
-        className={`absolute left-0 top-3 w-4 h-4 ${project.statusColor} rounded-full transition-transform group-hover:scale-125 z-10`}
+        className={`tone-dot tone-${project.statusTone} absolute left-0 top-3 w-4 h-4 rounded-full transition-transform group-hover:scale-125 z-10`}
+        aria-hidden="true"
       />
 
       {/* Content - Stacked Layout */}
@@ -154,11 +117,16 @@ export default function ProjectCard({
           {/* Phase & Role Label */}
           <div className="mb-2 flex flex-wrap items-center gap-2">
             <span
-              className={`text-xs font-bold ${project.phaseColor} uppercase tracking-wider`}
+              className={`tone-text tone-${project.phaseTone} text-xs font-bold uppercase tracking-wider`}
             >
               {project.phase}
             </span>
-            <span className="text-xs text-neutral-500 select-none mx-1" aria-hidden="true">•</span>
+            <span
+              className="text-xs text-neutral-500 select-none mx-1"
+              aria-hidden="true"
+            >
+              •
+            </span>
             <span
               className="text-xs font-semibold uppercase tracking-wider"
               style={{ color: "var(--text-secondary)" }}
@@ -175,7 +143,7 @@ export default function ProjectCard({
             >
               {project.title}
             </h2>
-            <StatusBadge status={project.status} />
+            <StatusBadge status={project.status} tone={project.statusTone} />
           </div>
 
           {/* Description */}
@@ -189,7 +157,7 @@ export default function ProjectCard({
           {/* Tech pills */}
           <div className="flex flex-wrap gap-1.5 mb-3 items-center">
             {project.tech.slice(0, 10).map((tech, idx) => (
-              <TechPill key={idx} tech={tech} accentColor={accentColor} />
+              <TechPill key={idx} tech={tech} />
             ))}
           </div>
 
